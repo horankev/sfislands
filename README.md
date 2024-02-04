@@ -8,8 +8,8 @@
 
 The goal of `sfislands` is to make it easier to deal with geographic
 datasets which contain islands. These do not have to be “literal”
-islands but any situation where one or more discontiguous geographical
-units are present. Such a situation can lead to two issues. Firstly, if
+islands but any situation where discontiguous geographical units are
+present. Such a situation can lead to two issues. Firstly, if
 unaddressed, the presence of such islands or exclaves can make certain
 types of contiguity-based modelling impossible. Secondly, just because
 two areas are separated by, say, a body of water, this does not mean
@@ -56,7 +56,9 @@ devtools::install_github("horankev/sfislands")
 
 ## Functions overview
 
-### 1. Set up data (“*pre-functions*”)
+The following is a framework within which these functions could be used:
+
+### Step 1: Set up data (“*pre-functions*”)
 
 - **st_bridges()**
 
@@ -77,12 +79,12 @@ list or matrix as column “nb”, while accounting for islands.*
 
 *Make manual changes to any connections.*
 
-### 2. Create model
+### Step 2: Create model
 
 *Use the output of **st_bridges()** as both the data and contiguity
 inputs for a model using, for example, `mgcv`, `brms` or `inla`.*
 
-### 3. Examine output (“*post functions*”)
+### Step 3: Examine output (“*post functions*”)
 
 - **st_augment()**
 
@@ -91,6 +93,9 @@ inputs for a model using, for example, `mgcv`, `brms` or `inla`.*
 - **st_quickmap_preds()**
 
 *Generate quick maps of these predictions.*
+
+Below, we look at these functions in more detail and show them in
+operation.
 
 ## Pre-functions
 

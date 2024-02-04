@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of `sfislands` is to make it easier to deal with geographic datasets which contain islands. These do not have to be "literal" islands but any situation where one or more discontiguous geographical units are present. Such a situation can lead to two issues. Firstly, if unaddressed, the presence of such islands or exclaves can make certain types of contiguity-based modelling impossible. Secondly, just because two areas are separated by, say, a body of water, this does not mean that they are necessarily independent. The package offers solutions to allow for the inclusion or exclusion of these units within an uncomplicated workflow.
+The goal of `sfislands` is to make it easier to deal with geographic datasets which contain islands. These do not have to be "literal" islands but any situation where discontiguous geographical units are present. Such a situation can lead to two issues. Firstly, if unaddressed, the presence of such islands or exclaves can make certain types of contiguity-based modelling impossible. Secondly, just because two areas are separated by, say, a body of water, this does not mean that they are necessarily independent. The package offers solutions to allow for the inclusion or exclusion of these units within an uncomplicated workflow.
 
 ## Installation
 
@@ -46,7 +46,9 @@ devtools::install_github("horankev/sfislands")
 
 ## Functions overview
 
-### 1. Set up data ("*pre-functions*")
+The following is a framework within which these functions could be used:
+
+### Step 1: Set up data ("*pre-functions*")
 
 -   **st_bridges()**
 
@@ -66,11 +68,11 @@ devtools::install_github("horankev/sfislands")
 
 *Make manual changes to any connections.*
 
-### 2. Create model
+### Step 2: Create model
 
 *Use the output of **st_bridges()** as both the data and contiguity inputs for a model using, for example, `mgcv`, `brms` or `inla`.*
 
-### 3. Examine output ("*post functions*")
+### Step 3: Examine output ("*post functions*")
 
 -   **st_augment()**
 
@@ -210,6 +212,8 @@ df_scaled_sf <- df_scaled |>
   st_as_sf() |> 
   st_transform(crs=27700)
 ```
+
+Below, we look at these functions in more detail and show them in operation.
 
 ## Pre-functions
 
