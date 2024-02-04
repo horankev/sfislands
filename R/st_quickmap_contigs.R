@@ -1,0 +1,77 @@
+#' Visualise a contiguity structure on a map
+#'
+#' @param nbsf
+#' @param linkcol
+#' @param bordercol
+#' @param pointcol
+#' @param fillcol
+#' @param linksize
+#' @param bordersize
+#' @param pointsize
+#' @param title
+#' @param subtitle
+#'
+#' @return
+#' @export
+#'
+#' @examples
+st_quickmap_contigs <- function(nbsf,
+                                linkcol = "dodgerblue",
+                                bordercol = "gray7",
+                                pointcol="darkred",
+                                fillcol = "gray95",
+                                linksize=0.2,
+                                bordersize=0.1,
+                                pointsize=0.8,
+                                title=NULL,
+                                subtitle=NULL){
+
+  if (!inherits(nbsf,"sf")) {
+    stop("Error: This function requires a simple features dataframe as input")
+  }
+
+  if (is.data.frame(nbsf) && !("nb" %in% colnames(nbsf))) {
+    stop("Error: The dataframe must contain a column called 'nb'")
+  }
+
+  if (!(is.list(nbsf$nb) || is.matrix(nbsf$nb))) {
+    stop("Error: The 'nb' argument must be a neighbours list or a neighbours matrix")
+  }
+
+
+  # to show the contiguities on a map
+  ###
+  # first, the dataframe must be a spdf, spatial dataframe
+  df_sp <- sf::as_Spatial(nbsf)
+
+  if(is.matrix(nbsf$nb)){
+    temp <- spdep::mat2listw(nbsf$nb, style="B")
+    cont <- temp[2]
+    cont <- cont$neighbours
+    class(cont) <- c("nb","list")
+  }
+
+  if(is.list(nbsf$nb)){
+    cont <- nbsf$nb
+    class(cont) <- c("nb","list")
+  }
+  # make lines where there are contiguities
+  neighbors_sf <- methods::as(spdep::nb2lines(cont, coords = df_sp), 'sf')
+  neighbors_sf <- sf::st_set_crs(neighbors_sf, sf::st_crs(nbsf))
+
+  # get the endpoints of these lines (they are not necessarily the centroids...)
+  endpoints_coords <- sf::st_coordinates(neighbors_sf) |> data.frame() |>
+    sf::st_as_sf(coords=c("X","Y"), crs=sf::st_crs(neighbors_sf))
+
+  # map the connections
+  ggplot2::ggplot() +
+    ggplot2::geom_sf(data=nbsf, fill=fillcol, colour=bordercol, linewidth=bordersize) +
+    ggplot2::geom_sf(data = neighbors_sf, colour=linkcol, linewidth=linksize) +
+    ggplot2::geom_sf(data=endpoints_coords, size=pointsize, colour=pointcol) +
+    ggplot2::coord_sf(datum=NA) +
+    ggplot2::labs(title = title,
+                  subtitle = subtitle) +
+    ggplot2::theme_void() +
+    ggplot2::theme(axis.title.x = ggplot2::element_blank()) +
+    ggplot2::theme(axis.title.y = ggplot2::element_blank())
+}
