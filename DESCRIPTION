@@ -1,6 +1,6 @@
 Package: sfislands
 Type: Package
-Title: Makes it easier to build neighbourhood lists
+Title: Pre andpost functions for working with areal data
 Version: 0.1.0
 Author: Kevin Horan
 Maintainer: Kevin Horan <kevin.horan.2021@mumail.ie>

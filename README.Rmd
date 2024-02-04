@@ -26,6 +26,11 @@ The goal of sfislands is to ...
 
 You can install the development version of `kh` from [GitHub](https://github.com/) with:
 
+``` r
+# install.packages("devtools")
+devtools::install_github("horankev/sfislands")
+```
+
 ```{r, echo=FALSE}
 
 ## Data and packages

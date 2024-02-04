@@ -13,6 +13,31 @@ The goal of sfislands is to …
 You can install the development version of `kh` from
 [GitHub](https://github.com/) with:
 
+``` r
+# install.packages("devtools")
+devtools::install_github("horankev/sfislands")
+```
+
+    #> DBI (1.2.0 -> 1.2.1) [CRAN]
+    #> 
+    #> The downloaded binary packages are in
+    #>  /var/folders/_n/vplp3rdn1jbcc_v1h6dt0mwh0000gn/T//Rtmpk0FUeq/downloaded_packages
+    #> ── R CMD build ─────────────────────────────────────────────────────────────────
+    #>      checking for file ‘/private/var/folders/_n/vplp3rdn1jbcc_v1h6dt0mwh0000gn/T/Rtmpk0FUeq/remotes13ecc698f80af/horankev-sfislands-4fb18af/DESCRIPTION’ ...  ✔  checking for file ‘/private/var/folders/_n/vplp3rdn1jbcc_v1h6dt0mwh0000gn/T/Rtmpk0FUeq/remotes13ecc698f80af/horankev-sfislands-4fb18af/DESCRIPTION’
+    #>   ─  preparing ‘sfislands’:
+    #>    checking      checking DESCRIPTION meta-information ...  ✔  checking DESCRIPTION meta-information
+    #>   ─  checking for LF line-endings in source and make files and shell scripts
+    #>   ─  checking for empty or unneeded directories
+    #>      Omitted ‘LazyData’ from DESCRIPTION
+    #>        NB: this package now depends on R (>= 3.5.0)
+    #>        WARNING: Added dependency on R >= 3.5.0 because serialized objects in
+    #>      serialize/load version 3 cannot be read in older versions of R.
+    #>      File(s) containing such objects:
+    #>        ‘sfislands/brmsfit_degree.rds’
+    #>   ─  building ‘sfislands_0.1.0.tar.gz’
+    #>      
+    #> 
+
 ## Summary
 
 1.  `sfislands` makes it easier to deal with geographic datasets which
