@@ -38,7 +38,7 @@ devtools::install_github("horankev/sfislands")
 # Read in data and necessary packages.
 
 # install.packages("devtools")
-devtools::install_github("horankev/sfislands")
+# devtools::install_github("horankev/sfislands")
 
 # required packages
 packages <- c(
@@ -490,9 +490,7 @@ st_bridges(df = df_scaled_sf|> filter(region %in% c("Wales","South West")),
            geom_col_name = "constituency_name",
            link_islands_k = 2
 )  |> 
-  st_manual_join_nb("Gower","St Ives") |>
-  st_quickmap_contigs(title = "st_bridges contiguities: Wales & South West",
-                      subtitle = "with additional st_manual_join_nb() for Gower and St Ives")
+  st_manual_join_nb("Gower","St Ives")
 ```
 
 These manual functions can also, of course, be used to edit any of the previously discussed contiguity structures created by `sfdep`.

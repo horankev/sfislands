@@ -18,26 +18,6 @@ You can install the development version of `kh` from
 devtools::install_github("horankev/sfislands")
 ```
 
-    #> DBI (1.2.0 -> 1.2.1) [CRAN]
-    #> 
-    #> The downloaded binary packages are in
-    #>  /var/folders/_n/vplp3rdn1jbcc_v1h6dt0mwh0000gn/T//Rtmpk0FUeq/downloaded_packages
-    #> ── R CMD build ─────────────────────────────────────────────────────────────────
-    #>      checking for file ‘/private/var/folders/_n/vplp3rdn1jbcc_v1h6dt0mwh0000gn/T/Rtmpk0FUeq/remotes13ecc698f80af/horankev-sfislands-4fb18af/DESCRIPTION’ ...  ✔  checking for file ‘/private/var/folders/_n/vplp3rdn1jbcc_v1h6dt0mwh0000gn/T/Rtmpk0FUeq/remotes13ecc698f80af/horankev-sfislands-4fb18af/DESCRIPTION’
-    #>   ─  preparing ‘sfislands’:
-    #>    checking      checking DESCRIPTION meta-information ...  ✔  checking DESCRIPTION meta-information
-    #>   ─  checking for LF line-endings in source and make files and shell scripts
-    #>   ─  checking for empty or unneeded directories
-    #>      Omitted ‘LazyData’ from DESCRIPTION
-    #>        NB: this package now depends on R (>= 3.5.0)
-    #>        WARNING: Added dependency on R >= 3.5.0 because serialized objects in
-    #>      serialize/load version 3 cannot be read in older versions of R.
-    #>      File(s) containing such objects:
-    #>        ‘sfislands/brmsfit_degree.rds’
-    #>   ─  building ‘sfislands_0.1.0.tar.gz’
-    #>      
-    #> 
-
 ## Summary
 
 1.  `sfislands` makes it easier to deal with geographic datasets which
@@ -487,12 +467,47 @@ st_bridges(df = df_scaled_sf|> filter(region %in% c("Wales","South West")),
            geom_col_name = "constituency_name",
            link_islands_k = 2
 )  |> 
-  st_manual_join_nb("Gower","St Ives") |>
-  st_quickmap_contigs(title = "st_bridges contiguities: Wales & South West",
-                      subtitle = "with additional st_manual_join_nb() for Gower and St Ives")
+  st_manual_join_nb("Gower","St Ives")
+#> Simple feature collection with 95 features and 10 fields
+#> Geometry type: GEOMETRY
+#> Dimension:     XY
+#> Bounding box:  xmin: 86995.12 ymin: 7057.949 xmax: 435914.6 ymax: 395314.9
+#> Projected CRS: OSGB36 / British National Grid
+#> First 10 features:
+#>    degree_educated health_not_good     white  con_swing population     region
+#> 1      -1.21794372      2.46944799 0.6393329  8.5917223      66133      Wales
+#> 2       0.04609836      0.56669033 0.6561204  2.2040312      56415      Wales
+#> 3      -0.65926781     -0.19820480 0.6815335  5.6002269      82505      Wales
+#> 4       0.13773571     -0.47810327 0.4232541  1.8868449      60573      Wales
+#> 5       1.34650480     -1.04380699 0.2421197 -1.4808353      88859 South West
+#> 6      -1.39315875      2.55186039 0.6988631  6.5435265      69814      Wales
+#> 7       0.16003516      0.01078566 0.2461538  0.7731324     102152 South West
+#> 8      -0.39901431      0.30711727 0.3126551  2.3754455      98968 South West
+#> 9       0.13143648      0.92867578 0.6636099  6.3803885      69197      Wales
+#> 10     -0.01572332      0.99556912 0.6123950  6.8025826      79873      Wales
+#>                     county      constituency_name
+#> 1           West Glamorgan               Aberavon
+#> 2                    Clwyd              Aberconwy
+#> 3                    Clwyd       Alyn and Deeside
+#> 4                  Gwynedd                  Arfon
+#> 5                     Avon                   Bath
+#> 6  Gwent and Mid Glamorgan          Blaenau Gwent
+#> 7                   Dorset       Bournemouth East
+#> 8                   Dorset       Bournemouth West
+#> 9                    Powys Brecon and Radnorshire
+#> 10 Gwent and Mid Glamorgan               Bridgend
+#>                          geometry country                            nb
+#> 1  POLYGON ((290786.3 202886.7...   Wales        10, 31, 48, 59, 65, 76
+#> 2  POLYGON ((283209.3 381440.5...   Wales                 4, 30, 34, 95
+#> 3  POLYGON ((331643.4 372873.5...   Wales                29, 30, 32, 93
+#> 4  POLYGON ((265248 356616.9, ...   Wales                     2, 34, 95
+#> 5  POLYGON ((374536.5 167755.8... England                            55
+#> 6  POLYGON ((320317.6 213680.5...   Wales             9, 41, 44, 46, 84
+#> 7  POLYGON ((416915.9 91439.65... England                         8, 28
+#> 8  POLYGON ((409021.9 95974.77... England                 7, 28, 45, 63
+#> 9  POLYGON ((316452.2 284629.3...   Wales 6, 22, 25, 31, 44, 46, 47, 48
+#> 10 POLYGON ((295421.8 179870.3...   Wales                     1, 59, 89
 ```
-
-<img src="man/figures/README-unnamed-chunk-22-1.png" width="100%" />
 
 These manual functions can also, of course, be used to edit any of the
 previously discussed contiguity structures created by `sfdep`.
