@@ -6,7 +6,16 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of sfislands is to …
+The goal of `sfislands` is to make it easier to deal with geographic
+datasets which contain islands. These do not have to be “literal”
+islands but any situation where one or more discontiguous geographical
+units are present. Such a situation can lead to two issues. Firstly, if
+unaddressed, the presence of such islands or exclaves can make certain
+types of contiguity-based modelling impossible. Secondly, just because
+two areas are separated by, say, a body of water, this does not mean
+that they are necessarily independent. The package offers solutions to
+allow for the inclusion or exclusion of these units within an
+uncomplicated workflow.
 
 ## Installation
 
@@ -18,39 +27,29 @@ You can install the development version of `kh` from
 devtools::install_github("horankev/sfislands")
 ```
 
-## Summary
+## Summary of features
 
-1.  `sfislands` makes it easier to deal with geographic datasets which
-    contain islands. These do not have to be “literal” islands but any
-    situation where one or more discontiguous geographical unit is
-    present. Such a situation can lead to two issues. Firstly, if
-    unaddressed, the presence of such islands or exclaves can make
-    certain types of contiguity-based modelling impossible. Secondly,
-    just because two areas are separated by, say, a body of water, this
-    does not mean that they are necessarily independent. The package
-    offers solutions to allow for the inclusion or exclusion of these
-    units within an uncomplicated workflow.
+1.  As an aid to setting up contiguity structures, particularly when
+    islands are involved, the package has a function to quickly map any
+    contiguity structure for visual inspection. This can also be used to
+    examine the output of `sfdep` contiguity functions. Such maps can be
+    used to check if the structure makes sense, given the researcher’s
+    knowledge about the geography of the study area.
 
-2.  As an aid to this, the package also has a function to quickly map
-    any contiguity structure for visual inspection. This can also be
-    used to examine the output of `sfdep` contiguity functions. This can
-    be used to check if the structure makes sense, given the
-    researcher’s knowledge about the geography of the study area.
-
-3.  If there are some contiguities present which are not appropriate, or
+2.  If there are some contiguities present which are not appropriate, or
     if you wish to add additional ones, there are functions to allow
     this to be done in a straightforward and openly reportable way.
 
-4.  Once an appropriate neighbourhood structure is in place, different
+3.  Once an appropriate neighbourhood structure is in place, different
     types of statistical tests and models can be performed. `sfdep`
     contains functionality to perform such test, and the output from
     `sfislands` can be used in its functions.
 
-5.  The contiguity outputs from `sfislands` can be directly used to fit
+4.  The contiguity outputs from `sfislands` can be directly used to fit
     different types of (multilevel) (I)CAR models using, for example,
     the `mgcv`, `brms`, `stan` or `INLA` packages.
 
-6.  For `mgcv` in particular, the predictions of such models can be
+5.  For `mgcv` in particular, the predictions of such models can be
     quite tedious to extract and visualise. `sfislands` can streamline
     this workflow from the human side. Furthermore, there is a function
     to draw maps of these predictions for quick inspection.
