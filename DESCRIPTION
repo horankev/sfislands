@@ -21,3 +21,5 @@ Imports:
     stringr,
     tidyr
 RoxygenNote: 7.2.3
+URL: https://github.com/horankev/sfislands
+BugReports: https://github.com/horankev/sfislands/issues
