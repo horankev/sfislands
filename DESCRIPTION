@@ -2,7 +2,7 @@ Package: sfislands
 Type: Package
 Title: Makes it easier to build neighbourhood lists
 Version: 0.1.0
-Authors@R: person("Kevin","horan, , "kevin.horan.2021@mumail.ie", role = c("aut","cre"), orcid = "0009-0003-9378-0084")
+Authors@R: person("Kevin","horan, "kevin.horan.2021@mumail.ie", role = c("aut","cre"), orcid = "0009-0003-9378-0084")
 Maintainer: Kevin Horan <kevin.horan.2021@mumail.ie>
 Description: It helps construct contiguities when islands are present.
     But also helps with checking and editing contiguities.
