@@ -18,7 +18,8 @@ Such a situation can lead to two issues.
   make certain types of contiguity-based modelling impossible.
 
 - Secondly, just because two areas are separated by, say, a body of
-  water, this does not mean that they are necessarily independent.
+  water, this does not necessarily mean that they are to be considered
+  independent of each other.
 
 This package offers solutions to allow for the inclusion or exclusion of
 these units within an uncomplicated workflow.
