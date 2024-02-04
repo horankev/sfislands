@@ -29,34 +29,42 @@ devtools::install_github("horankev/sfislands")
 
 ## Summary of features
 
-1.  As an aid to setting up contiguity structures, particularly when
+1.  The initial setting up neighbourhood structures can be frustrating
+    for people who are eager to get started with fitting spatial models.
+    This is especially so when the presence of discontiguities within a
+    geographical dataset means that, even having set up a neighbours
+    list, the model will still not run without further awkward data
+    manipulations.
+
+2.  As an aid to setting up contiguity structures, particularly when
     islands are involved, the package has a function to quickly map any
     contiguity structure for visual inspection. This can also be used to
     examine the output of `sfdep` contiguity functions. Such maps can be
     used to check if the structure makes sense, given the researcher’s
     knowledge about the geography of the study area.
 
-2.  If there are some contiguities present which are not appropriate, or
+3.  If there are some contiguities present which are not appropriate, or
     if you wish to add additional ones, there are functions to allow
     this to be done in a straightforward and openly reportable way.
 
-3.  Once an appropriate neighbourhood structure is in place, different
+4.  Once an appropriate neighbourhood structure is in place, different
     types of statistical tests and models can be performed. `sfdep`
     contains functionality to perform such test, and the output from
     `sfislands` can be used in its functions.
 
-4.  The contiguity outputs from `sfislands` can be directly used to fit
+5.  The contiguity outputs from `sfislands` can be directly used to fit
     different types of (multilevel) (I)CAR models using, for example,
     the `mgcv`, `brms`, `stan` or `INLA` packages.
 
-5.  For `mgcv` in particular, the predictions of such models can be
+6.  For `mgcv` in particular, the predictions of such models can be
     quite tedious to extract and visualise. `sfislands` can streamline
     this workflow from the human side. Furthermore, there is a function
     to draw maps of these predictions for quick inspection.
 
 ## Functions overview
 
-The following is a framework within which these functions could be used:
+The following is a framework within which the `sfislands` functions
+could be used:
 
 ### Step 1: Set up data (“*pre-functions*”)
 
