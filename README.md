@@ -7,15 +7,21 @@
 <!-- badges: end -->
 
 The goal of `sfislands` is to make it easier to deal with geographic
-datasets which contain islands. These do not have to be “literal”
-islands but any situation where discontiguous geographical units are
-present. Such a situation can lead to two issues. Firstly, if
-unaddressed, the presence of such islands or exclaves can make certain
-types of contiguity-based modelling impossible. Secondly, just because
-two areas are separated by, say, a body of water, this does not mean
-that they are necessarily independent. The package offers solutions to
-allow for the inclusion or exclusion of these units within an
-uncomplicated workflow.
+datasets which contain islands.
+
+- These do not have to be “literal” islands but any situation where
+  discontiguous geographical units are present.
+
+Such a situation can lead to two issues.
+
+- Firstly, if unaddressed, the presence of such islands or exclaves can
+  make certain types of contiguity-based modelling impossible.
+
+- Secondly, just because two areas are separated by, say, a body of
+  water, this does not mean that they are necessarily independent.
+
+This package offers solutions to allow for the inclusion or exclusion of
+these units within an uncomplicated workflow.
 
 ## Installation
 
