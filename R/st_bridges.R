@@ -1,13 +1,13 @@
-#' Create contiguityies when islands are present
+#' Create contiguities when islands are present
 #'
-#' @param df
-#' @param geom_col_name
-#' @param remove_islands
-#' @param link_islands_k
-#' @param nb_structure
-#' @param add_to_dataframe
+#' @param df an sf or sfc object
+#' @param geom_col_name name of column containing names (or unique identifiers) for each row
+#' @param remove_islands TRUE or FALSE (default)
+#' @param link_islands_k an integer, k. Each island should be connected to the k nearest units
+#' @param nb_structure either "list" (default) or "matrix"
+#' @param add_to_dataframe TRUE (default) or FALSE. Whether or not to augment existing df with output as "nb" column
 #'
-#' @return
+#' @return a named neighbourhood list or matrix, optionally included as a column in an sf dataframe
 #' @export
 #'
 #' @examples
@@ -19,8 +19,8 @@ st_bridges <- function(df, # sf dataframe
                        add_to_dataframe = TRUE)
 {
 
-  if (!inherits(df,"sf")) {
-    stop("Error: This function requires a simple features dataframe as input")
+  if (!inherits(df,"sf") || !inherits(df,"sfc")) {
+    stop("Error: This function requires an sf or sfc object")
   }
 
   if (remove_islands == TRUE){

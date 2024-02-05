@@ -2,7 +2,7 @@
 % Please edit documentation in R/st_bridges.R
 \name{st_bridges}
 \alias{st_bridges}
-\title{Create contiguityies when islands are present}
+\title{Create contiguities when islands are present}
 \usage{
 st_bridges(
   df,
@@ -14,8 +14,21 @@ st_bridges(
 )
 }
 \arguments{
-\item{add_to_dataframe}{}
+\item{df}{an sf or sfc object}
+
+\item{geom_col_name}{name of column containing names (or unique identifiers) for each row}
+
+\item{remove_islands}{TRUE or FALSE (default)}
+
+\item{link_islands_k}{an integer, k. Each island should be connected to the k nearest units}
+
+\item{nb_structure}{either "list" (default) or "matrix"}
+
+\item{add_to_dataframe}{TRUE (default) or FALSE. Whether or not to augment existing df with output as "nb" column}
+}
+\value{
+a named neighbourhood list or matrix, optionally included as a column in an sf dataframe
 }
 \description{
-Create contiguityies when islands are present
+Create contiguities when islands are present
 }
