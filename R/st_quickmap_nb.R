@@ -15,7 +15,7 @@
 #' @export
 #'
 #' @examples
-st_quickmap_contigs <- function(nbsf,
+st_quickmap_nb <- function(nbsf,
                                 linkcol = "dodgerblue",
                                 bordercol = "gray7",
                                 pointcol="darkred",
