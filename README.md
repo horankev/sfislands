@@ -79,24 +79,13 @@ could be used:
 
 ### Step 1: Set up data (“*pre-functions*”)
 
-- **st_bridges()**
-
-*Create a neighbours list, matrix, or `sf` dataframe containing a
-neighbours list or matrix as column “nb”, while accounting for islands.*
-
-- **st_quickmap_nb()**
-
-*Check contiguities visually on map.*
-
-- **st_check_islands()**
-
-*Check assignment of island contiguities in a dataframe.*
-
-- **st_manual_join_nb()**
-
-- **st_manual_cut_nb()**
-
-*Make manual changes to any connections.*
+| function:               | purpose:                                                                                                                                   |
+|-------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|
+| **st_bridges()**        | *Create a neighbours list, matrix, or `sf` dataframe containing a neighbours list or matrix as column “nb”, while accounting for islands.* |
+| **st_quickmap_nb()**    | *Check contiguities visually on map.*                                                                                                      |
+| **st_check_islands()**  | *Check assignment of island contiguities in a dataframe.*                                                                                  |
+| **st_manual_join_nb()** | *Make manual changes to any connections.*                                                                                                  |
+| **st_manual_cut_nb()**  | *Make manual changes to any connections.*                                                                                                  |
 
 ### Step 2: Create model
 
@@ -105,13 +94,10 @@ inputs for a model using, for example, `mgcv`, `brms` or `inla`.*
 
 ### Step 3: Examine output (“*post functions*”)
 
-- **st_augment()**
-
-*Augment the original dataframe with model predictions.*
-
-- **st_quickmap_preds()**
-
-*Generate quick maps of these predictions.*
+| function:               | purpose:                                                 |
+|-------------------------|----------------------------------------------------------|
+| **st_augment()**        | *Augment the original dataframe with model predictions.* |
+| **st_quickmap_preds()** | *Generate quick maps of these predictions.*              |
 
 Below, we look at these functions in more detail and show them in
 operation.
