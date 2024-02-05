@@ -47,14 +47,14 @@ devtools::install_github("horankev/sfislands")
     list, the model will still not run without further awkward data
     manipulations.
 
-2.  As an aid to setting up contiguity structures, particularly when
+2.  As an aid to setting up neighbourhood structures, particularly when
     islands are involved, the package has a function to quickly map any
-    contiguity structure for visual inspection. This can also be used to
-    examine the output of `sfdep` contiguity functions. Such maps can be
-    used to check if the structure makes sense, given the researcher’s
-    knowledge about the geography of the study area.
+    neighbourhood structure for visual inspection. This can also be used
+    to examine the output of `sfdep` neighbour functions. Such maps can
+    be used to check if the structure makes sense, given the
+    researcher’s knowledge about the geography of the study area.
 
-3.  If there are some contiguities present which are not appropriate, or
+3.  If there are some neighbours assigned which are not appropriate, or
     if you wish to add additional ones, there are functions to allow
     this to be done in a straightforward and openly reportable way.
 
@@ -81,10 +81,10 @@ could be used:
 
 - **st_bridges()**
 
-*Create a contiguity list, matrix, or `sf` dataframe with a contiguity
-list or matrix as column “nb”, while accounting for islands.*
+*Create a neighbours list, matrix, or `sf` dataframe containing a
+neighbours list or matrix as column “nb”, while accounting for islands.*
 
-- **st_quickmap_contigs()**
+- **st_quickmap_nb()**
 
 *Check contiguities visually on map.*
 
@@ -100,7 +100,7 @@ list or matrix as column “nb”, while accounting for islands.*
 
 ### Step 2: Create model
 
-*Use the output of **st_bridges()** as both the data and contiguity
+*Use the output of **st_bridges()** as both the data and neighbourhood
 inputs for a model using, for example, `mgcv`, `brms` or `inla`.*
 
 ### Step 3: Examine output (“*post functions*”)
@@ -118,9 +118,9 @@ operation.
 
 ## Pre-functions
 
-`sfdep` offers excellent tools for building contiguity structures, among
-other things. It has a range of functions depending on how we want to
-define contiguity.
+`sfdep` offers excellent tools for building neighbourhood structures,
+among other things. It has a range of functions depending on how we want
+to define what *neighbour* should mean.
 
 However, often when preparing areal spatial data, the presence of
 uncontiguous areas (such as islands or exclaves) can create
@@ -131,8 +131,8 @@ neighbours.
 `sfislands` provides functions to make this task easier.
 
 It also provides a number of further helper functions to examine these
-contiguity structures and use them in models such that the workflow is
-streamlined from the human side.
+neighbourhood structures and use them in models such that the workflow
+is streamlined from the human side.
 
 ### Mainland France (`guerry` dataset)
 
@@ -154,14 +154,14 @@ ggplot(g) +
 <img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
 
 In this French example, the `st_islands` function **st_bridges()**
-produces exactly the same contiguity structure as
-**sfdep::st_contiguity()**. This can be seen below by piping these
+produces exactly the same neighbourhood structure (based on contiguity)
+as **sfdep::st_contiguity()**. This can be seen below by piping these
 neighbourhood outputs through the `st_islands` function
-**st_quickmap_contigs()** which draws an easily editable map of the
-applied contiguity structure. This function works with contiguities
-constructed from any package as long as they are in list or matrix form.
+**st_quickmap_nb()** which gives a visual representation of the
+structure on a map. This function works with neighbourhoods constructed
+from any package as long as they are in list or matrix form.
 
-For **st_quickmap_contigs()**, the contiguities should be within an `sf`
+For **st_quickmap_nb()**, the neighbourhoods should be within an `sf`
 dataframe as a column called “nb”. **st_bridges()** does this
 automatically whereas the “nb” column needs to be added when using
 `sfdep` functions.
@@ -173,7 +173,7 @@ considered a neighbour of another if it touches it at least one point…
 
 ``` r
 g |> st_bridges("department") |> 
-  st_quickmap_contigs()
+  st_quickmap_nb()
 ```
 
 <img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
@@ -184,7 +184,7 @@ g |> st_bridges("department") |>
 
 ``` r
 g |> mutate(nb = st_contiguity(geometry)) |> 
-  st_quickmap_contigs()
+  st_quickmap_nb()
 ```
 
 <img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
@@ -198,24 +198,24 @@ characteristics of the map in a simple way:
 ggarrange(
   
   g |> mutate(nb = st_contiguity(geometry)) |> 
-    st_quickmap_contigs() +
+    st_quickmap_nb() +
     geom_sf(data = g |> group_by(region) |> summarise(), 
             linewidth = 0.5, colour = "black", fill = NA) + 
-    labs(title = "st_quickmap_contigs()",
+    labs(title = "st_quickmap_nb()",
          subtitle = "1. using ggplot syntax") + 
     theme_minimal() +
     theme(panel.background = element_rect(fill = "aquamarine3", color = "black"),
           axis.text = element_blank()),
   
   g |> mutate(nb = st_contiguity(geometry)) |> 
-    st_quickmap_contigs(linkcol = "orange", 
+    st_quickmap_nb(linkcol = "orange", 
                         bordercol = "white", 
                         pointcol = "yellow", 
                         fillcol = "black", 
                         linksize = 0.4, 
                         bordersize = 0.3, 
                         pointsize = 0.8,
-                        title = "st_quickmap_contigs()",
+                        title = "st_quickmap_nb()",
                         subtitle = "2. using simplified arguments"),
   
   ncol=2
@@ -224,9 +224,9 @@ ggarrange(
 
 <img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />
 
-`sfdep` offers a number of different types of contiguity structure, a
+`sfdep` offers a number of different types of neighbourhood structure, a
 selection of which are shown below. These can again be conveniently
-visualised using the **st_quickmap_contigs()** function:
+visualised using the **st_quickmap_nb()** function:
 
 #### sfdep::st_dist_band()
 
@@ -236,7 +236,7 @@ All areas within a certain distance are considered neighbours:
 
 g |> mutate(nb = st_geometry(g) |> 
               st_dist_band(upper = 150000)) |> 
-  st_quickmap_contigs()
+  st_quickmap_nb()
 ```
 
 <img src="man/figures/README-unnamed-chunk-8-1.png" width="100%" />
@@ -250,7 +250,7 @@ neighbours:
 
 g |> mutate(nb = st_geometry(g) |> 
               st_knn(1, symmetric = TRUE)) |> 
-  st_quickmap_contigs()
+  st_quickmap_nb()
 ```
 
 <img src="man/figures/README-unnamed-chunk-9-1.png" width="100%" />
@@ -267,7 +267,7 @@ g |>
   mutate(
     nb = st_block_nb(regime, id)
   ) |> 
-  st_quickmap_contigs()
+  st_quickmap_nb()
 ```
 
 <img src="man/figures/README-unnamed-chunk-10-1.png" width="100%" />
@@ -280,7 +280,7 @@ neighbours-of-neighbours:
 ``` r
 
 g |> mutate(nb = st_contiguity(geometry) |> st_nb_lag_cumul(2)) |> 
-  st_quickmap_contigs()
+  st_quickmap_nb()
 ```
 
 <img src="man/figures/README-unnamed-chunk-11-1.png" width="100%" />
@@ -292,9 +292,9 @@ into difficulties if we consider the following geography:
 
 In the context of the constituencies of England, Scotland and Wales,
 there will be problems due to the presence of islands which will not
-feature in these graphs unless we attempt to pick out these islands and
-set up a buffer around them. This process is, however, cumbersome and
-can induce contiguities which are not intended.
+feature in a contiguity graph unless we attempt to pick out these
+islands and set up a buffer around them. This process is, however,
+cumbersome and can induce contiguities which are not intended.
 
 One potential remedy is to entirely exclude islands from the study,
 another is to construct a contiguity structure according to your desired
@@ -323,7 +323,7 @@ these islands from the dataset entirely.
 nbsf <- st_bridges(df = df_scaled_sf,
                    geom_col_name = "constituency_name",
                    remove_islands = T)
-st_quickmap_contigs(nbsf,
+st_quickmap_nb(nbsf,
                     pointsize=0.05,
                     title = "st_bridges() contiguities",
                     subtitle = "no island constituencies\n(islands which remain are part of a contiguous constituency)")
@@ -340,7 +340,7 @@ form.
 nbsf <- st_bridges(df = df_scaled_sf,
                    geom_col_name = "constituency_name",
                    link_islands_k = 2)
-st_quickmap_contigs(nbsf,
+st_quickmap_nb(nbsf,
                     pointsize=0.05, 
                     title = "st_bridges() contiguities",
                     subtitle = "islands linked to k=2 nearest constituencies")
@@ -348,12 +348,13 @@ st_quickmap_contigs(nbsf,
 
 <img src="man/figures/README-unnamed-chunk-15-1.png" width="100%" />
 
-The contiguity structure which is created can be either a named list
+The neighbourhood structure which is created can be either a named list
 (the default) or a named matrix. Different modelling packages have
-different requirements for this. Furthermore, we can choose
-`add_to_dataframe` to be TRUE (the default) to return a dataframe with a
-column called `nb` which contains the named list or matrix. If FALSE,
-only the contiguity structure itself is returned
+different requirements for how this information should be presented.
+Furthermore, we can choose `add_to_dataframe` to be TRUE (the default)
+to return a dataframe with a column called `nb` which contains the named
+list or matrix. If FALSE, only the neighbourhood structure itself is
+returned
 
 These options can be seen in the unexecuted code below:
 
@@ -368,7 +369,7 @@ nbsf <- st_bridges(df = sf_dataframe,
                   subtitle = "subtitle")
 ```
 
-The contiguity is here in a list form:
+The neighbourhoods are here in a list form:
 
 ``` r
 
@@ -392,8 +393,8 @@ head(nbsf$nb)
 #> [1]  70 395 517 544
 ```
 
-But the “nb” column can also be a matrix, and `st_quickmap_contigs()`
-will still return the same map:
+But the “nb” column can also be a matrix, and `st_quickmap_nb()` will
+still return the same map:
 
 ``` r
 nbsf <- st_bridges(df = df_scaled_sf,
@@ -402,13 +403,13 @@ nbsf <- st_bridges(df = df_scaled_sf,
                    link_islands_k = 2,
                    nb_structure = "matrix",
                    add_to_dataframe = T)
-st_quickmap_contigs(nbsf,
+st_quickmap_nb(nbsf,
                     pointsize=0.05)
 ```
 
 <img src="man/figures/README-unnamed-chunk-18-1.png" width="100%" />
 
-The matrix contiguity structure is now of the following form:
+The matrix neighbourhood structure is now of the following form:
 
 ``` r
 
@@ -429,12 +430,12 @@ nbsf$nb[1:10,1:10]
 ### Editing the contiguities
 
 There are also functions for manually changing the results of a
-contiguity construction. It may be the case that you want to add some
-additional contiguities or to remove others. For example, you may be
-aware from local knowledge of connectivities which are not represented
-by mere contiguity of polygons. The presence of tunnels or bridges
-across a body of water would be an example of such a situation. The
-functions `st_manual_join_nb()` and `st_manual_cut_nb()` do this.
+neighbourhood construction. It may be the case that you want to add some
+additional links or to remove others. For example, you may be aware from
+local knowledge of connectivities which are not represented by mere
+contiguity of polygons. The presence of tunnels or bridges across a body
+of water would be an example of such a situation. The functions
+`st_manual_join_nb()` and `st_manual_cut_nb()` do this.
 
 #### sfisland::st_check_islands()
 
@@ -533,7 +534,7 @@ st_bridges(df = df_scaled_sf|> filter(region %in% c("Wales","South West")),
 ```
 
 These manual functions can also, of course, be used to edit any of the
-previously discussed contiguity structures created by `sfdep`.
+previously discussed neighbourhood structures created by `sfdep`.
 
 For example, looking just at Scotland we can use
 `sfdep::st_nb_lag_cumul()` to get first and second degree neighbours:
@@ -544,7 +545,7 @@ df_scaled_sf |>
   filter(region == "Scotland") |> 
   mutate(nb = st_contiguity(df_scaled_sf$geometry[df_scaled_sf$region == "Scotland"]) |> 
            st_nb_lag_cumul(2)) |>  
-  st_quickmap_contigs()
+  st_quickmap_nb()
 ```
 
 <img src="man/figures/README-unnamed-chunk-23-1.png" width="100%" />
@@ -558,7 +559,7 @@ df_scaled_sf |>
   filter(region == "Scotland") |> 
   st_bridges(geom_col_name = "constituency_name",
              link_islands_k = 2) |> 
-  st_quickmap_contigs()
+  st_quickmap_nb()
 ```
 
 <img src="man/figures/README-unnamed-chunk-24-1.png" width="100%" />
@@ -594,17 +595,18 @@ df_scaled_sf |>
   st_manual_join_nb(47,55) |>
   st_manual_join_nb(51,9) |>
   st_manual_join_nb(51,47) |>
-  st_quickmap_contigs()
+  st_quickmap_nb()
 ```
 
 <img src="man/figures/README-unnamed-chunk-26-1.png" width="100%" />
 
 ## Modelling & post-functions
 
-Having set up a contiguity structure and embedded it as a named list or
-matrix within the original `sf` dataset as column `nb`, there are some
-functions to make it easy to quickly perform ICAR smoothing, augment the
-original dataframe with these predictions, and visualise them.
+Having set up a neighbourhood structure and embedded it as a named list
+or matrix within the original `sf` dataset as column `nb`, there are
+some functions to make it easy to quickly perform ICAR smoothing,
+augment the original dataframe with these predictions, and visualise
+them.
 
 For example, we can use the `mgcv` package to generate a Markov Random
 Field ICAR smooth of poor health across the study area. This is done
@@ -626,7 +628,7 @@ gam(health_not_good ~ s(constituency_name, bs='mrf', xt=list(nb=prep_data$nb), k
 <img src="man/figures/README-unnamed-chunk-27-1.png" width="100%" />
 
 An equivalent model, this time smoothing over degree_educated, can be
-fitted using `brms`. This package requires the contiguity to be in
+fitted using `brms`. This package requires the neighbourhoods to be in
 matrix form:
 
 ``` r
@@ -760,7 +762,7 @@ gam(con_swing ~
 Returning to the dataset used in `sfdep`, we can easily create a smooth
 of suicides in France in 1830 as follows. Since there are no islands, we
 use `st_bridges()` and it will function like `sfdep:st_contiguity()`
-except that it automatically adds a contiguity ‘nb’ column to the
+except that it automatically adds a neighbourhood ‘nb’ column to the
 dataframe.
 
 ``` r
