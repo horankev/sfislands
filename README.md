@@ -30,8 +30,8 @@ these units within an uncomplicated workflow.
 
 ## Installation
 
-You can install the development version of `kh` from
-[GitHub](https://github.com/) with:
+You can install the development version of `sfislands` from
+[GitHub](https://github.com/horankev/sfislands) with:
 
 ``` r
 # install.packages("devtools")
