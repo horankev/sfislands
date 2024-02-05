@@ -390,6 +390,8 @@ ggplot() +
 
 To incorporate these we use `st_bridges()`. We can set `remove_islands` to TRUE if we decide to simply exclude the islands, or we set `link_k_islands` to the closest k constituencies to each islands which we want to bridge.
 
+#### Remove islands
+
 Below, with the argument `remove_islands` set to TRUE, we simply remove these islands from the dataset entirely.
 
 ```{r, fig.width=12, fig.height=10}
@@ -402,6 +404,8 @@ st_quickmap_nb(nbsf,
                     subtitle = "no island constituencies\n(islands which remain are part of a contiguous constituency)")
 
 ```
+
+#### Connect islands
 
 Alternatively, we can join islands to the nearest, say, 2 constituencies. `st_bridges()` by default returns the original dataframe augmented with a "nb" column which contains the contiguities in list form.
 

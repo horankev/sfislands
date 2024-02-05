@@ -302,6 +302,8 @@ to TRUE if we decide to simply exclude the islands, or we set
 `link_k_islands` to the closest k constituencies to each islands which
 we want to bridge.
 
+#### Remove islands
+
 Below, with the argument `remove_islands` set to TRUE, we simply remove
 these islands from the dataset entirely.
 
@@ -316,6 +318,8 @@ st_quickmap_nb(nbsf,
 ```
 
 <img src="man/figures/README-unnamed-chunk-14-1.png" width="100%" />
+
+#### Connect islands
 
 Alternatively, we can join islands to the nearest, say, 2
 constituencies. `st_bridges()` by default returns the original dataframe
