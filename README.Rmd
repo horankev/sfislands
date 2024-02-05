@@ -4,7 +4,7 @@ output: github_document
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# sfislands <img src="man/figures/logo.png" align="right" height="120"/>
+<img src="man/figures/logo.png" align="right" height="240"/>
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(

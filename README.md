@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# sfislands <img src="man/figures/logo.png" align="right" height="120"/>
+<img src="man/figures/logo.png" align="right" height="240"/>
 
 # sfislands
 
