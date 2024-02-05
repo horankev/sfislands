@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# sfislands <img src="man/figures/logo.png" align="right" height="120" alt="" />
+# sfislands <img src="man/figures/logo.png" align="right" height="120"/>
 
 # sfislands
 
@@ -9,7 +9,9 @@
 <!-- badges: end -->
 
 The goal of `sfislands` is to make it easier to deal with geographic
-datasets which contain islands.
+datasets which contain islands. It does so using a tidy framework in the
+spirit of Josiah Parry’s [sfdep](https://sfdep.josiahparry.com/)
+package.
 
 - These do not have to be “literal” islands but any situation where
   discontiguous geographical units are present.
@@ -136,8 +138,9 @@ streamlined from the human side.
 
 `sfislands` is intended to be used alongside the `sfdep` package. The
 principal functions from `sfdep` for areal data are demonstrated in its
-vignette using the `guerry` dataset. This data applies to the
-geographical area of mainland France as shown below:
+vignette using the `guerry` (“*Essay on the Moral Statistics of
+France*”) dataset. This data applies to the geographical area of
+mainland France as shown below:
 
 ``` r
 g <- guerry |> 
@@ -756,7 +759,7 @@ gam(con_swing ~
 ### Back to `guerry`
 
 Returning to the dataset used in `sfdep`, we can easily create a smooth
-of suicides in France in 1831 as follows. Since there are no islands, we
+of suicides in France in 1830 as follows. Since there are no islands, we
 use `st_bridges()` and it will function like `sfdep:st_contiguity()`
 except that it automatically adds a contiguity ‘nb’ column to the
 dataframe.
