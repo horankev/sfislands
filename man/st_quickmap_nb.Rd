@@ -18,7 +18,28 @@ st_quickmap_nb(
 )
 }
 \arguments{
-\item{subtitle}{}
+\item{nbsf}{an sf dataframe with a neighbourhood column called "nb"}
+
+\item{linkcol}{colour of lines connecting neighbours}
+
+\item{bordercol}{colour of boundary lines between areas}
+
+\item{pointcol}{colour of centroid points}
+
+\item{fillcol}{fill of areas}
+
+\item{linksize}{linewidth of lines connecting neighbours}
+
+\item{bordersize}{linewidth of borders between areas}
+
+\item{pointsize}{sie of centroid points}
+
+\item{title}{plot title}
+
+\item{subtitle}{plot subtitle}
+}
+\value{
+ggplot of areas and neighbourhood structure
 }
 \description{
 Visualise a contiguity structure on a map

@@ -7,7 +7,12 @@
 st_augment(model, df)
 }
 \arguments{
-\item{df}{}
+\item{model}{an `mgcv` model}
+
+\item{df}{the sf data frame to be augmented with model preditions}
+}
+\value{
+an augmented sd dataframe
 }
 \description{
 Augment dataframe with predictions of model

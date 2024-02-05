@@ -7,7 +7,10 @@
 st_check_islands(data)
 }
 \arguments{
-\item{data}{}
+\item{data}{an sf dataframe with a neighbourhood column called "nb"}
+}
+\value{
+a dataframe reporting non-contiguous connections made by st_bridges()
 }
 \description{
 Examine contiguity actions performed on islands

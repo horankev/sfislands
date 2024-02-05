@@ -1,9 +1,9 @@
 #' Augment dataframe with predictions of model
 #'
-#' @param model
-#' @param df
+#' @param model an `mgcv` model
+#' @param df the sf data frame to be augmented with model preditions
 #'
-#' @return
+#' @return an augmented sd dataframe
 #' @export
 #'
 #' @examples

@@ -1,8 +1,8 @@
 #' Examine contiguity actions performed on islands
 #'
-#' @param data
+#' @param data an sf dataframe with a neighbourhood column called "nb"
 #'
-#' @return
+#' @return a dataframe reporting non-contiguous connections made by st_bridges()
 #' @export
 #'
 #' @examples

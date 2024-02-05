@@ -7,7 +7,10 @@
 st_quickmap_preds(output)
 }
 \arguments{
-\item{output}{}
+\item{output}{an augmented sf dataframe produced by st_augment()}
+}
+\value{
+a list of ggplots
 }
 \description{
 Visualilse the predictions of an `mgcv` model

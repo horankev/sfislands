@@ -1,17 +1,17 @@
 #' Visualise a contiguity structure on a map
 #'
-#' @param nbsf
-#' @param linkcol
-#' @param bordercol
-#' @param pointcol
-#' @param fillcol
-#' @param linksize
-#' @param bordersize
-#' @param pointsize
-#' @param title
-#' @param subtitle
+#' @param nbsf an sf dataframe with a neighbourhood column called "nb"
+#' @param linkcol colour of lines connecting neighbours
+#' @param bordercol colour of boundary lines between areas
+#' @param pointcol colour of centroid points
+#' @param fillcol fill of areas
+#' @param linksize linewidth of lines connecting neighbours
+#' @param bordersize linewidth of borders between areas
+#' @param pointsize sie of centroid points
+#' @param title plot title
+#' @param subtitle plot subtitle
 #'
-#' @return
+#' @return ggplot of areas and neighbourhood structure
 #' @export
 #'
 #' @examples

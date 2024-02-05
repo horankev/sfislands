@@ -1,8 +1,8 @@
 #' Visualilse the predictions of an `mgcv` model
 #'
-#' @param output
+#' @param output an augmented sf dataframe produced by st_augment()
 #'
-#' @return
+#' @return a list of ggplots
 #' @export
 #'
 #' @examples
