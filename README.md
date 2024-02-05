@@ -321,10 +321,10 @@ these islands from the dataset entirely.
 
 ``` r
 nbsf <- st_bridges(df = df_scaled_sf,
-                  geom_col_name = "constituency_name",
-                  remove_islands = T)
+                   geom_col_name = "constituency_name",
+                   remove_islands = T)
 st_quickmap_contigs(nbsf,
-                     pointsize=0.05,
+                    pointsize=0.05,
                     title = "st_bridges() contiguities",
                     subtitle = "no island constituencies\n(islands which remain are part of a contiguous constituency)")
 ```
@@ -338,12 +338,12 @@ form.
 
 ``` r
 nbsf <- st_bridges(df = df_scaled_sf,
-                  geom_col_name = "constituency_name",
-                  link_islands_k = 2)
+                   geom_col_name = "constituency_name",
+                   link_islands_k = 2)
 st_quickmap_contigs(nbsf,
-                     pointsize=0.05, 
+                    pointsize=0.05, 
                     title = "st_bridges() contiguities",
-                      subtitle = "islands linked to k=2 nearest constituencies")
+                    subtitle = "islands linked to k=2 nearest constituencies")
 ```
 
 <img src="man/figures/README-unnamed-chunk-15-1.png" width="100%" />
@@ -397,13 +397,13 @@ will still return the same map:
 
 ``` r
 nbsf <- st_bridges(df = df_scaled_sf,
-                  geom_col_name = "constituency_name",
-                  remove_islands = F,
-                  link_islands_k = 2,
-                  nb_structure = "matrix",
-                  add_to_dataframe = T)
+                   geom_col_name = "constituency_name",
+                   remove_islands = F,
+                   link_islands_k = 2,
+                   nb_structure = "matrix",
+                   add_to_dataframe = T)
 st_quickmap_contigs(nbsf,
-                     pointsize=0.05)
+                    pointsize=0.05)
 ```
 
 <img src="man/figures/README-unnamed-chunk-18-1.png" width="100%" />
@@ -489,8 +489,7 @@ Wales is joined to **St Ives** in Cornwall and then mapped:
 ``` r
 st_bridges(df = df_scaled_sf|> filter(region %in% c("Wales","South West")),
            geom_col_name = "constituency_name",
-           link_islands_k = 2
-)  |> 
+           link_islands_k = 2)  |> 
   st_manual_join_nb("Gower","St Ives")
 #> Simple feature collection with 95 features and 10 fields
 #> Geometry type: GEOMETRY

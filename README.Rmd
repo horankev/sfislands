@@ -407,10 +407,10 @@ Below, with the argument `remove_islands` set to TRUE, we simply remove these is
 
 ```{r, fig.width=12, fig.height=10}
 nbsf <- st_bridges(df = df_scaled_sf,
-                  geom_col_name = "constituency_name",
-                  remove_islands = T)
+                   geom_col_name = "constituency_name",
+                   remove_islands = T)
 st_quickmap_contigs(nbsf,
-                     pointsize=0.05,
+                    pointsize=0.05,
                     title = "st_bridges() contiguities",
                     subtitle = "no island constituencies\n(islands which remain are part of a contiguous constituency)")
 
@@ -420,12 +420,12 @@ Alternatively, we can join islands to the nearest, say, 2 constituencies. `st_br
 
 ```{r, fig.width=12, fig.height=10}
 nbsf <- st_bridges(df = df_scaled_sf,
-                  geom_col_name = "constituency_name",
-                  link_islands_k = 2)
+                   geom_col_name = "constituency_name",
+                   link_islands_k = 2)
 st_quickmap_contigs(nbsf,
-                     pointsize=0.05, 
+                    pointsize=0.05, 
                     title = "st_bridges() contiguities",
-                      subtitle = "islands linked to k=2 nearest constituencies")
+                    subtitle = "islands linked to k=2 nearest constituencies")
 
 ```
 
@@ -457,13 +457,13 @@ But the "nb" column can also be a matrix, and `st_quickmap_contigs()` will still
 
 ```{r, fig.width=12, fig.height=10}
 nbsf <- st_bridges(df = df_scaled_sf,
-                  geom_col_name = "constituency_name",
-                  remove_islands = F,
-                  link_islands_k = 2,
-                  nb_structure = "matrix",
-                  add_to_dataframe = T)
+                   geom_col_name = "constituency_name",
+                   remove_islands = F,
+                   link_islands_k = 2,
+                   nb_structure = "matrix",
+                   add_to_dataframe = T)
 st_quickmap_contigs(nbsf,
-                     pointsize=0.05)
+                    pointsize=0.05)
 
 ```
 
@@ -505,8 +505,7 @@ As extra contiguities can be difficult to distinguish, an extreme case is shown 
 ```{r}
 st_bridges(df = df_scaled_sf|> filter(region %in% c("Wales","South West")),
            geom_col_name = "constituency_name",
-           link_islands_k = 2
-)  |> 
+           link_islands_k = 2)  |> 
   st_manual_join_nb("Gower","St Ives")
 ```
 
