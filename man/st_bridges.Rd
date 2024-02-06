@@ -33,5 +33,6 @@ a named neighbourhood list or matrix, optionally included as a column in an sf d
 Create contiguities when islands are present
 }
 \examples{
-uk_elections |> st_bridges("constituency_name")
+ukdata <- readRDS(system.file("extdata", "ukdata.rds", package="sfislands"))
+st_bridges(ukdata,"constituency_name")
 }

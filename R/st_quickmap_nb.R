@@ -15,16 +15,18 @@
 #' @export
 #'
 #' @examples
+#' st_bridges(uk_election,"constituency_name") |>
+#' st_quickmap_nb()
 st_quickmap_nb <- function(nbsf,
-                                linkcol = "dodgerblue",
-                                bordercol = "gray7",
-                                pointcol="darkred",
-                                fillcol = "gray95",
-                                linksize=0.2,
-                                bordersize=0.1,
-                                pointsize=0.8,
-                                title=NULL,
-                                subtitle=NULL){
+                           linkcol = "dodgerblue",
+                           bordercol = "gray7",
+                           pointcol="darkred",
+                           fillcol = "gray95",
+                           linksize=0.2,
+                           bordersize=0.1,
+                           pointsize=0.8,
+                           title=NULL,
+                           subtitle=NULL){
 
   if (!inherits(nbsf,"sf")) {
     stop("Error: This function requires a simple features dataframe as input")

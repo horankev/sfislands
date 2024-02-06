@@ -44,3 +44,7 @@ ggplot of areas and neighbourhood structure
 \description{
 Visualise a contiguity structure on a map
 }
+\examples{
+st_bridges(uk_election,"constituency_name") |>
+st_quickmap_nb()
+}
