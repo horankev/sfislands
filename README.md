@@ -137,7 +137,7 @@ ggplot(g) +
   theme_void()
 ```
 
-<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
 
 In this French example, the `st_islands` function **st_bridges()**
 produces exactly the same neighbourhood structure (based on contiguity)
@@ -162,7 +162,7 @@ g |> st_bridges("department") |>
   st_quickmap_nb()
 ```
 
-<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
 
 … are the same as these from `sfdep`:
 
@@ -173,7 +173,7 @@ g |> mutate(nb = st_contiguity(geometry)) |>
   st_quickmap_nb()
 ```
 
-<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
 
 As these maps are produced using `ggplot2`, their characteristics can be
 edited using normal `ggplot2` syntax (see 1, below). For convenience,
@@ -208,7 +208,7 @@ ggarrange(
 )
 ```
 
-<img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
 
 `sfdep` offers a number of different types of neighbourhood structure, a
 selection of which are shown below. These can again be conveniently
@@ -225,7 +225,7 @@ g |> mutate(nb = st_geometry(g) |>
   st_quickmap_nb()
 ```
 
-<img src="man/figures/README-unnamed-chunk-8-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />
 
 #### sfdep::st_knn()
 
@@ -239,7 +239,7 @@ g |> mutate(nb = st_geometry(g) |>
   st_quickmap_nb()
 ```
 
-<img src="man/figures/README-unnamed-chunk-9-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-8-1.png" width="100%" />
 
 #### sfdep::st_block_nb()
 
@@ -256,7 +256,7 @@ g |>
   st_quickmap_nb()
 ```
 
-<img src="man/figures/README-unnamed-chunk-10-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-9-1.png" width="100%" />
 
 #### sfdep::st_lag_cumul()
 
@@ -269,7 +269,7 @@ g |> mutate(nb = st_contiguity(geometry) |> st_nb_lag_cumul(2)) |>
   st_quickmap_nb()
 ```
 
-<img src="man/figures/README-unnamed-chunk-11-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-10-1.png" width="100%" />
 
 However, the `sfdep` functions above which rely on contiguity will run
 into difficulties if we consider the following geography:
@@ -295,7 +295,7 @@ There are island constituencies in the north around Scotland but also
 less obvious ones in Wales and England. The constituencies which are
 non-contiguous are outlined in red below:
 
-<img src="man/figures/README-unnamed-chunk-13-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-12-1.png" width="100%" />
 
 To incorporate these we use `st_bridges()`. We can set `remove_islands`
 to TRUE if we decide to simply exclude the islands, or we set
@@ -317,7 +317,7 @@ st_quickmap_nb(nbsf,
                     subtitle = "no island constituencies\n(islands which remain are part of a contiguous constituency)")
 ```
 
-<img src="man/figures/README-unnamed-chunk-14-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-13-1.png" width="100%" />
 
 #### Connect islands
 
@@ -336,7 +336,7 @@ st_quickmap_nb(nbsf,
                     subtitle = "islands linked to k=2 nearest constituencies")
 ```
 
-<img src="man/figures/README-unnamed-chunk-15-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-14-1.png" width="100%" />
 
 The neighbourhood structure which is created can be either a named list
 (the default) or a named matrix. Different modelling packages have
@@ -397,7 +397,7 @@ st_quickmap_nb(nbsf,
                     pointsize=0.05)
 ```
 
-<img src="man/figures/README-unnamed-chunk-18-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-17-1.png" width="100%" />
 
 The matrix neighbourhood structure is now of the following form:
 
@@ -481,47 +481,11 @@ Wales is joined to **St Ives** in Cornwall and then mapped:
 st_bridges(df = uk_election|> filter(region %in% c("Wales","South West")),
            geom_col_name = "constituency_name",
            link_islands_k = 2)  |> 
-  st_manual_join_nb("Gower","St Ives")
-#> Simple feature collection with 95 features and 10 fields
-#> Geometry type: GEOMETRY
-#> Dimension:     XY
-#> Bounding box:  xmin: 86995.12 ymin: 7057.949 xmax: 435914.6 ymax: 395314.9
-#> Projected CRS: OSGB36 / British National Grid
-#> First 10 features:
-#>    degree_educated health_not_good     white  con_swing population     region
-#> 1      -1.21794372      2.46944799 0.6393329  8.5917223      66133      Wales
-#> 2       0.04609836      0.56669033 0.6561204  2.2040312      56415      Wales
-#> 3      -0.65926781     -0.19820480 0.6815335  5.6002269      82505      Wales
-#> 4       0.13773571     -0.47810327 0.4232541  1.8868449      60573      Wales
-#> 5       1.34650480     -1.04380699 0.2421197 -1.4808353      88859 South West
-#> 6      -1.39315875      2.55186039 0.6988631  6.5435265      69814      Wales
-#> 7       0.16003516      0.01078566 0.2461538  0.7731324     102152 South West
-#> 8      -0.39901431      0.30711727 0.3126551  2.3754455      98968 South West
-#> 9       0.13143648      0.92867578 0.6636099  6.3803885      69197      Wales
-#> 10     -0.01572332      0.99556912 0.6123950  6.8025826      79873      Wales
-#>                     county      constituency_name
-#> 1           West Glamorgan               Aberavon
-#> 2                    Clwyd              Aberconwy
-#> 3                    Clwyd       Alyn and Deeside
-#> 4                  Gwynedd                  Arfon
-#> 5                     Avon                   Bath
-#> 6  Gwent and Mid Glamorgan          Blaenau Gwent
-#> 7                   Dorset       Bournemouth East
-#> 8                   Dorset       Bournemouth West
-#> 9                    Powys Brecon and Radnorshire
-#> 10 Gwent and Mid Glamorgan               Bridgend
-#>                          geometry country                            nb
-#> 1  POLYGON ((290786.3 202886.7...   Wales        10, 31, 48, 59, 65, 76
-#> 2  POLYGON ((283209.3 381440.5...   Wales                 4, 30, 34, 95
-#> 3  POLYGON ((331643.4 372873.5...   Wales                29, 30, 32, 93
-#> 4  POLYGON ((265248 356616.9, ...   Wales                     2, 34, 95
-#> 5  POLYGON ((374536.5 167755.8... England                            55
-#> 6  POLYGON ((320317.6 213680.5...   Wales             9, 41, 44, 46, 84
-#> 7  POLYGON ((416915.9 91439.65... England                         8, 28
-#> 8  POLYGON ((409021.9 95974.77... England                 7, 28, 45, 63
-#> 9  POLYGON ((316452.2 284629.3...   Wales 6, 22, 25, 31, 44, 46, 47, 48
-#> 10 POLYGON ((295421.8 179870.3...   Wales                     1, 59, 89
+  st_manual_join_nb("Gower","St Ives") |> 
+  st_quickmap_nb()
 ```
+
+<img src="man/figures/README-unnamed-chunk-21-1.png" width="100%" />
 
 These manual functions can also, of course, be used to edit any of the
 previously discussed neighbourhood structures created by `sfdep`.
@@ -538,7 +502,7 @@ uk_election |>
   st_quickmap_nb()
 ```
 
-<img src="man/figures/README-unnamed-chunk-23-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-22-1.png" width="100%" />
 
 This does not include the island constituencies. We can chose to include
 them by first using `st_bridges()` with k=2…
@@ -552,7 +516,7 @@ uk_election |>
   st_quickmap_nb()
 ```
 
-<img src="man/figures/README-unnamed-chunk-24-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-23-1.png" width="100%" />
 
 … and then examining the connections which have been made for islands:
 
@@ -588,7 +552,7 @@ uk_election |>
   st_quickmap_nb()
 ```
 
-<img src="man/figures/README-unnamed-chunk-26-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-25-1.png" width="100%" />
 
 ## Modelling & post-functions
 
@@ -615,7 +579,7 @@ gam(health_not_good ~ s(constituency_name, bs='mrf', xt=list(nb=prep_data$nb), k
 #> [[1]]
 ```
 
-<img src="man/figures/README-unnamed-chunk-27-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-26-1.png" width="100%" />
 
 An equivalent model, this time smoothing over degree_educated, can be
 fitted using `brms`. This package requires the neighbourhoods to be in
@@ -640,7 +604,7 @@ ggplot(prep_data2)+geom_sf(aes(fill=brmsfit), linewidth=0.1) +
   theme_bw()
 ```
 
-<img src="man/figures/README-unnamed-chunk-28-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-27-1.png" width="100%" />
 
 More complex models with random effects and multiple smooths are also
 possible with `mgcv` and the `st_augment()` and `st_quickmap_preds()`
@@ -667,7 +631,7 @@ model <- gam(con_swing ~
 ggarrange(plotlist = model, legend = "none", nrow=1)
 ```
 
-<img src="man/figures/README-unnamed-chunk-29-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-28-1.png" width="100%" />
 
 To see the estimates returned:
 
@@ -765,7 +729,7 @@ mod4 <- gam(suicides ~ s(department, bs='mrf', xt=list(nb=prep_data4$nb), k=80),
 ggarrange(plotlist=mod4)
 ```
 
-<img src="man/figures/README-unnamed-chunk-31-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-30-1.png" width="100%" />
 
 Or fit a more complex mixed model:
 
@@ -787,4 +751,4 @@ model5 <- gam(donations ~
 ggarrange(plotlist = model5, legend = "none", nrow = 1)
 ```
 
-<img src="man/figures/README-unnamed-chunk-32-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-31-1.png" width="100%" />
