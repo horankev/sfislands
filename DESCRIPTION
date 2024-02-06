@@ -25,3 +25,4 @@ URL: https://github.com/horankev/sfislands
 BugReports: https://github.com/horankev/sfislands/issues
 Depends: 
     R (>= 2.10)
+Config/Needs/website: rmarkdown
