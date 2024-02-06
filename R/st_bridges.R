@@ -11,6 +11,7 @@
 #' @export
 #'
 #' @examples
+#' uk_elections |> st_bridges("constituency_name")
 st_bridges <- function(df, # sf dataframe
                        geom_col_name,
                        remove_islands = FALSE,

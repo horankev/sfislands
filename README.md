@@ -485,7 +485,7 @@ st_bridges(df = df_scaled_sf|> filter(region %in% c("Wales","South West")),
 #> Simple feature collection with 95 features and 10 fields
 #> Geometry type: GEOMETRY
 #> Dimension:     XY
-#> Bounding box:  xmin: 86999.8 ymin: 7058.322 xmax: 435913.5 ymax: 395312.8
+#> Bounding box:  xmin: 86995.12 ymin: 7057.949 xmax: 435914.6 ymax: 395314.9
 #> Projected CRS: OSGB36 / British National Grid
 #> First 10 features:
 #>    degree_educated health_not_good     white  con_swing population     region
@@ -511,16 +511,16 @@ st_bridges(df = df_scaled_sf|> filter(region %in% c("Wales","South West")),
 #> 9                    Powys Brecon and Radnorshire
 #> 10 Gwent and Mid Glamorgan               Bridgend
 #>                          geometry country                            nb
-#> 1  POLYGON ((290787 202886.3, ...   Wales        10, 31, 48, 59, 65, 76
-#> 2  POLYGON ((283209.5 381438.7...   Wales                 4, 30, 34, 95
-#> 3  POLYGON ((331643.3 372871.7...   Wales                29, 30, 32, 93
-#> 4  POLYGON ((265248.3 356615.1...   Wales                     2, 34, 95
-#> 5  POLYGON ((374536.4 167756.1... England                            55
-#> 6  POLYGON ((320318.1 213680, ...   Wales             9, 41, 44, 46, 84
-#> 7  POLYGON ((416915.4 91440.78... England                         8, 28
-#> 8  POLYGON ((409021.3 95975.9,... England                 7, 28, 45, 63
-#> 9  POLYGON ((316452.3 284627.7...   Wales 6, 22, 25, 31, 44, 46, 47, 48
-#> 10 POLYGON ((295422.7 179870.2...   Wales                     1, 59, 89
+#> 1  POLYGON ((290786.3 202886.7...   Wales        10, 31, 48, 59, 65, 76
+#> 2  POLYGON ((283209.3 381440.5...   Wales                 4, 30, 34, 95
+#> 3  POLYGON ((331643.4 372873.5...   Wales                29, 30, 32, 93
+#> 4  POLYGON ((265248 356616.9, ...   Wales                     2, 34, 95
+#> 5  POLYGON ((374536.5 167755.8... England                            55
+#> 6  POLYGON ((320317.6 213680.5...   Wales             9, 41, 44, 46, 84
+#> 7  POLYGON ((416915.9 91439.65... England                         8, 28
+#> 8  POLYGON ((409021.9 95974.77... England                 7, 28, 45, 63
+#> 9  POLYGON ((316452.2 284629.3...   Wales 6, 22, 25, 31, 44, 46, 47, 48
+#> 10 POLYGON ((295421.8 179870.3...   Wales                     1, 59, 89
 ```
 
 These manual functions can also, of course, be used to edit any of the
@@ -687,7 +687,7 @@ gam(con_swing ~
 #> Simple feature collection with 6 features and 20 fields
 #> Geometry type: GEOMETRY
 #> Dimension:     XY
-#> Bounding box:  xmin: 264110.7 ymin: 148666.3 xmax: 488767.2 ymax: 812379.2
+#> Bounding box:  xmin: 264110.4 ymin: 148666.1 xmax: 488768.5 ymax: 812377.5
 #> Projected CRS: OSGB36 / British National Grid
 #>   degree_educated health_not_good      white  con_swing population     region
 #> 1     -1.21794372       2.4694480  0.6393329  8.5917223      66133      Wales
@@ -739,12 +739,12 @@ gam(con_swing ~
 #> 5                       0.4265664                             0.7384490
 #> 6                       0.1762707                             0.2423523
 #>                         geometry
-#> 1 POLYGON ((290787 202886.3, ...
-#> 2 POLYGON ((283209.5 381438.7...
-#> 3 MULTIPOLYGON (((395380.1 80...
-#> 4 POLYGON ((396214.5 805851.5...
-#> 5 POLYGON ((290853.9 662155.3...
-#> 6 POLYGON ((485406.9 159918.6...
+#> 1 POLYGON ((290786.3 202886.7...
+#> 2 POLYGON ((283209.3 381440.5...
+#> 3 MULTIPOLYGON (((395379.7 80...
+#> 4 POLYGON ((396214 805849.7, ...
+#> 5 POLYGON ((290854.4 662154.9...
+#> 6 POLYGON ((485408.1 159918.6...
 ```
 
 ### Back to `guerry`
