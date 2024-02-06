@@ -19,9 +19,9 @@ st_bridges <- function(df, # sf dataframe
                        add_to_dataframe = TRUE)
 {
 
-  if (!inherits(df,"sf") || !inherits(df,"sfc")) {
-    stop("Error: df must be an sf or sfc object")
-  }
+  # if (!inherits(df,"sf") || !inherits(df,"sfc")) {
+  #   stop("Error: df must be an sf or sfc object")
+  # }
 
   if (remove_islands == TRUE){
     # unconnected units
