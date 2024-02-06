@@ -19,7 +19,7 @@ st_bridges <- function(df, # sf dataframe
                        add_to_dataframe = TRUE)
 {
 
-  if (!inherits(df,"sf") || !inherits(df,"sfc")) {
+  if (!inherits(df,"sf")) {
     stop("Error: This function requires an sf or sfc object")
   }
 
