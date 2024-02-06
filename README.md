@@ -629,7 +629,7 @@ prep_data2 <- st_bridges(df_scaled_sf, "constituency_name", nb_structure = "matr
 #            data = prep_data2, data2 = list(W=prep_data2$nb),
 #            family = gaussian(),file = "brmsfit_degree")
 
-fit <- readRDS("brmsfit_degree.rds")
+fit <- readRDS("/Users/kevinhoran/Documents/sfislands_prepstuff/brmsfit_degree.rds")
 
 prep_data2$brmsfit <- predict(fit,prep_data2)[,1]
 
