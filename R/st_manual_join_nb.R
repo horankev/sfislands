@@ -8,8 +8,7 @@
 #' @export
 #'
 #' @examples
-#' ukdata <- readRDS(system.file("extdata", "ukdata.rds", package="sfislands"))
-#' st_bridges(ukdata,"constituency_name") |>
+#' st_bridges(uk_election,"constituency_name") |>
 #' st_manual_join_nb("Gower","St Ives")
 st_manual_join_nb <- function(nb,x,y){
 

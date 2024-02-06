@@ -118,100 +118,102 @@ library(sfislands)
 
 ```{r, echo=FALSE}
 
-### UK data
+# ### UK data
+# 
+# library(parlitools)
+# 
+# # prepare the data
+# # extract and join census and election data from parlitools package
+# census_11 <- parlitools::census_11 |> 
+#   select(-constituency_name,-constituency_type,-pano, -region, -country)
+# bes_2019 <- parlitools::bes_2019
+# 
+# elect_results <- left_join(bes_2019,census_11, by=c("ons_const_id"))
+# 
+# # download constituency boundaries for 2019 using the st_read() command below
+# # they come from: https://geoportal.statistics.gov.uk/datasets/ons::wpc-dec-2019-ultra-generalised-clipped-boundaries-uk
+# # which results in file: WPC_Dec_2019_UGCB_UK_2022_-5406762260244410508.geojson
+# 
+# uk_map_download <- st_read(
+#   "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/WPC_Dec_2019_UGCB_UK_2022/FeatureServer/0/query?outFields=*&where=1%3D1&f=geojson",
+#   quiet = TRUE)
+# 
+# # only need the boundaries and the IDs for merging with parlitools data
+# uk<- uk_map_download |> 
+#   select(pcon19cd,geometry) |> 
+#   st_transform(crs=27700) |> 
+#   st_make_valid() # ensure valid line overlaps etc
+# 
+# # create dataframe for filtering-out speaker constituencies below
+# speakers <- data.frame(
+#   year = c(2017,2019),
+#   constituency_name = c("Buckingham","Chorley")
+# )
+# 
+# # join constituency polygons to parlitools data
+# # filter out Scotland and Northern Ireland
+# # filter out the speakers' constituencies
+# # calculate the desired explanatory variables
+# # make levels into factors for use with `mgcv`
+# 
+# df <- elect_results |> 
+#   left_join(uk, by=c("ons_const_id"="pcon19cd")) |> 
+#   # filter(!country %in% c("Scotland","Northern Ireland")) |> 
+#   filter(!country %in% c("Northern Ireland")) |> 
+#   # filter(!constituency_name %in% speakers$constituency_name) |>
+#   mutate(degree_educated = qual_level_4,
+#          health_not_good = health_fair + health_bad + health_very_bad,
+#          white = ethnicity_white,
+#          con_change = con_19 - con_17, # difference in %
+#          lab_change = lab_19 - lab_17,
+#          con_swing = (con_change - lab_change)/2, # Butler swing
+#          region = factor(ifelse(county == "Merseyside", "Merseyside", region)),
+#          county = factor(county)) |> 
+#   st_as_sf()
+# 
+# # give the empty speaker seats the mean value, just for demostration purposes here
+# df$con_swing[df$constituency_name %in% speakers$constituency_name] <- mean(df$con_swing,na.rm = TRUE)
+# 
+# # create region boundaries layer for mapping
+# regions <- df |> group_by(region) |> 
+#   summarise() |> 
+#   st_as_sf() |> 
+#   st_transform(crs=27700)
+# 
+# # create county boundaries layer for mapping
+# counties <- df |> group_by(county) |> 
+#   summarise() |> 
+#   st_as_sf() |> 
+#   st_transform(crs=27700)
+# 
+# # create outline layer for mapping
+# uk_outline <- df |> 
+#   summarise() |> 
+#   st_as_sf() |> 
+#   st_transform(crs=27700)
+# 
+# # filter out required independent variables and scale them
+# # then add back to the features which were not scaled
+# df_scaled <- df |> 
+#   st_drop_geometry() |> 
+#   select(degree_educated,
+#          health_not_good,
+#          white) |> 
+#   scale() |> 
+#   as.data.frame() |> 
+#   mutate(con_swing = df$con_swing,
+#          population = df$population,
+#          region = factor(df$region),
+#          county = factor(df$county),
+#          constituency_name = df$constituency_name)
+# 
+# # create a simple features (spatial) version of this with a geometry column
+# df_scaled_sf <- df_scaled |> 
+#   mutate(geometry = df$geometry) |> 
+#   st_as_sf() |> 
+#   st_transform(crs=27700)
 
-library(parlitools)
-
-# prepare the data
-# extract and join census and election data from parlitools package
-census_11 <- parlitools::census_11 |> 
-  select(-constituency_name,-constituency_type,-pano, -region, -country)
-bes_2019 <- parlitools::bes_2019
-
-elect_results <- left_join(bes_2019,census_11, by=c("ons_const_id"))
-
-# download constituency boundaries for 2019 using the st_read() command below
-# they come from: https://geoportal.statistics.gov.uk/datasets/ons::wpc-dec-2019-ultra-generalised-clipped-boundaries-uk
-# which results in file: WPC_Dec_2019_UGCB_UK_2022_-5406762260244410508.geojson
-
-uk_map_download <- st_read(
-  "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/WPC_Dec_2019_UGCB_UK_2022/FeatureServer/0/query?outFields=*&where=1%3D1&f=geojson",
-  quiet = TRUE)
-
-# only need the boundaries and the IDs for merging with parlitools data
-uk<- uk_map_download |> 
-  select(pcon19cd,geometry) |> 
-  st_transform(crs=27700) |> 
-  st_make_valid() # ensure valid line overlaps etc
-
-# create dataframe for filtering-out speaker constituencies below
-speakers <- data.frame(
-  year = c(2017,2019),
-  constituency_name = c("Buckingham","Chorley")
-)
-
-# join constituency polygons to parlitools data
-# filter out Scotland and Northern Ireland
-# filter out the speakers' constituencies
-# calculate the desired explanatory variables
-# make levels into factors for use with `mgcv`
-
-df <- elect_results |> 
-  left_join(uk, by=c("ons_const_id"="pcon19cd")) |> 
-  # filter(!country %in% c("Scotland","Northern Ireland")) |> 
-  filter(!country %in% c("Northern Ireland")) |> 
-  # filter(!constituency_name %in% speakers$constituency_name) |>
-  mutate(degree_educated = qual_level_4,
-         health_not_good = health_fair + health_bad + health_very_bad,
-         white = ethnicity_white,
-         con_change = con_19 - con_17, # difference in %
-         lab_change = lab_19 - lab_17,
-         con_swing = (con_change - lab_change)/2, # Butler swing
-         region = factor(ifelse(county == "Merseyside", "Merseyside", region)),
-         county = factor(county)) |> 
-  st_as_sf()
-
-# give the empty speaker seats the mean value, just for demostration purposes here
-df$con_swing[df$constituency_name %in% speakers$constituency_name] <- mean(df$con_swing,na.rm = TRUE)
-
-# create region boundaries layer for mapping
-regions <- df |> group_by(region) |> 
-  summarise() |> 
-  st_as_sf() |> 
-  st_transform(crs=27700)
-
-# create county boundaries layer for mapping
-counties <- df |> group_by(county) |> 
-  summarise() |> 
-  st_as_sf() |> 
-  st_transform(crs=27700)
-
-# create outline layer for mapping
-uk_outline <- df |> 
-  summarise() |> 
-  st_as_sf() |> 
-  st_transform(crs=27700)
-
-# filter out required independent variables and scale them
-# then add back to the features which were not scaled
-df_scaled <- df |> 
-  st_drop_geometry() |> 
-  select(degree_educated,
-         health_not_good,
-         white) |> 
-  scale() |> 
-  as.data.frame() |> 
-  mutate(con_swing = df$con_swing,
-         population = df$population,
-         region = factor(df$region),
-         county = factor(df$county),
-         constituency_name = df$constituency_name)
-
-# create a simple features (spatial) version of this with a geometry column
-df_scaled_sf <- df_scaled |> 
-  mutate(geometry = df$geometry) |> 
-  st_as_sf() |> 
-  st_transform(crs=27700)
+# df_scaled_sf <- uk_election
 ```
 
 Below, we look at these functions in more detail and show them in operation.
@@ -360,8 +362,8 @@ One potential remedy is to entirely exclude islands from the study, another is t
 Below is the map in question:
 
 ```{r, echo=FALSE}
-df_scaled_sf$country <- case_when(df_scaled_sf$region == "Wales" ~ "Wales",
-                                  df_scaled_sf$region == "Scotland" ~ "Scotland",
+uk_election$country <- case_when(uk_election$region == "Wales" ~ "Wales",
+                                  uk_election$region == "Scotland" ~ "Scotland",
                                   TRUE ~ "England")
 ```
 
@@ -369,19 +371,19 @@ There are island constituencies in the north around Scotland but also less obvio
 
 ```{r, fig.width=12, fig.height=10, echo=FALSE}
 ggplot() + 
-  geom_sf(data=df_scaled_sf, aes(fill=country), colour="white") + 
-  # geom_sf_label(data=df_scaled_sf |> group_by(country) |> summarise(), aes(label=country),size=10) +
-  geom_sf(data=df_scaled_sf |> filter(constituency_name == "Na h-Eileanan An Iar"), colour="#B20016", fill=NA, linewidth=0.7) + 
-  geom_sf_label(data=df_scaled_sf |> filter(constituency_name == "Na h-Eileanan An Iar"),
+  geom_sf(data=uk_election, aes(fill=country), colour="white") + 
+  # geom_sf_label(data=uk_election |> group_by(country) |> summarise(), aes(label=country),size=10) +
+  geom_sf(data=uk_election |> filter(constituency_name == "Na h-Eileanan An Iar"), colour="#B20016", fill=NA, linewidth=0.7) + 
+  geom_sf_label(data=uk_election |> filter(constituency_name == "Na h-Eileanan An Iar"),
                 aes(label=constituency_name)) +
-  geom_sf(data=df_scaled_sf |> filter(constituency_name == "Orkney and Shetland"), colour="#B20016", fill=NA, linewidth=0.7) + 
-  geom_sf_label(data=df_scaled_sf |> filter(constituency_name == "Orkney and Shetland"),
+  geom_sf(data=uk_election |> filter(constituency_name == "Orkney and Shetland"), colour="#B20016", fill=NA, linewidth=0.7) + 
+  geom_sf_label(data=uk_election |> filter(constituency_name == "Orkney and Shetland"),
                 aes(label=constituency_name), nudge_x = -80000, nudge_y = -60000) +
-    geom_sf(data=df_scaled_sf |> filter(constituency_name=="Ynys Mon"),colour="#B20016", fill=NA, linewidth=0.7) + 
-    geom_sf_label(data=df_scaled_sf |> filter(constituency_name=="Ynys Mon"),
+    geom_sf(data=uk_election |> filter(constituency_name=="Ynys Mon"),colour="#B20016", fill=NA, linewidth=0.7) + 
+    geom_sf_label(data=uk_election |> filter(constituency_name=="Ynys Mon"),
                   aes(label=constituency_name), nudge_x = -90000) +
-    geom_sf(data=df_scaled_sf |> filter(constituency_name=="Isle Of Wight"),colour="#B20016", fill=NA, linewidth=0.7) + 
-    geom_sf_label(data=df_scaled_sf |> filter(constituency_name=="Isle Of Wight"),
+    geom_sf(data=uk_election |> filter(constituency_name=="Isle Of Wight"),colour="#B20016", fill=NA, linewidth=0.7) + 
+    geom_sf_label(data=uk_election |> filter(constituency_name=="Isle Of Wight"),
                   aes(label=constituency_name), nudge_x = 50000, nudge_y = -30000) +
   scale_fill_manual(values = c("antiquewhite4","#1C4769", "#24975E")) +
   # guides(fill = "none") + 
@@ -395,7 +397,7 @@ To incorporate these we use `st_bridges()`. We can set `remove_islands` to TRUE 
 Below, with the argument `remove_islands` set to TRUE, we simply remove these islands from the dataset entirely.
 
 ```{r, fig.width=12, fig.height=10}
-nbsf <- st_bridges(df = df_scaled_sf,
+nbsf <- st_bridges(df = uk_election,
                    geom_col_name = "constituency_name",
                    remove_islands = T)
 st_quickmap_nb(nbsf,
@@ -410,7 +412,7 @@ st_quickmap_nb(nbsf,
 Alternatively, we can join islands to the nearest, say, 2 constituencies. `st_bridges()` by default returns the original dataframe augmented with a "nb" column which contains the contiguities in list form.
 
 ```{r, fig.width=12, fig.height=10}
-nbsf <- st_bridges(df = df_scaled_sf,
+nbsf <- st_bridges(df = uk_election,
                    geom_col_name = "constituency_name",
                    link_islands_k = 2)
 st_quickmap_nb(nbsf,
@@ -447,7 +449,7 @@ head(nbsf$nb)
 But the "nb" column can also be a matrix, and `st_quickmap_nb()` will still return the same map:
 
 ```{r, fig.width=12, fig.height=10}
-nbsf <- st_bridges(df = df_scaled_sf,
+nbsf <- st_bridges(df = uk_election,
                    geom_col_name = "constituency_name",
                    remove_islands = F,
                    link_islands_k = 2,
@@ -494,7 +496,7 @@ nbsf |>
 As extra contiguities can be difficult to distinguish, an extreme case is shown below to demonstrate `st_manual_join_nb()`. **Gower** in South Wales is joined to **St Ives** in Cornwall and then mapped:
 
 ```{r}
-st_bridges(df = df_scaled_sf|> filter(region %in% c("Wales","South West")),
+st_bridges(df = uk_election|> filter(region %in% c("Wales","South West")),
            geom_col_name = "constituency_name",
            link_islands_k = 2)  |> 
   st_manual_join_nb("Gower","St Ives")
@@ -506,9 +508,9 @@ For example, looking just at Scotland we can use `sfdep::st_nb_lag_cumul()` to g
 
 ```{r}
 
-df_scaled_sf |> 
+uk_election |> 
   filter(region == "Scotland") |> 
-  mutate(nb = st_contiguity(df_scaled_sf$geometry[df_scaled_sf$region == "Scotland"]) |> 
+  mutate(nb = st_contiguity(uk_election$geometry[uk_election$region == "Scotland"]) |> 
            st_nb_lag_cumul(2)) |>  
   st_quickmap_nb()
 
@@ -518,7 +520,7 @@ This does not include the island constituencies. We can chose to include them by
 
 ```{r}
 
-df_scaled_sf |> 
+uk_election |> 
   filter(region == "Scotland") |> 
   st_bridges(geom_col_name = "constituency_name",
              link_islands_k = 2) |> 
@@ -530,7 +532,7 @@ df_scaled_sf |>
 
 ```{r}
 
-df_scaled_sf |> 
+uk_election |> 
   filter(region == "Scotland") |> 
   st_bridges(geom_col_name = "constituency_name",
              link_islands_k = 2) |> 
@@ -541,9 +543,9 @@ We can then add these island connections to the output of `sfdep::st_nb_lag_cumu
 
 ```{r}
 
-df_scaled_sf |> 
+uk_election |> 
   filter(region == "Scotland") |> 
-  mutate(nb = st_contiguity(df_scaled_sf$geometry[df_scaled_sf$region == "Scotland"]) |> 
+  mutate(nb = st_contiguity(uk_election$geometry[uk_election$region == "Scotland"]) |> 
            st_nb_lag_cumul(2)) |> 
   st_manual_join_nb(47,9) |>
   st_manual_join_nb(47,51) |>
@@ -562,7 +564,7 @@ For example, we can use the `mgcv` package to generate a Markov Random Field ICA
 
 ```{r, fig.width=12, fig.height=10}
 
-prep_data <- st_bridges(df_scaled_sf, "constituency_name")
+prep_data <- st_bridges(uk_election, "constituency_name")
 
 gam(health_not_good ~ s(constituency_name, bs='mrf', xt=list(nb=prep_data$nb), k=100),
         data=prep_data, method="REML") |>
@@ -575,7 +577,7 @@ An equivalent model, this time smoothing over degree_educated, can be fitted usi
 
 ```{r, fig.width=12, fig.height=10}
 
-prep_data2 <- st_bridges(df_scaled_sf, "constituency_name", nb_structure = "matrix")
+prep_data2 <- st_bridges(uk_election, "constituency_name", nb_structure = "matrix")
 
 # fit <- brm(degree_educated ~ car(W, gr=constituency_name, type="icar"),
 #            data = prep_data2, data2 = list(W=prep_data2$nb),
@@ -597,7 +599,7 @@ More complex models with random effects and multiple smooths are also possible w
 
 ```{r, fig.width=12, fig.height=6}
 
-prep_data3 <- st_bridges(df_scaled_sf, "constituency_name") # decide upon the contiguities and add them to the df
+prep_data3 <- st_bridges(uk_election, "constituency_name") # decide upon the contiguities and add them to the df
 
 model <- gam(con_swing ~ 
                s(region, bs="re") + # region level random intercept

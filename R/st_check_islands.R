@@ -6,8 +6,7 @@
 #' @export
 #'
 #' @examples
-#' ukdata <- readRDS(system.file("extdata", "ukdata.rds", package="sfislands"))
-#' st_bridges(ukdata,"constituency_name") |>
+#' st_bridges(uk_election,"constituency_name") |>
 #' st_check_islands()
 st_check_islands <- function(data){
 

@@ -16,10 +16,9 @@ a list of ggplots
 Visualilse the predictions of an `mgcv` model
 }
 \examples{
-ukdata <- readRDS(system.file("extdata", "ukdata.rds", package="sfislands")) |>
-st_bridges("constituency_name")
+prepdata <- st_bridges(uk_election,"constituency_name")
 mgcv::gam(health_not_good ~
-  s(constituency_name, bs='mrf', xt=list(nb=ukdata$nb), k=100),data=ukdata, method="REML") |>
-st_augment(ukdata) |>
+  s(constituency_name, bs='mrf', xt=list(nb=prepdata$nb), k=100),data=prepdata, method="REML") |>
+st_augment(uk_election) |>
 st_quickmap_preds()
 }

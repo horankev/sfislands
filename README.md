@@ -308,7 +308,7 @@ Below, with the argument `remove_islands` set to TRUE, we simply remove
 these islands from the dataset entirely.
 
 ``` r
-nbsf <- st_bridges(df = df_scaled_sf,
+nbsf <- st_bridges(df = uk_election,
                    geom_col_name = "constituency_name",
                    remove_islands = T)
 st_quickmap_nb(nbsf,
@@ -327,7 +327,7 @@ augmented with a “nb” column which contains the contiguities in list
 form.
 
 ``` r
-nbsf <- st_bridges(df = df_scaled_sf,
+nbsf <- st_bridges(df = uk_election,
                    geom_col_name = "constituency_name",
                    link_islands_k = 2)
 st_quickmap_nb(nbsf,
@@ -387,7 +387,7 @@ But the “nb” column can also be a matrix, and `st_quickmap_nb()` will
 still return the same map:
 
 ``` r
-nbsf <- st_bridges(df = df_scaled_sf,
+nbsf <- st_bridges(df = uk_election,
                    geom_col_name = "constituency_name",
                    remove_islands = F,
                    link_islands_k = 2,
@@ -478,7 +478,7 @@ is shown below to demonstrate `st_manual_join_nb()`. **Gower** in South
 Wales is joined to **St Ives** in Cornwall and then mapped:
 
 ``` r
-st_bridges(df = df_scaled_sf|> filter(region %in% c("Wales","South West")),
+st_bridges(df = uk_election|> filter(region %in% c("Wales","South West")),
            geom_col_name = "constituency_name",
            link_islands_k = 2)  |> 
   st_manual_join_nb("Gower","St Ives")
@@ -531,9 +531,9 @@ For example, looking just at Scotland we can use
 
 ``` r
 
-df_scaled_sf |> 
+uk_election |> 
   filter(region == "Scotland") |> 
-  mutate(nb = st_contiguity(df_scaled_sf$geometry[df_scaled_sf$region == "Scotland"]) |> 
+  mutate(nb = st_contiguity(uk_election$geometry[uk_election$region == "Scotland"]) |> 
            st_nb_lag_cumul(2)) |>  
   st_quickmap_nb()
 ```
@@ -545,7 +545,7 @@ them by first using `st_bridges()` with k=2…
 
 ``` r
 
-df_scaled_sf |> 
+uk_election |> 
   filter(region == "Scotland") |> 
   st_bridges(geom_col_name = "constituency_name",
              link_islands_k = 2) |> 
@@ -558,7 +558,7 @@ df_scaled_sf |>
 
 ``` r
 
-df_scaled_sf |> 
+uk_election |> 
   filter(region == "Scotland") |> 
   st_bridges(geom_col_name = "constituency_name",
              link_islands_k = 2) |> 
@@ -576,9 +576,9 @@ We can then add these island connections to the output of
 
 ``` r
 
-df_scaled_sf |> 
+uk_election |> 
   filter(region == "Scotland") |> 
-  mutate(nb = st_contiguity(df_scaled_sf$geometry[df_scaled_sf$region == "Scotland"]) |> 
+  mutate(nb = st_contiguity(uk_election$geometry[uk_election$region == "Scotland"]) |> 
            st_nb_lag_cumul(2)) |> 
   st_manual_join_nb(47,9) |>
   st_manual_join_nb(47,51) |>
@@ -606,7 +606,7 @@ inside the `mgcv` GAM formulation, and then piping into the
 
 ``` r
 
-prep_data <- st_bridges(df_scaled_sf, "constituency_name")
+prep_data <- st_bridges(uk_election, "constituency_name")
 
 gam(health_not_good ~ s(constituency_name, bs='mrf', xt=list(nb=prep_data$nb), k=100),
         data=prep_data, method="REML") |>
@@ -623,7 +623,7 @@ matrix form:
 
 ``` r
 
-prep_data2 <- st_bridges(df_scaled_sf, "constituency_name", nb_structure = "matrix")
+prep_data2 <- st_bridges(uk_election, "constituency_name", nb_structure = "matrix")
 
 # fit <- brm(degree_educated ~ car(W, gr=constituency_name, type="icar"),
 #            data = prep_data2, data2 = list(W=prep_data2$nb),
@@ -650,7 +650,7 @@ the 2019 election:
 
 ``` r
 
-prep_data3 <- st_bridges(df_scaled_sf, "constituency_name") # decide upon the contiguities and add them to the df
+prep_data3 <- st_bridges(uk_election, "constituency_name") # decide upon the contiguities and add them to the df
 
 model <- gam(con_swing ~ 
                s(region, bs="re") + # region level random intercept

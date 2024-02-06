@@ -11,8 +11,7 @@
 #' @export
 #'
 #' @examples
-#' ukdata <- readRDS(system.file("extdata", "ukdata.rds", package="sfislands"))
-#' st_bridges(ukdata,"constituency_name")
+#' st_bridges(uk_election,"constituency_name")
 st_bridges <- function(df, # sf dataframe
                        geom_col_name,
                        remove_islands = FALSE,

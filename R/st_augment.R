@@ -7,11 +7,15 @@
 #' @export
 #'
 #' @examples
-#' ukdata <- readRDS(system.file("extdata", "ukdata.rds", package="sfislands")) |>
-#' st_bridges("constituency_name")
+#' package_name <- "mgcv"
+#' if (!require(package_name, character.only = TRUE)) {
+#' install.packages(package_name)
+#' library(package_name, character.only = TRUE)
+#' }
+#' prepdata <- st_bridges(uk_election,"constituency_name")
 #' mgcv::gam(health_not_good ~
-#'   s(constituency_name, bs='mrf', xt=list(nb=ukdata$nb), k=100),data=ukdata, method="REML") |>
-#' st_augment(ukdata)
+#'   s(constituency_name, bs='mrf', xt=list(nb=prepdata$nb), k=100),data=prepdata, method="REML") |>
+#' st_augment(uk_election)
 st_augment <- function(model,df){
 
   if (!(class(model)[1] %in% "gam")) {
