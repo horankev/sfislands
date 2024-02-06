@@ -19,3 +19,9 @@ an amended neighbourhood list, matrix, or sf dataframe with a neighbourhood colu
 \description{
 Manual remove contiguity between two areas
 }
+\examples{
+ukdata <- readRDS(system.file("extdata", "ukdata.rds", package="sfislands"))
+st_bridges(ukdata,"constituency_name") |>
+st_manual_cut_nb("Ynys Mon","Arfon") |>
+st_manual_cut_nb(292,378)
+}

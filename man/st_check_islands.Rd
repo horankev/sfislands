@@ -15,3 +15,8 @@ a dataframe reporting non-contiguous connections made by st_bridges()
 \description{
 Examine contiguity actions performed on islands
 }
+\examples{
+ukdata <- readRDS(system.file("extdata", "ukdata.rds", package="sfislands"))
+st_bridges(ukdata,"constituency_name") |>
+st_check_islands()
+}

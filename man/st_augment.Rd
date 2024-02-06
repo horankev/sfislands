@@ -17,3 +17,10 @@ an augmented sd dataframe
 \description{
 Augment dataframe with predictions of model
 }
+\examples{
+ukdata <- readRDS(system.file("extdata", "ukdata.rds", package="sfislands")) |>
+st_bridges("constituency_name")
+mgcv::gam(health_not_good ~
+  s(constituency_name, bs='mrf', xt=list(nb=ukdata$nb), k=100),data=ukdata, method="REML") |>
+st_augment(ukdata)
+}

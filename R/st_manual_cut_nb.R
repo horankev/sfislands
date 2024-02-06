@@ -8,6 +8,10 @@
 #' @export
 #'
 #' @examples
+#' ukdata <- readRDS(system.file("extdata", "ukdata.rds", package="sfislands"))
+#' st_bridges(ukdata,"constituency_name") |>
+#' st_manual_cut_nb("Ynys Mon","Arfon") |>
+#' st_manual_cut_nb(292,378)
 st_manual_cut_nb <- function(nb,x,y){
 
   if (!(is.data.frame(nb) || is.list(nb$nb) || is.matrix(nb$nb) || is.list(nb) || is.matrix(nb))) {
