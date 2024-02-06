@@ -45,6 +45,7 @@ ggplot of areas and neighbourhood structure
 Visualise a contiguity structure on a map
 }
 \examples{
-st_bridges(uk_election,"constituency_name") |>
+ukdata <- readRDS(system.file("extdata", "ukdata.rds", package="sfislands"))
+st_bridges(ukdata,"constituency_name") |>
 st_quickmap_nb()
 }

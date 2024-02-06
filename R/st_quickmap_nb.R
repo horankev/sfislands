@@ -15,7 +15,8 @@
 #' @export
 #'
 #' @examples
-#' st_bridges(uk_election,"constituency_name") |>
+#' ukdata <- readRDS(system.file("extdata", "ukdata.rds", package="sfislands"))
+#' st_bridges(ukdata,"constituency_name") |>
 #' st_quickmap_nb()
 st_quickmap_nb <- function(nbsf,
                            linkcol = "dodgerblue",
