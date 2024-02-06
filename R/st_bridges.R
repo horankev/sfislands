@@ -20,7 +20,7 @@ st_bridges <- function(df, # sf dataframe
 {
 
   if (!inherits(df,"sf") || !inherits(df,"sfc")) {
-    stop("Error: This function requires an sf or sfc object")
+    stop("Error: df must be an sf or sfc object")
   }
 
   if (remove_islands == TRUE){
