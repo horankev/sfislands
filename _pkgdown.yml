@@ -1,8 +1,4 @@
 url: https://horankev.github.io/sfislands/
 template:
   bootstrap: 5
-  bslib:
-    base_font: {google: "Roboto"}
-    heading_font: {google: "Roboto Slab"}
-    code_font: {google: "JetBrains Mono"}
 
