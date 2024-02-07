@@ -39,7 +39,8 @@ packages <- c(
   "ggpubr",
   "spdep",
   "sfdep",
-  "here"
+  "here",
+  "parlitools"
 )
 
 # Install packages not yet installed
@@ -56,8 +57,6 @@ invisible(lapply(packages, library, character.only = TRUE, quietly = TRUE))
 ```{r, echo=FALSE}
 
 ### UK data
-
-library(parlitools)
 
 # prepare the data
 # extract and join census and election data from parlitools package

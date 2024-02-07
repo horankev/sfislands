@@ -19,7 +19,8 @@ Imports:
     spdep,
     stats,
     stringr,
-    tidyr
+    tidyr,
+    parlitools
 RoxygenNote: 7.2.3
 URL: https://github.com/horankev/sfislands, https://horankev.github.io/sfislands/
 BugReports: https://github.com/horankev/sfislands/issues
