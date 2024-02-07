@@ -168,5 +168,5 @@ ggarrange(plotlist = model, legend = "none", nrow=1)
 
 <img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
 
-Further information and worked examples are available in the vignettes
-which can be found [here](https://horankev.github.io/sfislands/).
+Further information and worked examples are available in the this
+[article](https://horankev.github.io/sfislands/).

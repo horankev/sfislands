@@ -1154,25 +1154,37 @@ gam(health_not_good ~ s(constituency_name, bs='mrf', xt=list(nb=prep_data$nb), k
 
 An equivalent model, this time smoothing over degree_educated, can be fitted using `brms`. This package requires the neighbourhoods to be in matrix form:
 
-```{r, fig.width=12, fig.height=10}
+```{r, fig.width=12, fig.height=10, eval=FALSE}
 
 prep_data2 <- st_bridges(df_scaled_sf, "constituency_name", nb_structure = "matrix")
 
-# fit <- brm(degree_educated ~ car(W, gr=constituency_name, type="icar"),
-#            data = prep_data2, data2 = list(W=prep_data2$nb),
-#            family = gaussian(),file = "brmsfit_degree")
+fit <- brm(degree_educated ~ car(W, gr=constituency_name, type="icar"),
+           data = prep_data2, data2 = list(W=prep_data2$nb),
+           family = gaussian(),file = "brmsfit_degree")
 
-# fit <- readRDS("brmsfit_degree.rds")
-# 
-# prep_data2$brmsfit <- predict(fit,prep_data2)[,1]
-# 
-# ggplot(prep_data2)+geom_sf(aes(fill=brmsfit), linewidth=0.1) +
-#   scale_fill_gradient2(low="firebrick4",mid="white",high="darkblue",midpoint = 0) +
-#   coord_sf(datum=NA) +
-#   theme_minimal() +
-#   theme_bw()
+prep_data2$brmsfit <- predict(fit,prep_data2)[,1]
+
+ggplot(prep_data2)+geom_sf(aes(fill=brmsfit), linewidth=0.1) +
+  scale_fill_gradient2(low="firebrick4",mid="white",high="darkblue",midpoint = 0) +
+  coord_sf(datum=NA) +
+  theme_minimal() +
+  theme_bw()
 
 ```
+
+```{r, fig.width=12, fig.height=10, echo=FALSE, eval=FALSE}
+brms_plot <- ggplot(prep_data2)+geom_sf(aes(fill=brmsfit), linewidth=0.1) +
+  scale_fill_gradient2(low="firebrick4",mid="white",high="darkblue",midpoint = 0) +
+  coord_sf(datum=NA) + 
+  theme_minimal() +
+  theme_bw() + 
+  theme(legend.text = element_text(size = 30),
+        legend.title = element_text(size = 30))
+ggsave("/Users/kevinhoran/Documents/sfislands/vignettes/articles/brms_plot.png", width = 12, height = 10)
+
+```
+
+<img src="/Users/kevinhoran/Documents/sfislands/vignettes/articles/brms_plot.png" align="centre" height="720"/>
 
 More complex models with random effects and multiple smooths are also possible with `mgcv` and the `st_augment()` and `st_quickmap_preds()` functions can handle these and label the columns and maps which are generated appropriately. This is shown below with a model of swing in the 2019 election:
 

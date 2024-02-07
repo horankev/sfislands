@@ -172,4 +172,4 @@ model <- gam(con_swing ~
 ggarrange(plotlist = model, legend = "none", nrow=1)
 ```
 
-Further information and worked examples are available in the vignettes which can be found [here](https://horankev.github.io/sfislands/).
+Further information and worked examples are available in the this [article](https://horankev.github.io/sfislands/).
