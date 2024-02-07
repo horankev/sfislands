@@ -37,13 +37,14 @@ st_check_islands <- function(data){
   output <- data[unconnected,]$nb
   names(output) <- paste(names(output)," : ",unconnected)
 
-  output2 <- do.call(rbind, lapply(names(output), function(x) cbind(region = x, nb_num = output[[x]]))) |>
+  output2 <- do.call(rbind, lapply(names(output), function(x) cbind(x, output[[x]]))) |>
     data.frame()
+  names(output2) <- c("region","nb_num")
 
   consnames <- names(data$nb)
   output2$nb_names <- consnames[as.integer(output2$nb_num)]
 
-  output2 <- tidyr::separate(output2, region, into = c("island_names", "island_num"), sep = " : ")
+  output2 <- tidyr::separate(output2, "region", into = c("island_names", "island_num"), sep = " : ")
 
   return(output2)
 }
