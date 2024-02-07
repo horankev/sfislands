@@ -5,3 +5,7 @@
 ^data-raw$
 ^vignettes/articles$
 ^cran-comments\.md$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^\.github$
