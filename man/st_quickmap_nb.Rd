@@ -2,7 +2,7 @@
 % Please edit documentation in R/st_quickmap_nb.R
 \name{st_quickmap_nb}
 \alias{st_quickmap_nb}
-\title{Visualise a contiguity structure on a map}
+\title{Visualise a neighbourhood structure on a map}
 \usage{
 st_quickmap_nb(
   nbsf,
@@ -42,7 +42,7 @@ st_quickmap_nb(
 ggplot of areas and neighbourhood structure
 }
 \description{
-Visualise a contiguity structure on a map
+Visualise a neighbourhood structure on a map
 }
 \examples{
 st_bridges(uk_election,"constituency_name") |>

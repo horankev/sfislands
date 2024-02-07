@@ -1,7 +1,5 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-<!-- <img src="man/figures/logo.png" align="right" height="240"/> -->
-<!-- # sfislands <a href="https://horankev.github.io/sfislands/"><img src="man/figures/logo.png" align="right" height="240" alt="sfislands website" /></a> -->
 
 # sfislands
 
@@ -68,6 +66,8 @@ devtools::install_github("horankev/sfislands")
     quite tedious to extract and visualise. `sfislands` can streamline
     this workflow from the human side. Furthermore, there is a function
     to draw maps of these predictions for quick inspection.
+
+<img src="man/figures/logo.png" align="right" height="240"/>
 
 ## Functions overview
 
@@ -140,6 +140,27 @@ Field ICAR smooth of poor health across the study area. This is done
 very quickly by using `st_bridges()` to prepare the data, putting that
 inside the `mgcv` GAM formulation, and then piping into the
 `st_augment()` and `st_quickmap_preds()` functions.
+
+``` r
+
+prep_data3 <- st_bridges(uk_election, "constituency_name") # decide upon the contiguities and add them to the df
+
+model <- gam(con_swing ~ 
+               s(region, bs="re") + # region level random intercept
+               s(county, bs="re") + # county level random intercept
+               s(county, degree_educated, bs="re") + # county level random coefficient
+               s(constituency_name, bs='mrf', 
+                 xt=list(nb=prep_data3$nb),k=10) + # ICAR constituency ICAR varying coefficients
+               s(constituency_name, by=white, bs='mrf', 
+                 xt=list(nb=prep_data3$nb),k=10), # ICAR constituency ICAR varying coefficients
+             data=prep_data3, method="REML") |> 
+  st_augment(prep_data3) |> # pipe into function to get estimates
+  st_quickmap_preds() # pipe into this for visualisation
+
+ggarrange(plotlist = model, legend = "none", nrow=1)
+```
+
+<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
 
 Further information and worked examples are available in the vignettes
 which can be found [here](https://horankev.github.io/sfislands/).

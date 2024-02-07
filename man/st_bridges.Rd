@@ -2,7 +2,7 @@
 % Please edit documentation in R/st_bridges.R
 \name{st_bridges}
 \alias{st_bridges}
-\title{Create contiguities when islands are present}
+\title{Create neighbourhood structure when islands are present}
 \usage{
 st_bridges(
   df,
@@ -30,7 +30,7 @@ st_bridges(
 a named neighbourhood list or matrix, optionally included as a column in an sf dataframe
 }
 \description{
-Create contiguities when islands are present
+Create neighbourhood structure when islands are present
 }
 \examples{
 st_bridges(uk_election,"constituency_name")
