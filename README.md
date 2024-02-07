@@ -128,7 +128,9 @@ st_bridges(df = uk_election|> filter(region %in% c("Wales","South West")),
            geom_col_name = "constituency_name",
            link_islands_k = 2)  |> 
   st_manual_join_nb("Gower","St Ives") |> 
-  st_quickmap_nb()
+  st_quickmap_nb() + 
+  geom_sf_label(data=uk_election|> filter(constituency_name %in% c("Gower","St Ives")),
+                aes(label=constituency_name),nudge_x = -30000)
 ```
 
 <img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
