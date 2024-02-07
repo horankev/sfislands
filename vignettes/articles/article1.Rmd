@@ -18,13 +18,6 @@ library(sfislands)
 
 ```
 
-<img src="logo.png" align="right" height="240"/> 
-
-<!-- badges: start -->
-
-<!-- badges: end -->
-
-
 ```{r, echo=FALSE}
 
 ## Data and packages
