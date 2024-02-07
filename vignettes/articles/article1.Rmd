@@ -1184,7 +1184,7 @@ ggsave("/Users/kevinhoran/Documents/sfislands/vignettes/articles/brms_plot.png",
 
 ```
 
-<img src="/Users/kevinhoran/Documents/sfislands/vignettes/articles/brms_plot.png" align="centre" height="720"/>
+<img src="brms_plot.png" align="centre" height="720"/>
 
 More complex models with random effects and multiple smooths are also possible with `mgcv` and the `st_augment()` and `st_quickmap_preds()` functions can handle these and label the columns and maps which are generated appropriately. This is shown below with a model of swing in the 2019 election:
 
