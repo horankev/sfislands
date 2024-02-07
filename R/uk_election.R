@@ -8,14 +8,14 @@
 #'    An sf and data.frame object with 632 rows and 9 columns
 #'
 #' \describe{
-#'   \item{degree_educated}{percent of population with level 4 qualifications or higher}
-#'   \item{health_not_good}{percent of population reporting health to be fair, bad, or very bad}
-#'   \item{white}{percent of population of exclusively white ethnicity}
+#'   \item{degree_educated}{Percentage of constituency population with level 4 qualifications or higher, scaled to mean 0 and standard deviation 1}
+#'   \item{health_not_good}{Percentage of constituency of population reporting health to be fair, bad, or very bad, scaled to mean 0 and standard deviation 1}
+#'   \item{white}{Percentage of constituency of population of exclusively white ethnicity, scaled to mean 0 and standard deviation 1}
 #'   \item{con_swing}{Butler swing to the Conservative Party from the Labour Party from election 2019 to election 2019}
 #'   \item{population}{Constituency population}
-#'   \item{region}{Region}
-#'   \item{county}{County}
-#'   \item{constituency_name}{Constituency}
+#'   \item{region}{Regions}
+#'   \item{county}{Counties}
+#'   \item{constituency_name}{Westminster parliamentary constituencies, as of 2019}
 #'   \item{geometry}{sfc polygons column}
 #'   ...
 #' }
