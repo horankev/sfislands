@@ -72,7 +72,13 @@ devtools::install_github("horankev/sfislands")
 ## Functions overview
 
 The following is a framework within which the `sfislands` functions
-could be used:
+could be used.
+
+The first group can be seen as pre-functions, designed to create a
+neighbourhood structure suitable for certain types of models.
+
+Once a model has been fit (using `mgcv` in this case), the
+post-functions can be used to extract the predictions.
 
 ### Step 1: Set up data (“*pre-functions*”)
 
