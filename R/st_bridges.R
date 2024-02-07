@@ -1,4 +1,4 @@
-#' Create contiguities when islands are present
+#' Create neighbourhood structure when islands are present
 #'
 #' @param df an sf or sfc object
 #' @param geom_col_name name of column containing names (or unique identifiers) for each row

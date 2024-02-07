@@ -1,4 +1,4 @@
-#' Visualise a contiguity structure on a map
+#' Visualise a neighbourhood structure on a map
 #'
 #' @param nbsf an sf dataframe with a neighbourhood column called "nb"
 #' @param linkcol colour of lines connecting neighbours
