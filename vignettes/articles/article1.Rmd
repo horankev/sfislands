@@ -1,5 +1,8 @@
 ---
 title: "Guide to sfislands package"
+output:
+  rmarkdown::html_vignette:
+    theme: document
 ---
 
 ```{r, include = FALSE}
