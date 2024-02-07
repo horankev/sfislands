@@ -75,4 +75,7 @@ uk_election <- df_scaled |>
   sf::st_as_sf() |>
   sf::st_transform(crs=27700)
 
+# attempt to fix non-ascii character issue (degrees symbol)
+st_crs(uk_election)$wkt <- gsub("°|º", "\\\\u00b0", st_crs(uk_election)$wkt)
+
 usethis::use_data(uk_election, overwrite = TRUE, compress = "bzip2")
