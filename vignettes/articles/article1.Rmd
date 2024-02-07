@@ -1,11 +1,5 @@
 ---
 title: "Guide to sfislands package"
-output: 
-  html_document: 
-    theme: yeti
-    toc: true
-    toc_depth: 3
-    toc_float: true
 ---
 
 ```{r, include = FALSE}
