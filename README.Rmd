@@ -5,6 +5,7 @@ output: github_document
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 <!-- <img src="man/figures/logo.png" align="right" height="240"/> -->
+<!-- # sfislands <a href="https://horankev.github.io/sfislands/"><img src="man/figures/logo.png" align="right" height="240" alt="sfislands website" /></a> -->
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
@@ -61,7 +62,7 @@ The following is a framework within which the `sfislands` functions could be use
 ### Step 1: Set up data ("*pre-functions*")
 
 | function:               | purpose:                                                                                                                                   |
-|------------|-----------------------------------------------|
+|-----------------|-------------------------------------------------------|
 | **st_bridges()**        | *Create a neighbours list, matrix, or `sf` dataframe containing a neighbours list or matrix as column "nb", while accounting for islands.* |
 | **st_quickmap_nb()**    | *Check contiguities visually on map.*                                                                                                      |
 | **st_check_islands()**  | *Check assignment of island contiguities in a dataframe.*                                                                                  |
@@ -75,7 +76,7 @@ The following is a framework within which the `sfislands` functions could be use
 ### Step 3: Examine output ("*post functions*")
 
 | function:               | purpose:                                                 |
-|-----------------|-------------------------------------------------------|
+|------------------|------------------------------------------------------|
 | **st_augment()**        | *Augment the original dataframe with model predictions.* |
 | **st_quickmap_preds()** | *Generate quick maps of these predictions.*              |
 
@@ -112,18 +113,15 @@ library(sfislands)
 
 ```
 
-
 ## Examples
 
 In the context of the constituencies of England, Scotland and Wales, `st_bridges` will define a neighbourhood structure which includes the islands. `st_quickmap_nb` will show a representation of this on a map:
-
 
 ```{r, echo=FALSE}
 uk_election$country <- case_when(uk_election$region == "Wales" ~ "Wales",
                                   uk_election$region == "Scotland" ~ "Scotland",
                                   TRUE ~ "England")
 ```
-
 
 ```{r, fig.width=12, fig.height=10}
 nbsf <- st_bridges(df = uk_election,
@@ -136,7 +134,7 @@ st_quickmap_nb(nbsf,
 
 ```
 
-Neighbours can be manually added or removed using `st_manual_join_nb()` and `st_manual_cut_nb()`. 
+Neighbours can be manually added or removed using `st_manual_join_nb()` and `st_manual_cut_nb()`.
 
 ```{r}
 st_bridges(df = uk_election|> filter(region %in% c("Wales","South West")),
@@ -146,11 +144,10 @@ st_bridges(df = uk_election|> filter(region %in% c("Wales","South West")),
   st_quickmap_nb()
 ```
 
-
 ## Modelling & post-functions
 
 Having set up a neighbourhood structure and embedded it as a named list or matrix within the original `sf` dataset as column `nb`, there are some functions to make it easy to quickly perform ICAR smoothing, augment the original dataframe with these predictions, and visualise them.
 
 For example, we can use the `mgcv` package to generate a Markov Random Field ICAR smooth of poor health across the study area. This is done very quickly by using `st_bridges()` to prepare the data, putting that inside the `mgcv` GAM formulation, and then piping into the `st_augment()` and `st_quickmap_preds()` functions.
 
-Further information and worked examples are available in this vignette.
+Further information and worked examples are available in the vignettes which can be found [here](https://horankev.github.io/sfislands/).

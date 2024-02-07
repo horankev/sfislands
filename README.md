@@ -1,6 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 <!-- <img src="man/figures/logo.png" align="right" height="240"/> -->
+<!-- # sfislands <a href="https://horankev.github.io/sfislands/"><img src="man/figures/logo.png" align="right" height="240" alt="sfislands website" /></a> -->
 
 # sfislands
 
@@ -140,4 +141,5 @@ very quickly by using `st_bridges()` to prepare the data, putting that
 inside the `mgcv` GAM formulation, and then piping into the
 `st_augment()` and `st_quickmap_preds()` functions.
 
-Further information and worked examples are available in this vignette.
+Further information and worked examples are available in the vignettes
+which can be found [here](https://horankev.github.io/sfislands/).
