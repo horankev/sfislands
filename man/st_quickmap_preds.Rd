@@ -4,10 +4,24 @@
 \alias{st_quickmap_preds}
 \title{Visualilse the predictions of an `mgcv` model}
 \usage{
-st_quickmap_preds(output)
+st_quickmap_preds(
+  output,
+  scale_low = "firebrick4",
+  scale_mid = "white",
+  scale_high = "darkblue",
+  scale_midpoint = 0
+)
 }
 \arguments{
 \item{output}{an augmented sf dataframe produced by st_augment()}
+
+\item{scale_low}{fill of lowest extreme of scale}
+
+\item{scale_mid}{fill of midpoint of scale}
+
+\item{scale_high}{fill of highest extreme of scale}
+
+\item{scale_midpoint}{value of midpoint of scale}
 }
 \value{
 a list of ggplots

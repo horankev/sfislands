@@ -1,6 +1,10 @@
 #' Visualilse the predictions of an `mgcv` model
 #'
 #' @param output an augmented sf dataframe produced by st_augment()
+#' @param scale_low fill of lowest extreme of scale
+#' @param scale_mid fill of midpoint of scale
+#' @param scale_high fill of highest extreme of scale
+#' @param scale_midpoint value of midpoint of scale
 #'
 #' @return a list of ggplots
 #' @export
@@ -11,7 +15,11 @@
 #'   s(constituency_name, bs='mrf', xt=list(nb=prepdata$nb), k=100),data=prepdata, method="REML") |>
 #' st_augment(uk_election) |>
 #' st_quickmap_preds()
-st_quickmap_preds <- function(output){
+st_quickmap_preds <- function(output,
+                              scale_low = "firebrick4",
+                              scale_mid = "white",
+                              scale_high = "darkblue",
+                              scale_midpoint = 0){
 
   if (!inherits(output,"sf")) {
     stop("Error: This function requires a simple features dataframe as input")
@@ -34,7 +42,10 @@ st_quickmap_preds <- function(output){
   for (i in 1:length(fillnames)){
     plot_list[[i]] <- ggplot2::ggplot() +
       ggplot2::geom_sf(data=output1, ggplot2::aes(fill=!!as.name(fillnames[i])), linewidth=0.05, colour="black") +
-      ggplot2::scale_fill_gradient2() +
+      ggplot2::scale_fill_gradient2(low = scale_low,
+                                    mid = scale_mid,
+                                    high = scale_high,
+                                    midpoint = scale_midpoint) +
       ggplot2::labs(title=newtitle[i],
                     subtitle=newsubtitle[i]) +
       ggplot2::coord_sf(datum=NA) +
