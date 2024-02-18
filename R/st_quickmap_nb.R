@@ -3,16 +3,16 @@
 #' @param nbsf an sf dataframe with a neighbourhood column called "nb"
 #' @param linkcol colour of lines connecting neighbours
 #' @param bordercol colour of boundary lines between areas
-#' @param pointcol colour of centroid points if nodes == "point"
+#' @param pointcol colour of centroid points if nodes are point
 #' @param fillcol fill of areas
 #' @param linksize linewidth of lines connecting neighbours
 #' @param bordersize linewidth of borders between areas
-#' @param pointsize size of centroid points if nodes == "point"
+#' @param pointsize size of centroid points if nodes are point
 #' @param title plot title
 #' @param subtitle plot subtitle
 #' @param nodes point or numeric
-#' @param numericsize font size if nodes == "numeric"
-#' @param numericcol font colour if nodes == "numeric"
+#' @param numericsize font size if nodes are numeric
+#' @param numericcol font colour if nodes are numeric
 #'
 #' @return ggplot of areas and neighbourhood structure
 #' @export
@@ -71,7 +71,22 @@ st_quickmap_nb <- function(nbsf,
   endpoints_coords <- sf::st_coordinates(neighbors_sf) |> data.frame() |>
     sf::st_as_sf(coords=c("X","Y"), crs=sf::st_crs(neighbors_sf))
 
-  if(nodes == "point"){
+  if(nodes == "numeric"){
+
+    # map the connections
+    ggplot2::ggplot() +
+      ggplot2::geom_sf(data=nbsf, fill=fillcol, colour=bordercol, linewidth=bordersize) +
+      ggplot2::geom_sf(data = neighbors_sf, colour=linkcol, linewidth=linksize) +
+      ggplot2::geom_sf_text(data=endpoints_coords, label=1:nrow(endpoints_coords), numericsize=numericsize, numericcol=numericcol, fontface="bold") +
+      ggplot2::coord_sf(datum=NA) +
+      ggplot2::labs(title = title,
+                    subtitle = subtitle) +
+      ggplot2::theme_void() +
+      ggplot2::theme(axis.title.x = ggplot2::element_blank()) +
+      ggplot2::theme(axis.title.y = ggplot2::element_blank())
+  }
+
+  else{
 
     # map the connections
     ggplot2::ggplot() +
@@ -86,19 +101,4 @@ st_quickmap_nb <- function(nbsf,
       ggplot2::theme(axis.title.y = ggplot2::element_blank())
   }
 
-  if(nodes == "numeric"){
-
-    # map the connections
-    ggplot2::ggplot() +
-      ggplot2::geom_sf(data=nbsf, fill=fillcol, colour=bordercol, linewidth=bordersize) +
-      ggplot2::geom_sf(data = neighbors_sf, colour=linkcol, linewidth=linksize) +
-      ggplot2::geom_sf_text(data=endpoints_coords,
-                            ggplot2::aes(label=rownames(endpoints_coords)), numericsize=numericsize, numericcol=numericcol, fontface="bold") +
-      ggplot2::coord_sf(datum=NA) +
-      ggplot2::labs(title = title,
-                    subtitle = subtitle) +
-      ggplot2::theme_void() +
-      ggplot2::theme(axis.title.x = ggplot2::element_blank()) +
-      ggplot2::theme(axis.title.y = ggplot2::element_blank())
-  }
 }
