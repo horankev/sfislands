@@ -73,11 +73,13 @@ st_quickmap_nb <- function(nbsf,
 
   if(nodes == "numeric"){
 
+    endpoints_coords$id <- 1:nrow(endpoints_coords)
+
     # map the connections
     ggplot2::ggplot() +
       ggplot2::geom_sf(data=nbsf, fill=fillcol, colour=bordercol, linewidth=bordersize) +
       ggplot2::geom_sf(data = neighbors_sf, colour=linkcol, linewidth=linksize) +
-      ggplot2::geom_sf_text(data=endpoints_coords, aes(label=1:nrow(endpoints_coords)), numericsize=numericsize, numericcol=numericcol, fontface="bold") +
+      ggplot2::geom_sf_text(data=endpoints_coords, aes(label=!!id), numericsize=numericsize, numericcol=numericcol) +
       ggplot2::coord_sf(datum=NA) +
       ggplot2::labs(title = title,
                     subtitle = subtitle) +
