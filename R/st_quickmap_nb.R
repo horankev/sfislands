@@ -31,7 +31,7 @@ st_quickmap_nb <- function(nbsf,
                            title=NULL,
                            subtitle=NULL,
                            nodes="point",
-                           numericsize=5,
+                           numericsize=1,
                            numericcol="black"){
 
   if (!inherits(nbsf,"sf")) {
@@ -77,7 +77,7 @@ st_quickmap_nb <- function(nbsf,
     ggplot2::ggplot() +
       ggplot2::geom_sf(data=nbsf, fill=fillcol, colour=bordercol, linewidth=bordersize) +
       ggplot2::geom_sf(data = neighbors_sf, colour=linkcol, linewidth=linksize) +
-      ggplot2::geom_sf_text(data=endpoints_coords, label=1:nrow(endpoints_coords), numericsize=numericsize, numericcol=numericcol, fontface="bold") +
+      ggplot2::geom_sf_text(data=endpoints_coords, aes(label=1:nrow(endpoints_coords)), numericsize=numericsize, numericcol=numericcol, fontface="bold") +
       ggplot2::coord_sf(datum=NA) +
       ggplot2::labs(title = title,
                     subtitle = subtitle) +

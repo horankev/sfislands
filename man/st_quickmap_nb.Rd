@@ -16,7 +16,7 @@ st_quickmap_nb(
   title = NULL,
   subtitle = NULL,
   nodes = "point",
-  numericsize = 5,
+  numericsize = 1,
   numericcol = "black"
 )
 }
@@ -27,7 +27,7 @@ st_quickmap_nb(
 
 \item{bordercol}{colour of boundary lines between areas}
 
-\item{pointcol}{colour of centroid points if nodes == "point"}
+\item{pointcol}{colour of centroid points if nodes are point}
 
 \item{fillcol}{fill of areas}
 
@@ -35,7 +35,7 @@ st_quickmap_nb(
 
 \item{bordersize}{linewidth of borders between areas}
 
-\item{pointsize}{size of centroid points if nodes == "point"}
+\item{pointsize}{size of centroid points if nodes are point}
 
 \item{title}{plot title}
 
@@ -43,9 +43,9 @@ st_quickmap_nb(
 
 \item{nodes}{point or numeric}
 
-\item{numericsize}{font size if nodes == "numeric"}
+\item{numericsize}{font size if nodes are numeric}
 
-\item{numericcol}{font colour if nodes == "numeric"}
+\item{numericcol}{font colour if nodes are numeric}
 }
 \value{
 ggplot of areas and neighbourhood structure
