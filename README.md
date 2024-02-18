@@ -113,9 +113,9 @@ nbsf <- st_bridges(df = uk_election,
                    geom_col_name = "constituency_name",
                    link_islands_k = 2)
 st_quickmap_nb(nbsf,
-                    pointsize=0.05, 
-                    title = "st_bridges() contiguities",
-                    subtitle = "islands linked to k=2 nearest constituencies")
+               pointsize=0.05, 
+               title = "st_bridges() contiguities",
+               subtitle = "islands linked to k=2 nearest constituencies")
 ```
 
 <img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
