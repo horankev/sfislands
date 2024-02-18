@@ -32,8 +32,7 @@ packages <- c(
   "ggpubr",
   "spdep",
   "sfdep",
-  "here",
-  "parlitools"
+  "here"
 )
 
 # Install packages not yet installed
