@@ -79,7 +79,7 @@ st_quickmap_nb <- function(nbsf,
     ggplot2::ggplot() +
       ggplot2::geom_sf(data=nbsf, fill=fillcol, colour=bordercol, linewidth=bordersize) +
       ggplot2::geom_sf(data = neighbors_sf, colour=linkcol, linewidth=linksize) +
-      ggplot2::geom_sf_text(data=endpoints_coords, aes(label=endpoints_coords$id), numericsize=numericsize, numericcol=numericcol) +
+      ggplot2::geom_sf_text(data=endpoints_coords, aes(label=endpoints_coords$id), size=numericsize, colour=numericcol) +
       ggplot2::coord_sf(datum=NA) +
       ggplot2::labs(title = title,
                     subtitle = subtitle) +
