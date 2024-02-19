@@ -13,6 +13,10 @@
 #' @param nodes point or numeric
 #' @param numericsize font size if nodes are numeric
 #' @param numericcol font colour if nodes are numeric
+#' @param concavehull default FALSE. whether or not to show concave hulls
+#' @param hullratio fraction convex: 1 returns the convex hulls, 0 maximally concave hulls
+#' @param hullcol colour of concave hull lines
+#' @param hullsize line width of concave hull lines
 #'
 #' @return ggplot of areas and neighbourhood structure
 #' @export
@@ -31,8 +35,12 @@ st_quickmap_nb <- function(nbsf,
                            title=NULL,
                            subtitle=NULL,
                            nodes="point",
-                           numericsize=1,
-                           numericcol="black"){
+                           numericsize=5,
+                           numericcol="black",
+                           concavehull=FALSE,
+                           hullratio=0.8,
+                           hullcol="darkgreen",
+                           hullsize=0.5){
 
   if (!inherits(nbsf,"sf")) {
     stop("Error: This function requires a simple features dataframe as input")
@@ -72,35 +80,72 @@ st_quickmap_nb <- function(nbsf,
     sf::st_as_sf(coords=c("X","Y"), crs=sf::st_crs(neighbors_sf))
 
   if(nodes == "numeric"){
+    if(concavehull == TRUE){
+      nbsf$id <- 1:nrow(nbsf)
 
-    nbsf$id <- 1:nrow(nbsf)
+      # map the connections
+      ggplot2::ggplot() +
+        ggplot2::geom_sf(data=nbsf, fill=fillcol, colour=bordercol, linewidth=bordersize) +
+        ggplot2::geom_sf(data = neighbors_sf, colour=linkcol, linewidth=linksize) +
+        ggplot2::geom_sf_text(data=nbsf |> sf::st_centroid(), ggplot2::aes(label=id), size=numericsize, colour=numericcol, fontface="bold") +
+        ggplot2::coord_sf(datum=NA) +
+        ggplot2::labs(title = title,
+                      subtitle = subtitle) +
+        ggplot2::theme_void() +
+        ggplot2::theme(axis.title.x = ggplot2::element_blank()) +
+        ggplot2::theme(axis.title.y = ggplot2::element_blank()) +
+        ggplot2::geom_sf(data=nbsf |> sf::st_concave_hull(ratio = hullratio), fill=NA, colour=hullcol, linewidth=hullsize)
+    }
 
-    # map the connections
-    ggplot2::ggplot() +
-      ggplot2::geom_sf(data=nbsf, fill=fillcol, colour=bordercol, linewidth=bordersize) +
-      ggplot2::geom_sf(data = neighbors_sf, colour=linkcol, linewidth=linksize) +
-      ggplot2::geom_sf_text(data=nbsf |> st_centroid(), aes(label=id), size=numericsize, colour=numericcol, fontface="bold") +
-      ggplot2::coord_sf(datum=NA) +
-      ggplot2::labs(title = title,
-                    subtitle = subtitle) +
-      ggplot2::theme_void() +
-      ggplot2::theme(axis.title.x = ggplot2::element_blank()) +
-      ggplot2::theme(axis.title.y = ggplot2::element_blank())
+    else{
+      nbsf$id <- 1:nrow(nbsf)
+
+      # map the connections
+      ggplot2::ggplot() +
+        ggplot2::geom_sf(data=nbsf, fill=fillcol, colour=bordercol, linewidth=bordersize) +
+        ggplot2::geom_sf(data = neighbors_sf, colour=linkcol, linewidth=linksize) +
+        ggplot2::geom_sf_text(data=nbsf |> sf::st_centroid(), ggplot2::aes(label=id), size=numericsize, colour=numericcol, fontface="bold") +
+        ggplot2::coord_sf(datum=NA) +
+        ggplot2::labs(title = title,
+                      subtitle = subtitle) +
+        ggplot2::theme_void() +
+        ggplot2::theme(axis.title.x = ggplot2::element_blank()) +
+        ggplot2::theme(axis.title.y = ggplot2::element_blank())
+    }
+
+
   }
 
   else{
+    if(concavehull == TRUE){
+      # map the connections
+      ggplot2::ggplot() +
+        ggplot2::geom_sf(data=nbsf, fill=fillcol, colour=bordercol, linewidth=bordersize) +
+        ggplot2::geom_sf(data = neighbors_sf, colour=linkcol, linewidth=linksize) +
+        ggplot2::geom_sf(data=endpoints_coords, size=pointsize, colour=pointcol) +
+        ggplot2::coord_sf(datum=NA) +
+        ggplot2::labs(title = title,
+                      subtitle = subtitle) +
+        ggplot2::theme_void() +
+        ggplot2::theme(axis.title.x = ggplot2::element_blank()) +
+        ggplot2::theme(axis.title.y = ggplot2::element_blank()) +
+        ggplot2::geom_sf(data=nbsf |> sf::st_concave_hull(ratio = hullratio), fill=NA, colour=hullcol, linewidth=hullsize)
+    }
 
-    # map the connections
-    ggplot2::ggplot() +
-      ggplot2::geom_sf(data=nbsf, fill=fillcol, colour=bordercol, linewidth=bordersize) +
-      ggplot2::geom_sf(data = neighbors_sf, colour=linkcol, linewidth=linksize) +
-      ggplot2::geom_sf(data=endpoints_coords, size=pointsize, colour=pointcol) +
-      ggplot2::coord_sf(datum=NA) +
-      ggplot2::labs(title = title,
-                    subtitle = subtitle) +
-      ggplot2::theme_void() +
-      ggplot2::theme(axis.title.x = ggplot2::element_blank()) +
-      ggplot2::theme(axis.title.y = ggplot2::element_blank())
+    else{
+      # map the connections
+      ggplot2::ggplot() +
+        ggplot2::geom_sf(data=nbsf, fill=fillcol, colour=bordercol, linewidth=bordersize) +
+        ggplot2::geom_sf(data = neighbors_sf, colour=linkcol, linewidth=linksize) +
+        ggplot2::geom_sf(data=endpoints_coords, size=pointsize, colour=pointcol) +
+        ggplot2::coord_sf(datum=NA) +
+        ggplot2::labs(title = title,
+                      subtitle = subtitle) +
+        ggplot2::theme_void() +
+        ggplot2::theme(axis.title.x = ggplot2::element_blank()) +
+        ggplot2::theme(axis.title.y = ggplot2::element_blank())
+    }
+
   }
 
 }

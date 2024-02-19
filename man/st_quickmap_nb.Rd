@@ -16,8 +16,12 @@ st_quickmap_nb(
   title = NULL,
   subtitle = NULL,
   nodes = "point",
-  numericsize = 1,
-  numericcol = "black"
+  numericsize = 5,
+  numericcol = "black",
+  concavehull = FALSE,
+  hullratio = 0.8,
+  hullcol = "darkgreen",
+  hullsize = 0.5
 )
 }
 \arguments{
@@ -46,6 +50,14 @@ st_quickmap_nb(
 \item{numericsize}{font size if nodes are numeric}
 
 \item{numericcol}{font colour if nodes are numeric}
+
+\item{concavehull}{default FALSE. whether or not to show concave hulls}
+
+\item{hullratio}{fraction convex: 1 returns the convex hulls, 0 maximally concave hulls}
+
+\item{hullcol}{colour of concave hull lines}
+
+\item{hullsize}{line width of concave hull lines}
 }
 \value{
 ggplot of areas and neighbourhood structure
