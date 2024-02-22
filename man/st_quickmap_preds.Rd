@@ -13,8 +13,8 @@ st_quickmap_preds(
   borderwidth = 0.05,
   bordercol = "black",
   legendlimits = "individual",
-  titlesize = 10,
-  subtitlesize = 8,
+  titlesize = 12,
+  subtitlesize = 10,
   framefill = "white",
   frameline = "black",
   framesize = 1
