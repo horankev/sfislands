@@ -1104,7 +1104,7 @@ brms_plot <- ggplot(prep_data2)+geom_sf(aes(fill=brmsfit), linewidth=0.1) +
   theme_bw() + 
   theme(legend.text = element_text(size = 30),
         legend.title = element_text(size = 30))
-ggsave("/Users/kevinhoran/Documents/sfislands/vignettes/articles/brms_plot.png", width = 12, height = 10)
+# ggsave("/Users/kevinhoran/Documents/sfislands/vignettes/articles/brms_plot.png", width = 12, height = 10)
 
 ```
 
