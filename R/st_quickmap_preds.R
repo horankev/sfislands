@@ -65,7 +65,9 @@ st_quickmap_preds <- function(output,
   plot_list <- list()
   for (i in 1:length(fillnames)){
     plot_list[[i]] <- ggplot2::ggplot() +
-      ggplot2::geom_sf(data=output1, ggplot2::aes(fill=!!as.name(fillnames[i])), linewidth=borderwidth, colour=bordercol) +
+      ggplot2::geom_sf(data=output1, ggplot2::aes(fill=!!as.name(fillnames[i])),
+                       linewidth=borderwidth,
+                       colour=bordercol) +
       ggplot2::scale_fill_gradient2(low = scale_low,
                                     mid = scale_mid,
                                     high = scale_high,
@@ -78,7 +80,9 @@ st_quickmap_preds <- function(output,
       ggplot2::theme(plot.title = ggplot2::element_text(size=titlesize),
                      plot.subtitle = ggplot2::element_text(size=subtitlesize),
                      legend.title =  ggplot2::element_blank(),
-                     panel.background = ggplot2::element_rect(fill = framefill, color = frameline, linewidth = framesize))
+                     panel.background = ggplot2::element_rect(fill=framefill,
+                                                              color=frameline,
+                                                              linewidth=framesize))
 
   }
 
