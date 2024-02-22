@@ -8,6 +8,8 @@
 #' @param borderwidth linewidth of borders between units
 #' @param bordercol colour of borders between units
 #' @param legendlimits "individual" (default) each plot scaled to individual min-max. "minmax" means all plot have a common min-max according to the global min-max
+#' @param titlesize font size for title
+#' @param subtitlesize font size for subtitle
 #'
 #' @return a list of ggplots
 #' @export
@@ -25,7 +27,9 @@ st_quickmap_preds <- function(output,
                               scale_midpoint = 0,
                               borderwidth = 0.05,
                               bordercol = "black",
-                              legendlimits = "individual"){
+                              legendlimits = "individual",
+                              titlesize = 10,
+                              subtitlesize = 8){
 
   if (!inherits(output,"sf")) {
     stop("Error: This function requires a simple features dataframe as input")
@@ -67,7 +71,9 @@ st_quickmap_preds <- function(output,
       ggplot2::coord_sf(datum=NA) +
       ggplot2::theme_minimal() +
       ggplot2::theme_bw() +
-      ggplot2::theme(plot.subtitle = ggplot2::element_text(size=10))
+      ggplot2::theme(plot.title = ggplot2::element_text(size=titlesize)) +
+      ggplot2::theme(plot.subtitle = ggplot2::element_text(size=subtitlesize)) +
+      ggplot2::theme(legend.title =  ggplot2::element_blank())
 
   }
 

@@ -12,7 +12,9 @@ st_quickmap_preds(
   scale_midpoint = 0,
   borderwidth = 0.05,
   bordercol = "black",
-  legendlimits = "individual"
+  legendlimits = "individual",
+  titlesize = 10,
+  subtitlesize = 8
 )
 }
 \arguments{
@@ -31,6 +33,10 @@ st_quickmap_preds(
 \item{bordercol}{colour of borders between units}
 
 \item{legendlimits}{"individual" (default) each plot scaled to individual min-max. "minmax" means all plot have a common min-max according to the global min-max}
+
+\item{titlesize}{font size for title}
+
+\item{subtitlesize}{font size for subtitle}
 }
 \value{
 a list of ggplots
