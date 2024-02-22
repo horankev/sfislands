@@ -75,12 +75,10 @@ st_quickmap_preds <- function(output,
       ggplot2::labs(title=newtitle[i],
                     subtitle=newsubtitle[i]) +
       ggplot2::coord_sf(datum=NA) +
-      ggplot2::theme_minimal() +
-      ggplot2::theme_bw() +
-      ggplot2::theme(plot.title = ggplot2::element_text(size=titlesize)) +
-      ggplot2::theme(plot.subtitle = ggplot2::element_text(size=subtitlesize)) +
-      ggplot2::theme(legend.title =  ggplot2::element_blank() +
-      ggplot2::theme(panel.background = ggplot2::element_rect(fill = framefill, color = frameline, linewidth= framesize)))
+      ggplot2::theme(plot.title = ggplot2::element_text(size=titlesize),
+                     plot.subtitle = ggplot2::element_text(size=subtitlesize),
+                     legend.title =  ggplot2::element_blank(),
+                     panel.background = ggplot2::element_rect(fill = framefill, color = frameline, linewidth = framesize))
 
   }
 
