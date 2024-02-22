@@ -10,6 +10,9 @@
 #' @param legendlimits "individual" (default) each plot scaled to individual min-max. "minmax" means all plot have a common min-max according to the global min-max
 #' @param titlesize font size for title
 #' @param subtitlesize font size for subtitle
+#' @param framefill colour for background fill
+#' @param frameline colour for frame
+#' @param framesize line width of frame
 #'
 #' @return a list of ggplots
 #' @export
@@ -29,7 +32,10 @@ st_quickmap_preds <- function(output,
                               bordercol = "black",
                               legendlimits = "individual",
                               titlesize = 10,
-                              subtitlesize = 8){
+                              subtitlesize = 8,
+                              framefill = "white",
+                              frameline = "black",
+                              framesize = 1){
 
   if (!inherits(output,"sf")) {
     stop("Error: This function requires a simple features dataframe as input")
@@ -52,9 +58,9 @@ st_quickmap_preds <- function(output,
 
   # split column names into title and subtitle
   # either side of second . in string
-  newtitle <- sub("^(.*?\\..*?)\\..*$", "\\1", fillnames)
+  newsubtitle <- sub("^(.*?\\..*?)\\..*$", "\\1", fillnames)
   # extract the text after random.effect. or mrf.smooth.
-  newsubtitle <- stringr::str_replace_all(fillnames, "(random\\.effect\\.|mrf\\.smooth\\.)", "")
+  newtitle <- stringr::str_replace_all(fillnames, "(random\\.effect\\.|mrf\\.smooth\\.)", "")
 
   plot_list <- list()
   for (i in 1:length(fillnames)){
@@ -73,7 +79,8 @@ st_quickmap_preds <- function(output,
       ggplot2::theme_bw() +
       ggplot2::theme(plot.title = ggplot2::element_text(size=titlesize)) +
       ggplot2::theme(plot.subtitle = ggplot2::element_text(size=subtitlesize)) +
-      ggplot2::theme(legend.title =  ggplot2::element_blank())
+      ggplot2::theme(legend.title =  ggplot2::element_blank() +
+      ggplot2::theme(panel.background = ggplot2::element_rect(fill = framefill, color = frameline, linewidth= framesize)))
 
   }
 

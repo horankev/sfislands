@@ -14,7 +14,10 @@ st_quickmap_preds(
   bordercol = "black",
   legendlimits = "individual",
   titlesize = 10,
-  subtitlesize = 8
+  subtitlesize = 8,
+  framefill = "white",
+  frameline = "black",
+  framesize = 1
 )
 }
 \arguments{
@@ -37,6 +40,12 @@ st_quickmap_preds(
 \item{titlesize}{font size for title}
 
 \item{subtitlesize}{font size for subtitle}
+
+\item{framefill}{colour for background fill}
+
+\item{frameline}{colour for frame}
+
+\item{framesize}{line width of frame}
 }
 \value{
 a list of ggplots
