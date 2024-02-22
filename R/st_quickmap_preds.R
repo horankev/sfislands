@@ -7,7 +7,7 @@
 #' @param scale_midpoint value of midpoint of scale
 #' @param borderwidth linewidth of borders between units
 #' @param bordercol colour of borders between units
-#' @param limits "individual" (default) each plot scaled to individual min-max. "minmax" means all plot have a common min-max according to the global min-max
+#' @param legendlimits "individual" (default) each plot scaled to individual min-max. "minmax" means all plot have a common min-max according to the global min-max
 #'
 #' @return a list of ggplots
 #' @export
@@ -60,9 +60,8 @@ st_quickmap_preds <- function(output,
                                     mid = scale_mid,
                                     high = scale_high,
                                     midpoint = scale_midpoint,
-                                    limits = ifelse(legendlimits == "minmax",
-                                                    c(min_scale, max_scale),
-                                                    NULL)) +
+                                    limits = if(legendlimits == "minmax") c(min_scale, max_scale)
+                                                else(NULL)) +
       ggplot2::labs(title=newtitle[i],
                     subtitle=newsubtitle[i]) +
       ggplot2::coord_sf(datum=NA) +

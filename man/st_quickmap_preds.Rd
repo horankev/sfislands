@@ -30,7 +30,7 @@ st_quickmap_preds(
 
 \item{bordercol}{colour of borders between units}
 
-\item{limits}{"individual" (default) each plot scaled to individual min-max. "minmax" means all plot have a common min-max according to the global min-max}
+\item{legendlimits}{"individual" (default) each plot scaled to individual min-max. "minmax" means all plot have a common min-max according to the global min-max}
 }
 \value{
 a list of ggplots
