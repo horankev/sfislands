@@ -9,7 +9,10 @@ st_quickmap_preds(
   scale_low = "firebrick4",
   scale_mid = "white",
   scale_high = "darkblue",
-  scale_midpoint = 0
+  scale_midpoint = 0,
+  borderwidth = 0.05,
+  bordercol = "black",
+  legendlimits = "individual"
 )
 }
 \arguments{
@@ -22,6 +25,12 @@ st_quickmap_preds(
 \item{scale_high}{fill of highest extreme of scale}
 
 \item{scale_midpoint}{value of midpoint of scale}
+
+\item{borderwidth}{linewidth of borders between units}
+
+\item{bordercol}{colour of borders between units}
+
+\item{limits}{"individual" (default) each plot scaled to individual min-max. "minmax" means all plot have a common min-max according to the global min-max}
 }
 \value{
 a list of ggplots
