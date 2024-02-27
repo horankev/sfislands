@@ -60,7 +60,9 @@ st_quickmap_preds <- function(output,
   # either side of second . in string
   newsubtitle <- sub("^(.*?\\..*?)\\..*$", "\\1", fillnames)
   # extract the text after random.effect. or mrf.smooth.
-  newtitle <- stringr::str_replace_all(fillnames, "(random\\.effect\\. | mrf\\.smooth\\.)", "")
+  newtitle <- stringr::str_replace_all(fillnames, "(random\\.effect\\.|mrf\\.smooth\\.)", "")
+  # Add a space on either side of any occurrence of '|'
+  newtitle <- str_replace_all(newtitle, "\\|", " | ")
 
   plot_list <- list()
   for (i in 1:length(fillnames)){
