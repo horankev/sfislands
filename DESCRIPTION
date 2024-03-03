@@ -1,0 +1,37 @@
+Package: sfislands
+Type: Package
+Title: Pre and post functions for working with areal data
+Version: 0.1.0
+Author: Kevin Horan
+Authors@R: c(
+    person("Kevin", "Horan", , "kevin.horan.2021@mumail.ie", role = c("aut", "cre"),
+      comment = c(ORCID = "0009-0003-9378-0084")
+    )
+  )
+Maintainer: Kevin Horan <kevin.horan.2021@mumail.ie>
+Description: It helps construct contiguities when islands are present.
+    But also helps with checking and editing contiguities.
+    Provides functions for extracting predictions from areal models.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Imports: 
+    dplyr,
+    ggplot2,
+    methods,
+    purrr,
+    sf,
+    spdep,
+    stats,
+    stringr,
+    tidyr
+Suggests:
+    mgcv,
+    testthat (>= 3.0.0)
+RoxygenNote: 7.2.3
+URL: https://github.com/horankev/sfislands, https://horankev.github.io/sfislands/
+BugReports: https://github.com/horankev/sfislands/issues
+Depends: 
+    R (>= 2.10)
+Config/Needs/website: rmarkdown
+Config/testthat/edition: 3
