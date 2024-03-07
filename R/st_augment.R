@@ -121,7 +121,7 @@ st_augment.lmerMod <- function(model,df) {
     newname2_clean <- stringr::str_replace_all(newname2, "\\(Intercept\\)\\|", "")
     names(x)[names(x)=="std.error"] <- newname2_clean
 
-    return(df)
+    return(x)
   }
 
   temp2 <- lapply(temp_list, myfunct)
@@ -132,7 +132,7 @@ st_augment.lmerMod <- function(model,df) {
   # due to missing values
   cols_to_remove <- c("group","term","group_term")
   left_join_to_df <- function(y) {
-    dplyr::left_join(df |> sf::st_drop_geometry(), df, by=names(y)[2])  |>
+    dplyr::left_join(df |> sf::st_drop_geometry(), y, by=names(y)[2])  |>
       dplyr::select(-cols_to_remove)
   }
 
