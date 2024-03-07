@@ -1,6 +1,6 @@
 #' Augment dataframe with predictions of model
 #'
-#' @param model an `mgcv` model
+#' @param model an `mgcv` or `lme4` model
 #' @param df the sf data frame to be augmented with model preditions
 #'
 #' @return an augmented sd dataframe
@@ -16,11 +16,23 @@
 #' mgcv::gam(health_not_good ~
 #'   s(constituency_name, bs='mrf', xt=list(nb=prepdata$nb), k=100),data=prepdata, method="REML") |>
 #' st_augment(uk_election)
-st_augment <- function(model,df){
 
-  if (!(class(model)[1] %in% "gam")) {
-    stop("Error: This function requires the model to be of class 'gam'")
-  }
+st_augment <- function(model,df){
+  UseMethod("st_augment")
+}
+
+
+#' @export
+st_augment.default <- function(model,df){
+
+  warning(paste("st_augment does not know how to handle object of class ",
+                class(model),
+                "and can only be used on classes gam and lmerMod"))
+
+}
+
+#' @export
+st_augment.gam <- function(model,df){
 
   # Identify numeric columns
   numeric_columns <- sapply(df, is.numeric)
@@ -80,4 +92,56 @@ st_augment <- function(model,df){
 
   return(output2)
 
+}
+
+#' @export
+st_augment.lmerMod <- function(model,df) {
+
+  temp1 <- broom.mixed::tidy(model, effects = "ran_vals", conf.int = TRUE) |>
+    dplyr::select(2:6)
+
+  # Create a unique identifier for each combination of group and term
+  temp1$group_term <- paste(temp1$group, temp1$term, sep = ".")
+
+  # Split dataframe into a list of dataframes
+  # based on the unique combinations of group and term
+  temp_list <- split(temp1, temp1$group_term)
+
+  # function to change one col name for joining purposes
+  # and give desired name structure to estimates and std errors
+  myfunct <- function(x) {
+    tempname <- unique(x[,1])
+    colnames(x)[2] <- as.character(tempname)
+
+    newname1 <- paste0("random.effect.",x$term,"|",x$group)
+    newname1_clean <- stringr::str_replace_all(newname1, "\\(Intercept\\)\\|", "")
+    names(x)[names(x)=="estimate"] <- newname1_clean
+
+    newname2 <- paste0("se.random.effect.",x$term,"|",x$group)
+    newname2_clean <- stringr::str_replace_all(newname2, "\\(Intercept\\)\\|", "")
+    names(x)[names(x)=="std.error"] <- newname2_clean
+
+    return(df)
+  }
+
+  temp2 <- lapply(temp_list, myfunct)
+
+  # function to join each nested df to original sf df
+  # first remove geometry for rejoining later
+  # remove the three cols before merging which would lead to NAs
+  # due to missing values
+  cols_to_remove <- c("group","term","group_term")
+  left_join_to_df <- function(y) {
+    dplyr::left_join(df |> sf::st_drop_geometry(), df, by=names(y)[2])  |>
+      dplyr::select(-cols_to_remove)
+  }
+
+  temp3 <- lapply(temp2, left_join_to_df)
+
+  # make list of dfs into one df and add geometry column back
+  temp4 <- Reduce(function(x, y) merge(x, y, all=TRUE), temp3) |>
+    dplyr::mutate(geometry = df$geometry) |>
+    sf::st_as_sf()
+
+  return(temp4)
 }

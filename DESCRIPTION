@@ -24,7 +24,8 @@ Imports:
     spdep,
     stats,
     stringr,
-    tidyr
+    tidyr,
+    broom.mixed
 Suggests:
     mgcv,
     testthat (>= 3.0.0)
