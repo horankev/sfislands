@@ -27,7 +27,7 @@ st_augment.default <- function(model,df){
 
   warning(paste("st_augment does not know how to handle object of class ",
                 class(model),
-                "and can only be used on classes gam and lmerMod"))
+                "and can only be used on classes gam, lmerMod and lme"))
 
 }
 
