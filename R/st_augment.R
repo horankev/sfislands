@@ -1,7 +1,7 @@
 #' Augment dataframe with predictions of model
 #'
 #' @param model an `mgcv`, `lme4` or `nlme` model
-#' @param df the sf data frame to be augmented with model preditions
+#' @param df the sf data frame to be augmented with model predictions
 #'
 #' @return an augmented sd dataframe
 #' @export
@@ -14,7 +14,8 @@
 #' }
 #' prepdata <- st_bridges(uk_election,"constituency_name")
 #' mgcv::gam(health_not_good ~
-#'   s(constituency_name, bs='mrf', xt=list(nb=prepdata$nb), k=100),data=prepdata, method="REML") |>
+#'   s(constituency_name, bs='mrf', xt=list(nb=prepdata$nb), k=100),
+#'   data=prepdata, method="REML") |>
 #' st_augment(uk_election)
 
 st_augment <- function(model,df){

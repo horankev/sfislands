@@ -9,7 +9,7 @@ st_augment(model, df)
 \arguments{
 \item{model}{an `mgcv`, `lme4` or `nlme` model}
 
-\item{df}{the sf data frame to be augmented with model preditions}
+\item{df}{the sf data frame to be augmented with model predictions}
 }
 \value{
 an augmented sd dataframe
@@ -25,6 +25,7 @@ library(package_name, character.only = TRUE)
 }
 prepdata <- st_bridges(uk_election,"constituency_name")
 mgcv::gam(health_not_good ~
-  s(constituency_name, bs='mrf', xt=list(nb=prepdata$nb), k=100),data=prepdata, method="REML") |>
+  s(constituency_name, bs='mrf', xt=list(nb=prepdata$nb), k=100),
+  data=prepdata, method="REML") |>
 st_augment(uk_election)
 }
