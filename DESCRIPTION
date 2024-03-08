@@ -2,17 +2,23 @@ Package: sfislands
 Type: Package
 Title: Pre and post functions for working with areal data
 Version: 0.1.0
-Authors@R: c(
-    person("Kevin", "Horan", , "kevin.horan.2021@mumail.ie", role = c("aut", "cre"),
-      comment = c(ORCID = "0009-0003-9378-0084")
+Authors@R: 
+  c(person(given = "Kevin", 
+          family = "Horan",
+          email = "kevin.horan.2021@mumail.ie", 
+          role = c("aut", "cre"),
+          comment = c(ORCID = "0009-0003-9378-0084")),
+    person(given = "Katarina", 
+          family = "Domijan", 
+          email = "katarina.domijan@mu.ie", 
+          role = c("ths"), 
+          comment = c(ORCID = "0000-0002-4268-2236")),
+    person(given = "Chris", 
+          family = "Brunsdon", 
+          email = "Christopher.Brunsdon@mu.ie", 
+          role = c("ths"), 
+          comment = c(ORCID = "0000-0003-4254-1780"))
     )
-    person("Katarina", "Domijan", , "katarina.domijan@mu.ie", role = c("ths"),
-      comment = c(ORCID = "0000-0002-4268-2236")
-    )
-    person("Chris", "Brunsdon", , "Christopher.Brunsdon@mu.ie", role = c("ths"),
-      comment = c(ORCID = "0000-0003-4254-1780")
-    )
-  )
 Maintainer: Kevin Horan <kevin.horan.2021@mumail.ie>
 Description: It helps construct contiguities when islands are present.
     But also helps with checking and editing contiguities.
