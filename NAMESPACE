@@ -2,6 +2,7 @@
 
 S3method(st_augment,default)
 S3method(st_augment,gam)
+S3method(st_augment,lme)
 S3method(st_augment,lmerMod)
 export(st_augment)
 export(st_bridges)
