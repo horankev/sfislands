@@ -12,7 +12,7 @@ st_augment(model, df)
 \item{df}{the sf data frame to be augmented with model predictions}
 }
 \value{
-an augmented sd dataframe
+an augmented sf dataframe
 }
 \description{
 Augment dataframe with predictions of model
