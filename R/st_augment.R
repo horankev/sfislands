@@ -3,7 +3,7 @@
 #' @param model an `mgcv`, `lme4` or `nlme` model
 #' @param df the sf data frame to be augmented with model predictions
 #'
-#' @return an augmented sd dataframe
+#' @return an augmented sf dataframe
 #' @export
 #'
 #' @examples

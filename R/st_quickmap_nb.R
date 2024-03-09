@@ -81,7 +81,8 @@ st_quickmap_nb <- function(nbsf,
 
   if(nodes == "numeric"){
     if(concavehull == TRUE){
-      nbsf$id <- 1:nrow(nbsf)
+      id <- 1:nrow(nbsf)
+      nbsf$id <- id
 
       # map the connections
       ggplot2::ggplot() +
@@ -98,7 +99,8 @@ st_quickmap_nb <- function(nbsf,
     }
 
     else{
-      nbsf$id <- 1:nrow(nbsf)
+      id <- 1:nrow(nbsf)
+      nbsf$id <- id
 
       # map the connections
       ggplot2::ggplot() +
