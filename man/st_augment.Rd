@@ -7,12 +7,12 @@
 st_augment(model, df)
 }
 \arguments{
-\item{model}{an `mgcv`, `lme4` or `nlme` model}
+\item{model}{an `mgcv`, `lme4` or `nlme` model.}
 
-\item{df}{the sf data frame to be augmented with model predictions}
+\item{df}{an `sf` data frame to be augmented with model predictions.}
 }
 \value{
-an augmented sf dataframe
+an augmented `sf` data frame with extra columns showing estimates of random effects from model.
 }
 \description{
 Augment dataframe with predictions of model

@@ -1,24 +1,24 @@
 #' Visualise a neighbourhood structure on a map
 #'
-#' @param nbsf an sf dataframe with a neighbourhood column called "nb"
-#' @param linkcol colour of lines connecting neighbours
-#' @param bordercol colour of boundary lines between areas
-#' @param pointcol colour of centroid points if nodes are point
-#' @param fillcol fill of areas
-#' @param linksize linewidth of lines connecting neighbours
-#' @param bordersize linewidth of borders between areas
-#' @param pointsize size of centroid points if nodes are point
-#' @param title plot title
-#' @param subtitle plot subtitle
-#' @param nodes point or numeric
-#' @param numericsize font size if nodes are numeric
-#' @param numericcol font colour if nodes are numeric
-#' @param concavehull default FALSE. whether or not to show concave hulls
-#' @param hullratio fraction convex: 1 returns the convex hulls, 0 maximally concave hulls
-#' @param hullcol colour of concave hull lines
-#' @param hullsize line width of concave hull lines
+#' @param nbsf an `sf` dataframe with a neighbourhood column called "nb", such as the output of `st_bridges()`
+#' @param linkcol colour of lines connecting neighbours.
+#' @param bordercol colour of boundary lines between areas.
+#' @param pointcol colour of centroid points if nodes are `"point"`.
+#' @param fillcol fill of areas.
+#' @param linksize linewidth of lines connecting neighbours.
+#' @param bordersize linewidth of borders between areas.
+#' @param pointsize size of centroid points if nodes are `"point"`.
+#' @param title plot title.
+#' @param subtitle plot subtitle.
+#' @param nodes default `"point"`. Can also be `"numeric"`.
+#' @param numericsize font size if nodes are `"numeric"`.
+#' @param numericcol font colour if nodes are `"numeric"`.
+#' @param concavehull default `FALSE`. Whether or not to show concave hulls.
+#' @param hullratio value between 0 and 1. 1 returns the convex hulls, 0 maximally concave hulls.
+#' @param hullcol colour of concave hull lines.
+#' @param hullsize line width of concave hull lines.
 #'
-#' @return ggplot of areas and neighbourhood structure
+#' @return `ggplot` of areas and neighbourhood structure.
 #' @export
 #'
 #' @examples

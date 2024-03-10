@@ -7,14 +7,14 @@
 st_manual_join_nb(nb, x, y)
 }
 \arguments{
-\item{nb}{a neighbourhood list or matrix, or an sf dataframe with a neighbourhood column called "nb"}
+\item{nb}{a neighbourhood `"list"` or `"matrix"`, or an `sf` dataframe with a neighbourhood column called `"nb"`.}
 
-\item{x}{name or number of first area}
+\item{x}{name or number of first area.}
 
-\item{y}{name or number of second area}
+\item{y}{name or number of second area.}
 }
 \value{
-an amended neighbourhood list, matrix, or sf dataframe with a neighbourhood column called "nb"
+an amended neighbourhood `"list"`, `"matrix"`, or `sf` dataframe with a neighbourhood column called `"nb"`.
 }
 \description{
 Manually enforce contiguity between two areas

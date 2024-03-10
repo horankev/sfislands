@@ -2,18 +2,18 @@
 % Please edit documentation in R/st_check_islands.R
 \name{st_check_islands}
 \alias{st_check_islands}
-\title{Examine contiguity actions performed on islands}
+\title{Examine contiguity actions which have been performed on islands by `st_bridges()`}
 \usage{
 st_check_islands(data)
 }
 \arguments{
-\item{data}{an sf dataframe with a neighbourhood column called "nb"}
+\item{data}{an `sf` dataframe with a neighbourhood column called `"nb"` such as the output of `st_bridges()`.}
 }
 \value{
-a dataframe reporting non-contiguous connections made by st_bridges()
+a dataframe reporting non-contiguous connections made by `st_bridges()`.
 }
 \description{
-Examine contiguity actions performed on islands
+Examine contiguity actions which have been performed on islands by `st_bridges()`
 }
 \examples{
 st_bridges(uk_election,"constituency_name") |>

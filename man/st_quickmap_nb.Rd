@@ -25,42 +25,42 @@ st_quickmap_nb(
 )
 }
 \arguments{
-\item{nbsf}{an sf dataframe with a neighbourhood column called "nb"}
+\item{nbsf}{an `sf` dataframe with a neighbourhood column called "nb", such as the output of `st_bridges()`}
 
-\item{linkcol}{colour of lines connecting neighbours}
+\item{linkcol}{colour of lines connecting neighbours.}
 
-\item{bordercol}{colour of boundary lines between areas}
+\item{bordercol}{colour of boundary lines between areas.}
 
-\item{pointcol}{colour of centroid points if nodes are point}
+\item{pointcol}{colour of centroid points if nodes are `"point"`.}
 
-\item{fillcol}{fill of areas}
+\item{fillcol}{fill of areas.}
 
-\item{linksize}{linewidth of lines connecting neighbours}
+\item{linksize}{linewidth of lines connecting neighbours.}
 
-\item{bordersize}{linewidth of borders between areas}
+\item{bordersize}{linewidth of borders between areas.}
 
-\item{pointsize}{size of centroid points if nodes are point}
+\item{pointsize}{size of centroid points if nodes are `"point"`.}
 
-\item{title}{plot title}
+\item{title}{plot title.}
 
-\item{subtitle}{plot subtitle}
+\item{subtitle}{plot subtitle.}
 
-\item{nodes}{point or numeric}
+\item{nodes}{default `"point"`. Can also be `"numeric"`.}
 
-\item{numericsize}{font size if nodes are numeric}
+\item{numericsize}{font size if nodes are `"numeric"`.}
 
-\item{numericcol}{font colour if nodes are numeric}
+\item{numericcol}{font colour if nodes are `"numeric"`.}
 
-\item{concavehull}{default FALSE. whether or not to show concave hulls}
+\item{concavehull}{default `FALSE`. Whether or not to show concave hulls.}
 
-\item{hullratio}{fraction convex: 1 returns the convex hulls, 0 maximally concave hulls}
+\item{hullratio}{value between 0 and 1. 1 returns the convex hulls, 0 maximally concave hulls.}
 
-\item{hullcol}{colour of concave hull lines}
+\item{hullcol}{colour of concave hull lines.}
 
-\item{hullsize}{line width of concave hull lines}
+\item{hullsize}{line width of concave hull lines.}
 }
 \value{
-ggplot of areas and neighbourhood structure
+`ggplot` of areas and neighbourhood structure.
 }
 \description{
 Visualise a neighbourhood structure on a map

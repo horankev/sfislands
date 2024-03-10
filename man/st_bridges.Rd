@@ -14,20 +14,20 @@ st_bridges(
 )
 }
 \arguments{
-\item{df}{an sf or sfc object}
+\item{df}{an `sf` or `sfc` object.}
 
-\item{geom_col_name}{name of column containing names (or unique identifiers) for each row}
+\item{geom_col_name}{name of column containing names (or unique identifiers) for each row.}
 
-\item{remove_islands}{TRUE or FALSE (default)}
+\item{remove_islands}{default `FALSE`. Whether or not to omit islands from contiguity construction.}
 
-\item{link_islands_k}{an integer, k. Each island should be connected to the k nearest units}
+\item{link_islands_k}{an integer, k. The number of nearest units to which each island should be connected.}
 
-\item{nb_structure}{either "list" (default) or "matrix"}
+\item{nb_structure}{default `"list"`. Can also be `"matrix"`.}
 
-\item{add_to_dataframe}{TRUE (default) or FALSE. Whether or not to augment existing df with output as "nb" column}
+\item{add_to_dataframe}{default `TRUE`. Whether or not to augment existing df with contiguity output as `"nb"` column. `FALSE` returns only the contiguity structure.}
 }
 \value{
-a named neighbourhood list or matrix, optionally included as a column in an sf dataframe
+either a named neighbourhood list or matrix, or an `sf` dataframe with list or matrix included as `"nb"` column.
 }
 \description{
 Create neighbourhood structure when islands are present
