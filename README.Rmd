@@ -31,6 +31,12 @@ This package offers solutions to allow for the inclusion or exclusion of these u
 
 ## Installation
 
+Install the released version from CRAN
+
+``` r
+install.packages("sfislands")
+```
+
 You can install the development version of `sfislands` from [GitHub](https://github.com/horankev/sfislands) with:
 
 ``` r

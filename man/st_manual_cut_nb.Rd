@@ -14,7 +14,7 @@ st_manual_cut_nb(nb, x, y)
 \item{y}{name or number of second area.}
 }
 \value{
-an amended neighbourhood `"list"`, `"matrix"`, or `sf` dataframe with a neighbourhood column called `"nb"`.
+An amended neighbourhood `"list"`, `"matrix"`, or `sf` dataframe with a neighbourhood column called `"nb"`.
 }
 \description{
 Manual remove contiguity between two areas

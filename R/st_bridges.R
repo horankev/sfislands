@@ -1,13 +1,13 @@
-#' Create neighbourhood structure when islands are present
+#' Creates first-order queen contiguity neighbourhood structure with additional connections when islands are present, ensuring that there are no unconnected units
 #'
 #' @param df an `sf` or `sfc` object.
-#' @param geom_col_name name of column containing names (or unique identifiers) for each row.
+#' @param geom_col_name name of a column from `df` containing names (or unique identifiers) for each row.
 #' @param remove_islands default `FALSE`. Whether or not to omit islands from contiguity construction.
 #' @param link_islands_k an integer, k. The number of nearest units to which each island should be connected.
-#' @param nb_structure default `"list"`. Can also be `"matrix"`.
+#' @param nb_structure default `"list"`. Can also be `"matrix"`. The format in which to return the named contiguity structure.
 #' @param add_to_dataframe default `TRUE`. Whether or not to augment existing df with contiguity output as `"nb"` column. `FALSE` returns only the contiguity structure.
 #'
-#' @return either a named neighbourhood list or matrix, or an `sf` dataframe with list or matrix included as `"nb"` column.
+#' @return Either a named neighbourhood list or matrix, or an `sf` dataframe with list or matrix included as `"nb"` column.
 #' @export
 #'
 #' @examples

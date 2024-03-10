@@ -2,7 +2,7 @@
 % Please edit documentation in R/st_bridges.R
 \name{st_bridges}
 \alias{st_bridges}
-\title{Create neighbourhood structure when islands are present}
+\title{Creates first-order queen contiguity neighbourhood structure with additional connections when islands are present, ensuring that there are no unconnected units}
 \usage{
 st_bridges(
   df,
@@ -16,21 +16,21 @@ st_bridges(
 \arguments{
 \item{df}{an `sf` or `sfc` object.}
 
-\item{geom_col_name}{name of column containing names (or unique identifiers) for each row.}
+\item{geom_col_name}{name of a column from `df` containing names (or unique identifiers) for each row.}
 
 \item{remove_islands}{default `FALSE`. Whether or not to omit islands from contiguity construction.}
 
 \item{link_islands_k}{an integer, k. The number of nearest units to which each island should be connected.}
 
-\item{nb_structure}{default `"list"`. Can also be `"matrix"`.}
+\item{nb_structure}{default `"list"`. Can also be `"matrix"`. The format in which to return the named contiguity structure.}
 
 \item{add_to_dataframe}{default `TRUE`. Whether or not to augment existing df with contiguity output as `"nb"` column. `FALSE` returns only the contiguity structure.}
 }
 \value{
-either a named neighbourhood list or matrix, or an `sf` dataframe with list or matrix included as `"nb"` column.
+Either a named neighbourhood list or matrix, or an `sf` dataframe with list or matrix included as `"nb"` column.
 }
 \description{
-Create neighbourhood structure when islands are present
+Creates first-order queen contiguity neighbourhood structure with additional connections when islands are present, ensuring that there are no unconnected units
 }
 \examples{
 st_bridges(uk_election,"constituency_name")

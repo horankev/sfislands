@@ -14,7 +14,7 @@
 #' @param frameline colour for frame.
 #' @param framesize line width of frame.
 #'
-#' @return a `"list"` of ggplots.
+#' @return A list of ggplots.
 #' @export
 #'
 #' @examples

@@ -2,7 +2,7 @@
 #'
 #' @param data an `sf` dataframe with a neighbourhood column called `"nb"` such as the output of `st_bridges()`.
 #'
-#' @return a dataframe reporting non-contiguous connections made by `st_bridges()`.
+#' @return A dataframe reporting non-contiguous connections made by `st_bridges()`.
 #' @export
 #'
 #' @examples

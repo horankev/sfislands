@@ -12,7 +12,7 @@ st_augment(model, df)
 \item{df}{an `sf` data frame to be augmented with model predictions.}
 }
 \value{
-an augmented `sf` data frame with extra columns showing estimates of random effects from model.
+An augmented `sf` data frame with extra columns showing estimates of random effects from model.
 }
 \description{
 Augment dataframe with predictions of model

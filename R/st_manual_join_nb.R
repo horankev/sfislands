@@ -4,7 +4,7 @@
 #' @param x name or number of first area.
 #' @param y name or number of second area.
 #'
-#' @return an amended neighbourhood `"list"`, `"matrix"`, or `sf` dataframe with a neighbourhood column called `"nb"`.
+#' @return An amended neighbourhood `"list"`, `"matrix"`, or `sf` dataframe with a neighbourhood column called `"nb"`.
 #' @export
 #'
 #' @examples

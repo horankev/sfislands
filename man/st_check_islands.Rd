@@ -10,7 +10,7 @@ st_check_islands(data)
 \item{data}{an `sf` dataframe with a neighbourhood column called `"nb"` such as the output of `st_bridges()`.}
 }
 \value{
-a dataframe reporting non-contiguous connections made by `st_bridges()`.
+A dataframe reporting non-contiguous connections made by `st_bridges()`.
 }
 \description{
 Examine contiguity actions which have been performed on islands by `st_bridges()`

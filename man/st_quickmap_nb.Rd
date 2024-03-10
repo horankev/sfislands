@@ -60,7 +60,7 @@ st_quickmap_nb(
 \item{hullsize}{line width of concave hull lines.}
 }
 \value{
-`ggplot` of areas and neighbourhood structure.
+A `ggplot` showing areas and neighbourhood structure.
 }
 \description{
 Visualise a neighbourhood structure on a map

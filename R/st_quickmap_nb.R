@@ -18,7 +18,7 @@
 #' @param hullcol colour of concave hull lines.
 #' @param hullsize line width of concave hull lines.
 #'
-#' @return `ggplot` of areas and neighbourhood structure.
+#' @return A `ggplot` showing areas and neighbourhood structure.
 #' @export
 #'
 #' @examples

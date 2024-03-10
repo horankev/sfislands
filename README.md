@@ -25,6 +25,12 @@ these units within an uncomplicated workflow.
 
 ## Installation
 
+Install the released version from CRAN
+
+``` r
+install.packages("sfislands")
+```
+
 You can install the development version of `sfislands` from
 [GitHub](https://github.com/horankev/sfislands) with:
 

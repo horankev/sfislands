@@ -3,7 +3,7 @@
 #' @param model an `mgcv`, `lme4` or `nlme` model.
 #' @param df an `sf` data frame to be augmented with model predictions.
 #'
-#' @return an augmented `sf` data frame with extra columns showing estimates of random effects from model.
+#' @return An augmented `sf` data frame with extra columns showing estimates of random effects from model.
 #' @export
 #'
 #' @examples
