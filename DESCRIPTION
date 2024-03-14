@@ -1,6 +1,6 @@
 Package: sfislands
 Type: Package
-Title: Pre and Post Functions for Working with Areal Data
+Title: Pre and Post Functions for Modelling Areal Data
 Version: 0.1.0
 Authors@R: 
   c(person(given = "Kevin", 

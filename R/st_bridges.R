@@ -1,4 +1,4 @@
-#' Creates first-order queen contiguity neighbourhood structure with additional connections when islands are present, ensuring that there are no unconnected units
+#' Create first-order queen contiguity neighbourhood structure with additional connections when islands are present, ensuring that there are no unconnected units
 #'
 #' @param df an `sf` or `sfc` object.
 #' @param geom_col_name name of a column from `df` containing names (or unique identifiers) for each row.
@@ -95,6 +95,8 @@ st_bridges <- function(df,
       tempdf <- df |>
         dplyr::mutate(nb = cont)
       tempdf[[geom_col_name]] <- factor(tempdf[[geom_col_name]])
+      tempdf <- tempdf |>
+        dplyr::select(everything(),nb,geometry)
       return(tempdf)
     }
     if(nb_structure =="matrix"){
@@ -103,6 +105,8 @@ st_bridges <- function(df,
       tempdf <- df |>
         dplyr::mutate(nb = cont2)
       tempdf[[geom_col_name]] <- factor(tempdf[[geom_col_name]])
+      tempdf <- tempdf |>
+        dplyr::select(everything(),nb,geometry)
       return(tempdf)
     }
   }

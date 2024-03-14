@@ -15,11 +15,13 @@ knitr::opts_chunk$set(
 )
 ```
 
+<img src="man/figures/logo.png" align="right" height="240"/>
+
 # sfislands
 
 The goal of `sfislands` is to make it easier to deal with geographic datasets which contain islands. It does so using a tidy framework in the spirit of Josiah Parry's [sfdep](https://sfdep.josiahparry.com/) package.
 
--   These do not have to be "literal" islands but any situation where discontiguous geographical units are present.
+-   These do not have to be *islands* by a traditional *land and water* geographic definition, but any situation where discontiguous geographical units are present.
 
 Such a situation can lead to two issues.
 
@@ -46,23 +48,21 @@ devtools::install_github("horankev/sfislands")
 
 ## Summary of features
 
-1.  The initial setting up neighbourhood structures can be frustrating for people who are eager to get started with fitting spatial models. This is especially so when the presence of discontiguities within a geographical dataset means that, even having set up a neighbours list, the model will still not run without further awkward data manipulations.
+1.  The initial setting-up of neighbourhood structures can be frustrating for people who are eager to get started with fitting spatial models. This is especially so when the presence of discontiguities within a geographical dataset means that, even having set up a neighbours list, the model will still not run without further awkward data manipulations.
 
 2.  As an aid to setting up neighbourhood structures, particularly when islands are involved, the package has a function to quickly map any neighbourhood structure for visual inspection. This can also be used to examine the output of `sfdep` neighbour functions. Such maps can be used to check if the structure makes sense, given the researcher's knowledge about the geography of the study area.
 
-3.  If there are some neighbours assigned which are not appropriate, or if you wish to add additional ones, there are functions to allow this to be done in a straightforward and openly reportable way.
+3.  If some units have been assigned as neighbours inappropriately, or if we wish to add additional connections, there are functions to allow this to be done in a straightforward and openly reportable way.
 
-4.  Once an appropriate neighbourhood structure is in place, different types of statistical tests and models can be performed. `sfdep` contains functionality to perform such test, and the output from `sfislands` can be used in its functions.
+4.  Once an appropriate neighbourhood structure is in place, different types of statistical tests and models can be performed. `sfdep` contains functionality to perform such tests, and the output from `sfislands` can be used in its functions.
 
 5.  The contiguity outputs from `sfislands` can be directly used to fit different types of (multilevel) (I)CAR models using, for example, the `mgcv`, `brms`, `stan` or `INLA` packages.
 
 6.  For `mgcv` in particular, the predictions of such models can be quite tedious to extract and visualise. `sfislands` can streamline this workflow from the human side. Furthermore, there is a function to draw maps of these predictions for quick inspection.
 
-<img src="man/figures/logo.png" align="right" height="240"/>
-
 ## Functions overview
 
-The following is a framework within which the `sfislands` functions could be used.
+The following is a brief explanations of the functions contained in the `sfislands` package and a workflow within which they could be used.
 
 The first group can be seen as pre-functions, designed to create a neighbourhood structure suitable for certain types of models.
 
@@ -80,7 +80,7 @@ Once a model has been fit (using `mgcv` in this case), the post-functions can be
 
 ### Step 2: Create model
 
-*Use the output of **st_bridges()** as both the data and neighbourhood inputs for a model using, for example, `mgcv`, `brms` or `inla`.*
+Use the output of `st_bridges()` as both the data and neighbourhood inputs for a model using, for example, `mgcv`, `brms` or `inla`.
 
 ### Step 3: Examine output ("*post functions*")
 
@@ -121,63 +121,137 @@ invisible(lapply(packages, library, character.only = TRUE, quietly = TRUE))
 library(sfislands)
 
 ```
-
-## Examples
-
-In the context of the constituencies of England, Scotland and Wales, `st_bridges` will define a neighbourhood structure which includes the islands. `st_quickmap_nb` will show a representation of this on a map:
-
 ```{r, echo=FALSE}
 uk_election$country <- case_when(uk_election$region == "Wales" ~ "Wales",
                                   uk_election$region == "Scotland" ~ "Scotland",
                                   TRUE ~ "England")
 ```
 
-```{r, fig.width=12, fig.height=10}
-nbsf <- st_bridges(df = uk_election,
-                   geom_col_name = "constituency_name",
-                   link_islands_k = 2)
-st_quickmap_nb(nbsf,
-               pointsize=0.05, 
-               title = "st_bridges() contiguities",
-               subtitle = "islands linked to k=2 nearest constituencies")
+## Workflow 
 
-```
+The dataset `uk_elections`, which is provided with the package, is used for the following demonstrations. It is an `sf` dataset with geometries for each of the 632 Westminster parliamentary constituencies of England, Scotland and Wales in the 2019 general election. For each constituency, it contains socio-economic data from the 2011 census. It also shows the *Butler swing* between the 2017 and 2019 elections, which is a measure of the change in voter allegiance in favour of the Conservative Party from the Labour Party.
 
-Neighbours can be manually added or removed using `st_manual_join_nb()` and `st_manual_cut_nb()`.
+### Pre-functions: Creating desired adjacency structure
+
+To demonstrate the `st_bridges()` function for preparing an adjacency matrix, we focus on Scotland. It is the nation with the highest number of islands. The function, with default arguments, returns a dataframe with an additional column named `nb`. This column is a named neighbourhood list of class `nb`. The default neighbourhood structure which it computes is:
+
+1.    for constituencies which are **not islands**, first-order queen contiguity. A constituency is considered to be a neighbour of all of those with which it shares at least a vortex.
+
+2.    for **islands**, contiguities are assigned to the two nearest constituencies to each island. This number can be altered using the `link_islands_k` argument.
 
 ```{r}
-st_bridges(df = uk_election|> filter(region %in% c("Wales","South West")),
-           geom_col_name = "constituency_name",
-           link_islands_k = 2)  |> 
-  st_manual_join_nb("Gower","St Ives") |> 
-  st_quickmap_nb() + 
-  geom_sf_label(data=uk_election|> filter(constituency_name %in% c("Gower","St Ives")),
-                aes(label=constituency_name),nudge_x = -30000)
+nbsf <- st_bridges(df = uk_election |> filter(country == "Scotland"),
+                   geom_col_name = "constituency_name",
+                   link_islands_k = 2)
 ```
 
-## Modelling & post-functions
+This new dataframe has the following form (with a column named `nb` containing a neighbours list):
 
-Having set up a neighbourhood structure and embedded it as a named list or matrix within the original `sf` dataset as column `nb`, there are some functions to make it easy to quickly perform ICAR smoothing, augment the original dataframe with these predictions, and visualise them.
+```{r}
+head(nbsf)
+```
+We can inspect (and openly report) what additional contiguities have been added to the standard queen contiguity structure using the function `st_check_islands()`.
 
-For example, we can use the `mgcv` package to generate a Markov Random Field ICAR smooth of poor health across the study area. This is done very quickly by using `st_bridges()` to prepare the data, putting that inside the `mgcv` GAM formulation, and then piping into the `st_augment()` and `st_quickmap_preds()` functions.
+```{r}
+st_check_islands(nbsf)
+```
 
-```{r, fig.width=12, fig.height=6}
+The overall contiguity structure can be visualised using the function `st_quickmap_nb()`, whose output is shown below on the left.
 
-prep_data3 <- st_bridges(uk_election, "constituency_name") # decide upon the contiguities and add them to the df
+```{r, fig.width=12, fig.height=10}
+ggarrange(
+  st_quickmap_nb(nbsf),
+  
+  st_quickmap_nb(nbsf,
+                 concavehull = TRUE,
+                 nodes = "numeric",
+                 numericsize = 3.5),
+  
+  ncol = 2
+)
 
-model <- gam(con_swing ~ 
+```
+
+However, it is often the case that each *island* unit (in this case, constituency) is in fact a multipolygon of islands. To make this clearer, the argument `concavehull = TRUE` can be chosen. These green boundaries (shown above on the right) around each constituency are for reference purpose only and do not influence the assignment of contiguities. They show which group of *islands* are considered as one *constituency of islands*. Furthermore, the argument `nodes = "numeric"` represents the centroids of each unit with its index number instead of a geometric point. This can be useful for editing the adjacencies, particularly if the researcher is not familiar with the names of the individual spatial units.
+
+#### Editing contiguities
+
+A researcher can now use domain knowledge or a particular hypothesis to edit these contiguities. For instance, we may not be happy with the connection between 47 (Na h-Eileanan An Iar) and 51 (Orkney and Shetland) and wish to remove it. We might instead feel that it is important for 47 and 5 to be considered neighbours. This can be easily achieved, as shown below, using the `st_manual_cut_nb()` and `st_manual_join_nb()` functions. The spatial units whose relationships we wish to change can be referenced by name or by index number.
+
+```{r}
+nbsf <- st_bridges(df = uk_election |> filter(country == "Scotland"),
+                   geom_col_name = "constituency_name",
+                   link_islands_k = 2) |> 
+  st_manual_cut_nb("Na h-Eileanan An Iar", "Orkney and Shetland") |> 
+  st_manual_join_nb(47, 5)
+```
+
+The results of these changes as visualised in map form are shown below:
+
+```{r, fig.width=12, fig.height=10}
+ggarrange(
+  st_quickmap_nb(nbsf,
+                 concavehull = TRUE,
+                 nodes = "numeric",
+                 numericsize = 3.5),
+  
+  st_quickmap_nb(nbsf),
+  
+  ncol = 2
+)
+
+```
+
+The above process can be iterated until we are happy that the structure conforms with our hypothesis of connectivity within the study area.
+
+### Modelling & post-functions
+
+Having set up a neighbourhood structure and embedded it as a named list or matrix within the original `sf` dataset as a column named `nb`, the workflow to generate and visualise predictions from a model (in this case using `mgcv`) is very straightforward and consists of only 3-4 lines of code.
+
+For example, we can use the `mgcv` package to generate quite a complicated model with various random intercepts and slopes at region and county level, and additionally, different Markov Random Field ICAR smooths at the constituency level. This is done very quickly by 
+
+* using `st_bridges()` to prepare the data, 
+* putting that inside the `mgcv::gam()` formulation, and then 
+* piping into the `st_augment()` function. 
+
+This gives the following output, with all of the spatially varying predictions and their standard errors being added as extra columns before the final geometry column:
+
+```{r}
+prep_data <- st_bridges(uk_election, "constituency_name") # decide upon the contiguities and add them to the df
+
+model1 <- gam(con_swing ~ 
                s(region, bs="re") + # region level random intercept
                s(county, bs="re") + # county level random intercept
                s(county, degree_educated, bs="re") + # county level random coefficient
                s(constituency_name, bs='mrf', 
-                 xt=list(nb=prep_data3$nb),k=10) + # ICAR constituency ICAR varying coefficients
+                 xt=list(nb=prep_data$nb),k=10) + # ICAR constituency ICAR varying coefficients
                s(constituency_name, by=white, bs='mrf', 
-                 xt=list(nb=prep_data3$nb),k=10), # ICAR constituency ICAR varying coefficients
-             data=prep_data3, method="REML") |> 
-  st_augment(prep_data3) |> # pipe into function to get estimates
-  st_quickmap_preds() # pipe into this for visualisation
+                 xt=list(nb=prep_data$nb),k=10), # ICAR constituency ICAR varying coefficients
+             data=prep_data, method="REML") |>  # pipe into function to get estimates
+  st_augment(prep_data)
 
-ggarrange(plotlist = model, legend = "none", nrow=1)
+head(model1)
+
 ```
 
-Further information and worked examples are available in the this [article](https://horankev.github.io/sfislands/).
+The predictions can be quickly visualised using `st_quickmap_preds()`. As this function generates a list of `ggplots`, they can be conveniently visualised using the `ggarrange()` function from the `ggpubr` package.
+
+```{r, fig.width=12, fig.height=6}
+plots <- st_quickmap_preds(model1)
+ggarrange(plotlist = plots, legend = "none", nrow=1)
+```
+
+To emphasise the simplicity of the process, the a modified version of the following sequence of commands will generate a series of plots of all of the spatially varying elements of a model defined in `mgcv`:
+
+```{r, eval=FALSE}
+prep_data <- st_bridges(...)
+
+gam(..., data = prep_data) |> 
+  st_augment() |> 
+  st_quickmap_preds()
+
+```
+
+It is also possible to conduct the same kind of augmenting and plotting of models generated using the `lme4` and `nlme` packages.
+
+Further information and vignettes containing more detailed examples are available [here](https://horankev.github.io/sfislands/).

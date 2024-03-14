@@ -2,7 +2,7 @@
 % Please edit documentation in R/st_bridges.R
 \name{st_bridges}
 \alias{st_bridges}
-\title{Creates first-order queen contiguity neighbourhood structure with additional connections when islands are present, ensuring that there are no unconnected units}
+\title{Create first-order queen contiguity neighbourhood structure with additional connections when islands are present, ensuring that there are no unconnected units}
 \usage{
 st_bridges(
   df,
@@ -30,7 +30,7 @@ st_bridges(
 Either a named neighbourhood list or matrix, or an `sf` dataframe with list or matrix included as `"nb"` column.
 }
 \description{
-Creates first-order queen contiguity neighbourhood structure with additional connections when islands are present, ensuring that there are no unconnected units
+Create first-order queen contiguity neighbourhood structure with additional connections when islands are present, ensuring that there are no unconnected units
 }
 \examples{
 st_bridges(uk_election,"constituency_name")
