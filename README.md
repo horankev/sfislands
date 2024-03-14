@@ -1,9 +1,8 @@
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
+# sfislands <img src="man/figures/logo.png" align="right" height="240"/>
 
-<img src="man/figures/logo.png" align="right" height="240"/>
-
-# sfislands
+<!-- badges: start -->
+<!-- badges: end -->
 
 The goal of `sfislands` is to make it easier to deal with geographic
 datasets which contain islands. It does so using a tidy framework in the
