@@ -160,20 +160,20 @@ head(nbsf)
 #> 4      -0.6852759      -0.6765349 0.7250742  1.7350840      86004 Scotland
 #> 5       0.2535023      -0.3624242 0.7174423  3.9062703      88166 Scotland
 #> 6      -0.6898382       0.6590625 0.7272781  4.4404142      93308 Scotland
-#>     county        constituency_name                       geometry  country
-#> 1 Scotland           Aberdeen North MULTIPOLYGON (((395379.7 80... Scotland
-#> 2 Scotland           Aberdeen South POLYGON ((396214 805849.7, ... Scotland
-#> 3 Scotland       Airdrie and Shotts POLYGON ((290854.4 662154.9... Scotland
-#> 4 Scotland                    Angus POLYGON ((374164.5 762668.6... Scotland
-#> 5 Scotland          Argyll and Bute MULTIPOLYGON (((139257.4 64... Scotland
-#> 6 Scotland Ayr, Carrick and Cumnock MULTIPOLYGON (((246939 6250... Scotland
-#>                       nb
-#> 1              2, 36, 58
-#> 2                  1, 58
-#> 3 11, 12, 41, 42, 43, 46
-#> 4         15, 16, 54, 58
-#> 5         54, 55, 57, 59
-#> 6         10, 13, 14, 39
+#>     county        constituency_name  country                     nb
+#> 1 Scotland           Aberdeen North Scotland              2, 36, 58
+#> 2 Scotland           Aberdeen South Scotland                  1, 58
+#> 3 Scotland       Airdrie and Shotts Scotland 11, 12, 41, 42, 43, 46
+#> 4 Scotland                    Angus Scotland         15, 16, 54, 58
+#> 5 Scotland          Argyll and Bute Scotland         54, 55, 57, 59
+#> 6 Scotland Ayr, Carrick and Cumnock Scotland         10, 13, 14, 39
+#>                         geometry
+#> 1 MULTIPOLYGON (((395379.7 80...
+#> 2 POLYGON ((396214 805849.7, ...
+#> 3 POLYGON ((290854.4 662154.9...
+#> 4 POLYGON ((374164.5 762668.6...
+#> 5 MULTIPOLYGON (((139257.4 64...
+#> 6 MULTIPOLYGON (((246939 6250...
 ```
 
 We can inspect (and openly report) what additional contiguities have
