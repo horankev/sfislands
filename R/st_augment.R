@@ -88,9 +88,11 @@ st_augment.gam <- function(model,df){
   output2 <- cbind(output,df) |>
     as.data.frame() |>
     dplyr::select(-dplyr::matches("fit\\.")) |>
-    dplyr::select(!dplyr::contains("mrf."),!dplyr::contains("random.effect."),
+    # dplyr::select(!dplyr::contains("mrf.") & !dplyr::contains("random.effect."),
+    #               dplyr::contains("random.effect."),dplyr::contains("mrf."),
+    #               geometry) |>
+    dplyr::select(names(df),
                   dplyr::everything(),
-                  dplyr::contains("random.effect."),dplyr::contains("mrf."),
                   geometry) |>
     sf::st_as_sf()
 
