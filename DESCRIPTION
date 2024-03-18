@@ -1,6 +1,6 @@
 Package: sfislands
 Type: Package
-Title: Streamlines the process of fitting areal spatial models, especially in the presence of disconnected units
+Title: Streamlines the Process of Fitting Areal Spatial Models, Especially in the Presence of Disconnected Units
 Version: 1.0.0
 Authors@R: 
   c(person(given = "Kevin", 
