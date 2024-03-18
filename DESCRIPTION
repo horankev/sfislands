@@ -1,6 +1,6 @@
 Package: sfislands
 Type: Package
-Title: Pre-Modelling and Post-Modelling Functions for Areal Data
+Title: Streamlines the process of fitting areal spatial models, especially in the presence of disconnected units
 Version: 1.0.0
 Authors@R: 
   c(person(given = "Kevin", 
