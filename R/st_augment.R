@@ -92,8 +92,7 @@ st_augment.gam <- function(model,df){
     #               dplyr::contains("random.effect."),dplyr::contains("mrf."),
     #               geometry) |>
     dplyr::select(names(df),
-                  dplyr::everything(),
-                  geometry) |>
+                  dplyr::everything()) |>
     sf::st_as_sf()
 
   return(output2)

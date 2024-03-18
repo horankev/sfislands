@@ -1,6 +1,6 @@
 Package: sfislands
 Type: Package
-Title: Pre and Post Functions for Modelling Areal Data
+Title: Pre-Modelling and Post-Modelling Functions for Areal Data
 Version: 1.0.0
 Authors@R: 
   c(person(given = "Kevin", 
@@ -21,7 +21,7 @@ Authors@R:
     )
 Maintainer: Kevin Horan <kevin.horan.2021@mumail.ie>
 Description: Streamlines the process of fitting areal spatial models, especially in the presence of disconnected units. 
-    It allows for convenient adding and removal of contiguities prior to modelling with the visual aid of maps.
+    It allows for convenient adding and removal of neighbourhood connectivity between areal units prior to modelling, with the visual aid of maps.
     Post-modelling, it reduces the human workload for extracting, tidying and mapping predictions from areal models.
 License: MIT + file LICENSE
 Encoding: UTF-8

@@ -95,8 +95,9 @@ st_bridges <- function(df,
       tempdf <- df |>
         dplyr::mutate(nb = cont)
       tempdf[[geom_col_name]] <- factor(tempdf[[geom_col_name]])
+      cols_to_reposition <- c("nb","geometry")
       tempdf <- tempdf |>
-        dplyr::select(everything(),nb,geometry)
+        dplyr::select(dplyr::everything(),dplyr::all_of(cols_to_reposition))
       return(tempdf)
     }
     if(nb_structure =="matrix"){
@@ -105,8 +106,9 @@ st_bridges <- function(df,
       tempdf <- df |>
         dplyr::mutate(nb = cont2)
       tempdf[[geom_col_name]] <- factor(tempdf[[geom_col_name]])
+      cols_to_reposition <- c("nb","geometry")
       tempdf <- tempdf |>
-        dplyr::select(everything(),nb,geometry)
+        dplyr::select(dplyr::everything(),dplyr::all_of(cols_to_reposition))
       return(tempdf)
     }
   }
