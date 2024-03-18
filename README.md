@@ -27,7 +27,7 @@ these units within an uncomplicated workflow.
 
 ## Installation
 
-Install the released version from CRAN
+Install the released version from CRAN:
 
 ``` r
 install.packages("sfislands")
