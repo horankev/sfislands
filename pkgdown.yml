@@ -3,7 +3,7 @@ pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
   article1: article1.html
-last_built: 2024-03-18T19:00Z
+last_built: 2024-03-19T21:00Z
 urls:
   reference: https://horankev.github.io/sfislands/reference
   article: https://horankev.github.io/sfislands/articles
