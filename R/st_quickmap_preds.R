@@ -20,7 +20,7 @@
 #' @examples
 #' prepdata <- st_bridges(uk_election,"constituency_name")
 #' mgcv::gam(health_not_good ~
-#'   s(constituency_name, bs='mrf', xt=list(nb=prepdata$nb), k=100),data=prepdata, method="REML") |>
+#'   s(constituency_name, bs='mrf', xt=list(nb=prepdata$nb), k=100), data=prepdata, method="REML") |>
 #' st_augment(uk_election) |>
 #' st_quickmap_preds()
 st_quickmap_preds <- function(output,

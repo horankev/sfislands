@@ -7,11 +7,6 @@
 #' @export
 #'
 #' @examples
-#' package_name <- "mgcv"
-#' if (!require(package_name, character.only = TRUE)) {
-#' install.packages(package_name)
-#' library(package_name, character.only = TRUE)
-#' }
 #' prepdata <- st_bridges(uk_election,"constituency_name")
 #' mgcv::gam(health_not_good ~
 #'   s(constituency_name, bs='mrf', xt=list(nb=prepdata$nb), k=100),

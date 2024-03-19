@@ -1,6 +1,6 @@
 Package: sfislands
 Type: Package
-Title: Streamlines the Process of Fitting Areal Spatial Models, Especially in the Presence of Disconnected Units
+Title: Streamlines the Process of Fitting Areal Spatial Models
 Version: 1.0.0
 Authors@R: 
   c(person(given = "Kevin", 
@@ -20,7 +20,7 @@ Authors@R:
           comment = c(ORCID = "0000-0003-4254-1780"))
     )
 Maintainer: Kevin Horan <kevin.horan.2021@mumail.ie>
-Description: Streamlines the process of fitting areal spatial models, especially in the presence of disconnected units. 
+Description: Helpers for addressing the issue of disconnected spatial units. 
     It allows for convenient adding and removal of neighbourhood connectivity between areal units prior to modelling, with the visual aid of maps.
     Post-modelling, it reduces the human workload for extracting, tidying and mapping predictions from areal models.
 License: MIT + file LICENSE
