@@ -25,6 +25,9 @@ Such a situation can lead to two issues.
 This package offers solutions to allow for the inclusion or exclusion of
 these units within an uncomplicated workflow.
 
+A pre-print of a paper discussing the package is available
+[here](https://arxiv.org/abs/2404.09863).
+
 ## Installation
 
 Install the released version from CRAN:
