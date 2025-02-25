@@ -13,6 +13,8 @@
 #' st_manual_cut_nb(292,378)
 st_manual_cut_nb <- function(nb,x,y){
 
+  lifecycle::deprecate_warn("1.1.0", "st_manual_cut_nb()", "st_force_cut_nb()")
+
   if (!(is.data.frame(nb) || is.list(nb$nb) || is.matrix(nb$nb) || is.list(nb) || is.matrix(nb))) {
     stop("Error: The 'nb' argument must be a neighbours list, a neighbours matrix, or a dataframe containing a neighbours list or matrix named 'nb'")
   } else if (is.data.frame(nb) && !("nb" %in% colnames(nb))) {

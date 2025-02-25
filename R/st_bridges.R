@@ -1,7 +1,7 @@
 #' Create first-order queen contiguity neighbourhood structure with additional connections when islands are present, ensuring that there are no unconnected units
 #'
 #' @param df an `sf` or `sfc` object.
-#' @param geom_col_name name of a column from `df` containing names (or unique identifiers) for each row.
+#' @param row_identifier name of a column from `df` containing names (or unique identifiers) for each row.
 #' @param remove_islands default `FALSE`. Whether or not to omit islands from contiguity construction.
 #' @param link_islands_k an integer, k. The number of nearest units to which each island should be connected.
 #' @param nb_structure default `"list"`. Can also be `"matrix"`. The format in which to return the named contiguity structure.
@@ -13,18 +13,28 @@
 #' @examples
 #' st_bridges(uk_election,"constituency_name")
 st_bridges <- function(df,
-                       geom_col_name,
+                       row_identifier,
                        remove_islands = FALSE,
                        link_islands_k = 1,
                        nb_structure = "list",
-                       add_to_dataframe = TRUE)
+                       add_to_dataframe = TRUE,
+                       geom_col_name = lifecycle::deprecated())
 {
+
+  if (lifecycle::is_present(geom_col_name)) {
+    lifecycle::deprecate_warn("1.1.0", "st_bridges(geom_col_name)", "st_bridges(row_identifier)")
+    row_identifier <- geom_col_name
+  }
+
+  if (anyDuplicated(df$row_identifier) != 0) {
+    stop(sprintf("Error: duplicate row identifiers present"), call. = FALSE)
+  }
 
   if (remove_islands == TRUE){
     # unconnected units
     cont <-  df |>
       sf::st_intersects()
-    still_unconnected <- lengths(lapply(cont, function(x) x))
+    still_unconnected <- lengths(cont)
     unconnected <- which(still_unconnected == 1)
 
     df <- df[-unconnected,]
@@ -37,7 +47,7 @@ st_bridges <- function(df,
     # unconnected units
     cont <-  df |>
       sf::st_intersects()
-    still_unconnected <- lengths(lapply(cont, function(x) x))
+    still_unconnected <- lengths(cont)
     unconnected <- which(still_unconnected == 1)
     # Calculate distances
     distdf <- data.frame(
@@ -62,7 +72,7 @@ st_bridges <- function(df,
       sf::st_intersects() |>
       purrr::imap(~setdiff(.x,.y))
 
-    names(cont) <- df |> dplyr::pull({{ geom_col_name }})
+    names(cont) <- df |> dplyr::pull({{ row_identifier }})
 
     class(cont) <- c("nb","list")
   }
@@ -74,7 +84,7 @@ st_bridges <- function(df,
       sf::st_intersects() |>
       purrr::imap(~setdiff(.x,.y))
 
-    names(cont) <- df |> dplyr::pull({{ geom_col_name }})
+    names(cont) <- df |> dplyr::pull({{ row_identifier }})
 
     class(cont) <- c("nb","list")
   }
@@ -94,7 +104,7 @@ st_bridges <- function(df,
     if(nb_structure == "list"){
       tempdf <- df |>
         dplyr::mutate(nb = cont)
-      tempdf[[geom_col_name]] <- factor(tempdf[[geom_col_name]])
+      tempdf[[row_identifier]] <- factor(tempdf[[row_identifier]])
       cols_to_reposition <- c("nb","geometry")
       tempdf <- tempdf |>
         dplyr::select(dplyr::everything(),dplyr::all_of(cols_to_reposition))
@@ -105,7 +115,7 @@ st_bridges <- function(df,
       rownames(cont2) <- names(cont)
       tempdf <- df |>
         dplyr::mutate(nb = cont2)
-      tempdf[[geom_col_name]] <- factor(tempdf[[geom_col_name]])
+      tempdf[[row_identifier]] <- factor(tempdf[[row_identifier]])
       cols_to_reposition <- c("nb","geometry")
       tempdf <- tempdf |>
         dplyr::select(dplyr::everything(),dplyr::all_of(cols_to_reposition))

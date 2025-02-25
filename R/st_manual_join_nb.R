@@ -12,6 +12,8 @@
 #' st_manual_join_nb("Gower","St Ives")
 st_manual_join_nb <- function(nb,x,y){
 
+  lifecycle::deprecate_warn("1.1.0", "st_manual_join_nb()", "st_force_join_nb()")
+
   if (!(is.data.frame(nb) || is.list(nb$nb) || is.matrix(nb$nb) || is.list(nb) || is.matrix(nb))) {
     stop("Error: The 'nb' argument must be a neighbours list, a neighbours matrix, or a dataframe containing a neighbours list or matrix named 'nb'")
   } else if (is.data.frame(nb) && !("nb" %in% colnames(nb))) {
