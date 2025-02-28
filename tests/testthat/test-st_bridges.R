@@ -1,7 +1,3 @@
-test_that("multiplication works", {
-  expect_equal(2 * 2, 4)
-})
-
 # list
 nbsf_list <- st_bridges(uk_election, row_identifier = "constituency_name", remove_islands = FALSE)
 nbsf_list_noislands <- st_bridges(uk_election, row_identifier = "constituency_name", remove_islands = TRUE)

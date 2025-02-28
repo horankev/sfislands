@@ -26,11 +26,9 @@ Enforce contiguity between pairs of areas
 st_bridges(uk_election,"constituency_name") |>
 st_force_join_nb(x = "Gower", y = "Bridgend")
 
-# For multiple x and y pairs
-xy_df <- data.frame(
-x = c("Gower", "Bridgend"),
-y = c("LLanelli", "Vale Of Glamorgan")
-)
+# For multiple x and y pairse") |>
 st_bridges(uk_election,"constituency_name") |>
-st_force_join_nb(xy_df = xy_df)
+st_force_join_nb(xy_df = data.frame(
+x = c("Gower", "Llanelli"),
+y = c("Bridgend", "Vale Of Glamorgan")))
 }
