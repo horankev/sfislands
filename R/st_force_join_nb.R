@@ -10,11 +10,16 @@
 #'
 #' @examples
 #' # For individual x and y
-#' st_force_join_nb(uk_election, x = "Gower", y = "Cardiff")
+#' st_bridges(uk_election,"constituency_name") |>
+#' st_force_join_nb(x = "Gower", y = "Bridgend")
 #'
 #' # For multiple x and y pairs
-#' xy_df <- data.frame(x = c("Gower", "St Ives"), y = c("Cardiff", "Penzance"))
-#' st_force_join_nb(uk_election, xy_df = xy_df)
+#' xy_df <- tibble(
+#' ~x, ~y,
+#' "Gower", "Bridgend",
+#' "LLanelli", "Vale Of Glamorgan")
+#' st_bridges(uk_election,"constituency_name") |>
+#' st_force_join_nb(xy_df = xy_df)
 st_force_join_nb <- function(nb, x = NULL, y = NULL, xy_df = NULL){
 
   # Check if nb is a valid neighbourhood list, matrix, or dataframe containing 'nb' column
