@@ -6,17 +6,19 @@
 \usage{
 st_bridges(
   df,
-  geom_col_name,
+  row_identifier,
   remove_islands = FALSE,
   link_islands_k = 1,
   nb_structure = "list",
-  add_to_dataframe = TRUE
+  add_to_dataframe = TRUE,
+  threshold = 1.001,
+  geom_col_name = lifecycle::deprecated()
 )
 }
 \arguments{
 \item{df}{an `sf` or `sfc` object.}
 
-\item{geom_col_name}{name of a column from `df` containing names (or unique identifiers) for each row.}
+\item{row_identifier}{name of a column from `df` containing names (or unique identifiers) for each row.}
 
 \item{remove_islands}{default `FALSE`. Whether or not to omit islands from contiguity construction.}
 
@@ -25,6 +27,10 @@ st_bridges(
 \item{nb_structure}{default `"list"`. Can also be `"matrix"`. The format in which to return the named contiguity structure.}
 
 \item{add_to_dataframe}{default `TRUE`. Whether or not to augment existing df with contiguity output as `"nb"` column. `FALSE` returns only the contiguity structure.}
+
+\item{threshold}{default 1.001. factor by which to change the size of buffer automatically generated around islands to account for imprecisions which may arise from sf::st_buffer() functionality.}
+
+\item{geom_col_name}{name of a column from `df` containing names (or unique identifiers) for each row. This argument is now deprecated and the new "row_identifier" argument replaces it with the same functionality.}
 }
 \value{
 Either a named neighbourhood list or matrix, or an `sf` dataframe with list or matrix included as `"nb"` column.
