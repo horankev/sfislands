@@ -14,7 +14,7 @@
 #' st_force_join_nb(x = "Gower", y = "Bridgend")
 #'
 #' # For multiple x and y pairs
-#' xy_df <- tibble(
+#' xy_df <- dplyr::tibble(
 #' ~x, ~y,
 #' "Gower", "Bridgend",
 #' "LLanelli", "Vale Of Glamorgan")

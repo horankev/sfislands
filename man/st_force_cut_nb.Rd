@@ -23,9 +23,14 @@ Remove contiguity between pairs of areas
 }
 \examples{
 # For individual x and y
-st_force_cut_nb(uk_election, x = "Ynys Mon", y = "Arfon")
+st_bridges(uk_election,"constituency_name") |>
+st_force_cut_nb(x = "Llanelli", y = "Swansea West")
 
 # For multiple x and y pairs
-xy_df <- data.frame(x = c("Ynys Mon", "Gower"), y = c("Arfon", "Cardiff"))
-st_force_cut_nb(uk_election, xy_df = xy_df)
+xy_df <- tibble(
+~x, ~y,
+"Llanelli", "Swansea West",
+"Bridgend", "Vale Of Glamorgan")
+st_bridges(uk_election,"constituency_name") |>
+st_force_cut_nb(xy_df = xy_df)
 }
