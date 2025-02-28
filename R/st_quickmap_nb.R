@@ -85,11 +85,10 @@ st_quickmap_nb <- function(nbsf,
 
   # Add numeric labels if nodes = "numeric"
   if (nodes == "numeric") {
-    utils::globalVariables("id")
     nbsf$id <- seq_len(nrow(nbsf))
     sf::st_agr(nbsf) <- "constant" #explicitly make attribute constant despite the following geometry operations to avoid warnings
     plot <- plot + ggplot2::geom_sf_text(data = sf::st_centroid(nbsf),
-                                         ggplot2::aes(label = id),
+                                         ggplot2::aes(label = .data$id),
                                          size = numericsize, colour = numericcol, fontface = "bold")
   } else {
     plot <- plot + ggplot2::geom_sf(data = endpoints_coords, size = pointsize, colour = pointcol)
