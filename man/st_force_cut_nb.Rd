@@ -27,7 +27,7 @@ st_bridges(uk_election,"constituency_name") |>
 st_force_cut_nb(x = "Llanelli", y = "Swansea West")
 
 # For multiple x and y pairs
-xy_df <- tibble(
+xy_df <- dplyr::tibble(
 ~x, ~y,
 "Llanelli", "Swansea West",
 "Bridgend", "Vale Of Glamorgan")

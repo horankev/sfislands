@@ -14,10 +14,10 @@
 #' st_force_join_nb(x = "Gower", y = "Bridgend")
 #'
 #' # For multiple x and y pairs
-#' xy_df <- dplyr::tibble(
-#' ~x, ~y,
-#' "Gower", "Bridgend",
-#' "LLanelli", "Vale Of Glamorgan")
+#' xy_df <- data.frame(
+#' x = c("Gower", "Bridgend"),
+#' y = c("LLanelli", "Vale Of Glamorgan")
+#' )
 #' st_bridges(uk_election,"constituency_name") |>
 #' st_force_join_nb(xy_df = xy_df)
 st_force_join_nb <- function(nb, x = NULL, y = NULL, xy_df = NULL){
