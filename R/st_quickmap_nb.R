@@ -86,6 +86,7 @@ st_quickmap_nb <- function(nbsf,
   # Add numeric labels if nodes = "numeric"
   if (nodes == "numeric") {
     nbsf$id <- seq_len(nrow(nbsf))
+    utils::globalVariables("id")
     sf::st_agr(nbsf) <- "constant" #explicitly make attribute constant despite the following geometry operations to avoid warnings
     centroids <- sf::st_centroid(nbsf)
     centroids$id <- nbsf$id
