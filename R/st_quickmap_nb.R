@@ -92,11 +92,6 @@ st_quickmap_nb <- function(nbsf,
     plot <- plot + ggplot2::geom_sf_text(data = centroids,
                                          ggplot2::aes(label = id),
                                          size = numericsize, colour = numericcol, fontface = "bold")
-    # nbsf$id <- seq_len(nrow(nbsf))
-    # sf::st_agr(nbsf) <- "constant" #explicitly make attribute constant despite the following geometry operations to avoid warnings
-    # plot <- plot + ggplot2::geom_sf_text(data = sf::st_centroid(nbsf),
-    #                                      ggplot2::aes(label = .data$id),
-    #                                      size = numericsize, colour = numericcol, fontface = "bold")
   } else {
     plot <- plot + ggplot2::geom_sf(data = endpoints_coords, size = pointsize, colour = pointcol)
   }
