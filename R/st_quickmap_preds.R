@@ -78,7 +78,8 @@ st_quickmap_preds <- function(output,
                                                 else(NULL)) +
       ggplot2::labs(title=newtitle[i],
                     subtitle=newsubtitle[i]) +
-      ggplot2::coord_sf(datum=NA) +
+      ggplot2::coord_sf(datum=NA,
+                        default = TRUE) +#to deal with unwanted 'coordinate system already present' message
       ggplot2::theme(plot.title = ggplot2::element_text(size=titlesize),
                      plot.subtitle = ggplot2::element_text(size=subtitlesize),
                      legend.title =  ggplot2::element_blank(),

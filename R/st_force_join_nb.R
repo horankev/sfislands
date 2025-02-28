@@ -10,12 +10,12 @@
 #'
 #' @examples
 #' # For individual x and y
-#' st_fj(uk_election, x = "Gower", y = "Cardiff")
+#' st_force_join_nb(uk_election, x = "Gower", y = "Cardiff")
 #'
 #' # For multiple x and y pairs
 #' xy_df <- data.frame(x = c("Gower", "St Ives"), y = c("Cardiff", "Penzance"))
-#' st_fj(uk_election, xy_df = xy_df)
-st_fj <- function(nb, x = NULL, y = NULL, xy_df = NULL){
+#' st_force_join_nb(uk_election, xy_df = xy_df)
+st_force_join_nb <- function(nb, x = NULL, y = NULL, xy_df = NULL){
 
   # Check if nb is a valid neighbourhood list, matrix, or dataframe containing 'nb' column
   if (!(is.data.frame(nb) || is.list(nb$nb) || is.matrix(nb$nb) || is.list(nb) || is.matrix(nb))) {

@@ -6,6 +6,8 @@
 #' @param link_islands_k an integer, k. The number of nearest units to which each island should be connected.
 #' @param nb_structure default `"list"`. Can also be `"matrix"`. The format in which to return the named contiguity structure.
 #' @param add_to_dataframe default `TRUE`. Whether or not to augment existing df with contiguity output as `"nb"` column. `FALSE` returns only the contiguity structure.
+#' @param threshold default 1.001. factor by which to change the size of buffer automatically generated around islands to account for imprecisions which may arise from sf::st_buffer() functionality.
+#' @param geom_col_name name of a column from `df` containing names (or unique identifiers) for each row. This argument is now deprecated and the new "row_identifier" argument replaces it with the same functionality.
 #'
 #' @return Either a named neighbourhood list or matrix, or an `sf` dataframe with list or matrix included as `"nb"` column.
 #' @export
@@ -18,6 +20,7 @@ st_bridges <- function(df,
                        link_islands_k = 1,
                        nb_structure = "list",
                        add_to_dataframe = TRUE,
+                       threshold = 1.001,
                        geom_col_name = lifecycle::deprecated())
 {
 
@@ -58,7 +61,7 @@ st_bridges <- function(df,
     {
       distances <- sf::st_distance(df$geometry[unconnected[i]], sf::st_geometry(df$geometry)) |>
         as.numeric() |> sort()
-      distdf[i,2] <- distances[link_islands_k+1] * 1.001
+      distdf[i,2] <- distances[link_islands_k+1] * threshold
       distdf[i,1] <- unconnected[i]
     }
     bufs <- rep(0,nrow(df))
@@ -71,6 +74,13 @@ st_bridges <- function(df,
       sf::st_buffer(dist=bufs) |>
       sf::st_intersects() |>
       purrr::imap(~setdiff(.x,.y))
+
+    # attempt to use st_is_within_distance instead of buffer and intersects
+    # cont <- purrr::map2(seq_len(nrow(df)), bufs, function(i, buf) {
+    #   # Apply st_is_within_distance for the ith row and buffer distance buf
+    #   sf::st_is_within_distance(df[i, ], df, dist = buf)
+    # }) |>
+    #   purrr::imap(~setdiff(.x, .y))  # Remove self-neighbor (if any)
 
     names(cont) <- df |> dplyr::pull({{ row_identifier }})
 

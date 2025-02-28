@@ -30,7 +30,14 @@ st_check_islands <- function(data){
   # unconnected units
   cont <-  data |>
     sf::st_intersects()
-  still_unconnected <- lengths(lapply(cont, function(x) x))
+  still_unconnected <- lengths(cont)
+
+  # check if original structure had any islands
+  if(all(still_unconnected > 1)){
+    message("No disconnected units were found in original data")
+    return(0)
+  }
+
   unconnected <- which(still_unconnected == 1)
 
 
