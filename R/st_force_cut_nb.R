@@ -14,12 +14,10 @@
 #' st_force_cut_nb(x = "Llanelli", y = "Swansea West")
 #'
 #' # For multiple x and y pairs
-#' xy_df <- data.frame(
-#' x = c("Llanelli", "Swansea West"),
-#' y = c("Bridgend", "Vale Of Glamorgan")
-#' )
 #' st_bridges(uk_election,"constituency_name") |>
-#' st_force_cut_nb(xy_df = xy_df)
+#' st_force_cut_nb(xy_df = data.frame(
+#' x = c("Llanelli", "Swansea West"),
+#' y = c("Bridgend", "Vale Of Glamorgan")))
 st_force_cut_nb <- function(nb, x = NULL, y = NULL, xy_df = NULL) {
 
   # Check if nb is a valid neighbourhood list, matrix, or dataframe containing 'nb' column
