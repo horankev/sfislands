@@ -2,7 +2,7 @@ test_that("multiplication works", {
   expect_equal(2 * 2, 4)
 })
 
-checkdf <- st_bridges(uk_election, "constituency_name", remove_islands = FALSE) |>
+checkdf <- st_bridges(uk_election, row_identifier = "constituency_name", remove_islands = FALSE) |>
   st_check_islands()
 
 test_that("indices match names", {

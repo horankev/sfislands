@@ -3,16 +3,16 @@ test_that("multiplication works", {
 })
 
 # list
-nbsf_list <- st_bridges(uk_election, "constituency_name", remove_islands = FALSE)
-nbsf_list_noislands <- st_bridges(uk_election, "constituency_name", remove_islands = TRUE)
-nbsf_list_nodf <- st_bridges(uk_election, "constituency_name", remove_islands = FALSE, add_to_dataframe = FALSE)
-nbsf_list_noislands_nodf <- st_bridges(uk_election, "constituency_name", remove_islands = TRUE, add_to_dataframe = FALSE)
+nbsf_list <- st_bridges(uk_election, row_identifier = "constituency_name", remove_islands = FALSE)
+nbsf_list_noislands <- st_bridges(uk_election, row_identifier = "constituency_name", remove_islands = TRUE)
+nbsf_list_nodf <- st_bridges(uk_election, row_identifier = "constituency_name", remove_islands = FALSE, add_to_dataframe = FALSE)
+nbsf_list_noislands_nodf <- st_bridges(uk_election, row_identifier = "constituency_name", remove_islands = TRUE, add_to_dataframe = FALSE)
 
 # matrix
-nbsf_matrix <- st_bridges(uk_election, "constituency_name", remove_islands = FALSE, nb_structure = "matrix")
-nbsf_matrix_noislands <- st_bridges(uk_election, "constituency_name", remove_islands = TRUE, nb_structure = "matrix")
-nbsf_matrix_nodf <- st_bridges(uk_election, "constituency_name", remove_islands = FALSE, add_to_dataframe = FALSE, nb_structure = "matrix")
-nbsf_matrix_noislands_nodf <- st_bridges(uk_election, "constituency_name", remove_islands = TRUE, add_to_dataframe = FALSE, nb_structure = "matrix")
+nbsf_matrix <- st_bridges(uk_election, row_identifier = "constituency_name", remove_islands = FALSE, nb_structure = "matrix")
+nbsf_matrix_noislands <- st_bridges(uk_election, row_identifier = "constituency_name", remove_islands = TRUE, nb_structure = "matrix")
+nbsf_matrix_nodf <- st_bridges(uk_election, row_identifier = "constituency_name", remove_islands = FALSE, add_to_dataframe = FALSE, nb_structure = "matrix")
+nbsf_matrix_noislands_nodf <- st_bridges(uk_election, row_identifier = "constituency_name", remove_islands = TRUE, add_to_dataframe = FALSE, nb_structure = "matrix")
 
 test_that("neighbors are of appropriate length for lists", {
   skip_on_cran()
