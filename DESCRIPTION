@@ -36,7 +36,8 @@ Imports:
     stats,
     stringr,
     tidyr,
-    broom.mixed
+    broom.mixed,
+    waldo
 Suggests:
     mgcv,
     testthat (>= 3.0.0)
