@@ -92,13 +92,13 @@ post-functions can be used to extract the predictions.
 
 ### Step 1: Set up data (“*pre-functions*”)
 
-| function:               | purpose:                                                                                                                                   |
-|-------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|
-| **st_bridges()**        | *Create a neighbours list, matrix, or `sf` dataframe containing a neighbours list or matrix as column “nb”, while accounting for islands.* |
-| **st_quickmap_nb()**    | *Check contiguities visually on map.*                                                                                                      |
-| **st_check_islands()**  | *Check assignment of island contiguities in a dataframe.*                                                                                  |
-| **st_manual_join_nb()** | *Make manual changes to any connections.*                                                                                                  |
-| **st_manual_cut_nb()**  | *Make manual changes to any connections.*                                                                                                  |
+| function: | purpose: |
+|----|----|
+| **st_bridges()** | *Create a neighbours list, matrix, or `sf` dataframe containing a neighbours list or matrix as column “nb”, while accounting for islands.* |
+| **st_quickmap_nb()** | *Check contiguities visually on map.* |
+| **st_check_islands()** | *Check assignment of island contiguities in a dataframe.* |
+| **st_force_join_nb()** | *Enforce changes to any connections.* |
+| **st_force_cut_nb()** | *Enforce changes to any connections.* |
 
 ### Step 2: Create model
 
@@ -107,10 +107,10 @@ inputs for a model using, for example, `mgcv`, `brms` or `inla`.
 
 ### Step 3: Examine output (“*post functions*”)
 
-| function:               | purpose:                                                 |
-|-------------------------|----------------------------------------------------------|
-| **st_augment()**        | *Augment the original dataframe with model predictions.* |
-| **st_quickmap_preds()** | *Generate quick maps of these predictions.*              |
+| function: | purpose: |
+|----|----|
+| **st_augment()** | *Augment the original dataframe with model predictions.* |
+| **st_quickmap_preds()** | *Generate quick maps of these predictions.* |
 
 ## Workflow
 
@@ -142,7 +142,7 @@ which it computes is:
 
 ``` r
 nbsf <- st_bridges(df = uk_election |> filter(country == "Scotland"),
-                   geom_col_name = "constituency_name",
+                   row_identifier = "constituency_name",
                    link_islands_k = 2)
 ```
 
@@ -236,10 +236,10 @@ we wish to change can be referenced by name or by index number.
 
 ``` r
 nbsf <- st_bridges(df = uk_election |> filter(country == "Scotland"),
-                   geom_col_name = "constituency_name",
+                   row_identifier = "constituency_name",
                    link_islands_k = 2) |> 
-  st_manual_cut_nb("Na h-Eileanan An Iar", "Orkney and Shetland") |> 
-  st_manual_join_nb(47, 5)
+  st_force_cut_nb("Na h-Eileanan An Iar", "Orkney and Shetland") |> 
+  st_force_join_nb(47, 5)
 ```
 
 The results of these changes as visualised in map form are shown below:

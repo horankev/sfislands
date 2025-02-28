@@ -76,8 +76,8 @@ Once a model has been fit (using `mgcv` in this case), the post-functions can be
 | **st_bridges()**        | *Create a neighbours list, matrix, or `sf` dataframe containing a neighbours list or matrix as column "nb", while accounting for islands.* |
 | **st_quickmap_nb()**    | *Check contiguities visually on map.*                                                                                                      |
 | **st_check_islands()**  | *Check assignment of island contiguities in a dataframe.*                                                                                  |
-| **st_manual_join_nb()** | *Make manual changes to any connections.*                                                                                                  |
-| **st_manual_cut_nb()**  | *Make manual changes to any connections.*                                                                                                  |
+| **st_force_join_nb()** | *Enforce changes to any connections.*                                                                                                  |
+| **st_force_cut_nb()**  | *Enforce changes to any connections.*                                                                                                  |
 
 ### Step 2: Create model
 
@@ -122,6 +122,7 @@ invisible(lapply(packages, library, character.only = TRUE, quietly = TRUE))
 library(sfislands)
 
 ```
+
 ```{r, echo=FALSE}
 uk_election$country <- case_when(uk_election$region == "Wales" ~ "Wales",
                                   uk_election$region == "Scotland" ~ "Scotland",
@@ -142,7 +143,7 @@ To demonstrate the `st_bridges()` function for preparing an adjacency matrix, we
 
 ```{r}
 nbsf <- st_bridges(df = uk_election |> filter(country == "Scotland"),
-                   geom_col_name = "constituency_name",
+                   row_identifier = "constituency_name",
                    link_islands_k = 2)
 ```
 
@@ -181,10 +182,10 @@ A researcher can now use domain knowledge or a particular hypothesis to edit the
 
 ```{r}
 nbsf <- st_bridges(df = uk_election |> filter(country == "Scotland"),
-                   geom_col_name = "constituency_name",
+                   row_identifier = "constituency_name",
                    link_islands_k = 2) |> 
-  st_manual_cut_nb("Na h-Eileanan An Iar", "Orkney and Shetland") |> 
-  st_manual_join_nb(47, 5)
+  st_force_cut_nb("Na h-Eileanan An Iar", "Orkney and Shetland") |> 
+  st_force_join_nb(47, 5)
 ```
 
 The results of these changes as visualised in map form are shown below:
