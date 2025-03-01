@@ -141,7 +141,8 @@ which it computes is:
     `link_islands_k` argument.
 
 ``` r
-nbsf <- st_bridges(df = uk_election |> filter(country == "Scotland"),
+scotland_df <- uk_election |> filter(country == "Scotland")
+nbsf <- st_bridges(df = scotland_df,
                    row_identifier = "constituency_name",
                    link_islands_k = 2)
 ```

@@ -29,8 +29,8 @@ st_bridges <- function(df,
     row_identifier <- geom_col_name
   }
 
-  if (length(unique(df$row_identifier)) != nrow(df)) {
-    stop(sprintf("duplicate row identifiers present"), call. = FALSE)
+  if (length(unique(df |> dplyr::pull({{ row_identifier }}))) != nrow(df)) {
+    stop("Duplicate row identifiers present", call. = FALSE)
   }
 
   if (remove_islands == TRUE){

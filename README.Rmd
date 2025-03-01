@@ -142,7 +142,8 @@ To demonstrate the `st_bridges()` function for preparing an adjacency matrix, we
 2.    for **islands**, contiguities are assigned to the two nearest constituencies to each island. This number can be altered using the `link_islands_k` argument.
 
 ```{r}
-nbsf <- st_bridges(df = uk_election |> filter(country == "Scotland"),
+scotland_df <- uk_election |> filter(country == "Scotland")
+nbsf <- st_bridges(df = scotland_df,
                    row_identifier = "constituency_name",
                    link_islands_k = 2)
 ```
