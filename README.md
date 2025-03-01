@@ -231,9 +231,9 @@ edit these contiguities. For instance, we may not be happy with the
 connection between 47 (Na h-Eileanan An Iar) and 51 (Orkney and
 Shetland) and wish to remove it. We might instead feel that it is
 important for 47 and 5 to be considered neighbours. This can be easily
-achieved, as shown below, using the `st_manual_cut_nb()` and
-`st_manual_join_nb()` functions. The spatial units whose relationships
-we wish to change can be referenced by name or by index number.
+achieved, as shown below, using the `st_force_cut_nb()` and
+`st_force_join_nb()` functions. The spatial units whose relationships we
+wish to change can be referenced by name or by index number.
 
 ``` r
 nbsf <- st_bridges(df = uk_election |> filter(country == "Scotland"),
