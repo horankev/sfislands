@@ -29,7 +29,7 @@ st_bridges <- function(df,
     row_identifier <- geom_col_name
   }
 
-  if (anyDuplicated(df$row_identifier) != 0) {
+  if (length(unique(df$row_identifier)) != nrow(df)) {
     stop(sprintf("Error: duplicate row identifiers present"), call. = FALSE)
   }
 
