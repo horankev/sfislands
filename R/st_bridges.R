@@ -30,7 +30,7 @@ st_bridges <- function(df,
   }
 
   if (length(unique(df$row_identifier)) != nrow(df)) {
-    stop(sprintf("Error: duplicate row identifiers present"), call. = FALSE)
+    stop(sprintf("duplicate row identifiers present"), call. = FALSE)
   }
 
   if (remove_islands == TRUE){
