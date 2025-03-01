@@ -18,40 +18,210 @@
 #' st_force_join_nb(xy_df = data.frame(
 #' x = c("Gower", "Llanelli"),
 #' y = c("Bridgend", "Vale Of Glamorgan")))
-st_force_join_nb <- function(nb, x = NULL, y = NULL, xy_df = NULL){
+# st_force_join_nb <- function(nb, x = NULL, y = NULL, xy_df = NULL){
+#
+#   # Check if nb is a valid neighbourhood list, matrix, or dataframe containing 'nb' column
+#   if (!(is.data.frame(nb) || is.list(nb$nb) || is.matrix(nb$nb) || is.list(nb) || is.matrix(nb))) {
+#     stop("Error: The 'nb' argument must be a neighbours list, a neighbours matrix, or a dataframe containing a neighbours list or matrix named 'nb'")
+#   } else if (is.data.frame(nb) && !("nb" %in% colnames(nb))) {
+#     stop("Error: The dataframe must contain a column called 'nb'")
+#   }
+#
+#   # If xy_df is provided, process multiple x, y pairs from the dataframe
+#   if (!is.null(xy_df)) {
+#     # Ensure that xy_df has x and y columns
+#     if (!all(c("x", "y") %in% colnames(xy_df))) {
+#       stop("Error: The dataframe must contain columns 'x' and 'y'")
+#     }
+#
+#     # Loop over the rows of xy_df and perform the join for each pair
+#     for (i in 1:nrow(xy_df)) {
+#       x <- xy_df$x[i]
+#       y <- xy_df$y[i]
+#
+#       # Process the current pair
+#       nb <- process_pair(nb, x, y)
+#     }
+#
+#     return(nb)
+#   }
+#
+#   # If no xy_df, proceed with single x and y processing
+#   if (is.null(x) || is.null(y)) {
+#     stop("Error: Either provide 'x' and 'y' or 'xy_df'.")
+#   }
+#
+#   # Process the single pair
+#   nb <- process_pair(nb, x, y)
+#
+#   return(nb)
+# }
+#
+# # Helper function to process a single pair of x and y
+# process_pair <- function(nb, x, y) {
+#
+#   # MAKE INTEGERS: xnum and ynum
+#   if(is.numeric(x) & is.numeric(y)){
+#     xnum <- as.integer(x)
+#     ynum <- as.integer(y)
+#   }else{
+#     if(is.data.frame(nb)){
+#       if(is.list(nb$nb)){
+#         xnum <- which(names(nb$nb) == x) |> as.integer()
+#         ynum <- which(names(nb$nb) == y) |> as.integer()
+#       }
+#       if(is.matrix(nb$nb)){
+#         xnum <- which(rownames(nb$nb) == x) |> as.integer()
+#         ynum <- which(rownames(nb$nb) == y) |> as.integer()
+#       }
+#     } else {
+#       if(is.list(nb)){
+#         xnum <- which(names(nb) == x) |> as.integer()
+#         ynum <- which(names(nb) == y) |> as.integer()
+#       }
+#       if(is.matrix(nb)){
+#         xnum <- which(rownames(nb) == x) |> as.integer()
+#         ynum <- which(rownames(nb) == y) |> as.integer()
+#       }
+#     }
+#   }
+#
+#   # EXTRACT THE CONTIGUITY AS LIST FOR ALL FORMS: tempnb
+#   if(is.data.frame(nb)){
+#     tempnb <- nb$nb # list or matrix within dataframe
+#     if(is.matrix(tempnb)){ # matrix within dataframe
+#       tempnb <- spdep::mat2listw(tempnb, style="B")
+#       tempnb <- tempnb[2]
+#       tempnb <- tempnb$neighbours
+#     }
+#   } else {
+#     if(is.matrix(nb)){
+#       tempnb <- spdep::mat2listw(nb, style="B")
+#       tempnb <- tempnb[2]
+#       tempnb <- tempnb$neighbours
+#     }
+#     if(is.list(nb)){
+#       tempnb <- nb
+#     }
+#   }
+#
+#   # Check if x and y are already neighbours
+#   if (!(xnum %in% tempnb[[ynum]])) {
+#     tempnb2 <- tempnb
+#     tempnb2[[xnum]] <- sort(c(tempnb[[xnum]], ynum))
+#     tempnb2[[xnum]] <- tempnb2[[xnum]][tempnb2[[xnum]] != 0]
+#     tempnb2[[ynum]] <- sort(c(tempnb[[ynum]], xnum))
+#     tempnb2[[ynum]] <- tempnb2[[ynum]][tempnb2[[ynum]] != 0]
+#     class(tempnb2) <- c("nb", "list")
+#
+#     if(is.data.frame(nb)){
+#       if(is.matrix(nb$nb)){
+#         tempmat <- spdep::nb2mat(tempnb2, style="B")
+#         dfmat_return <- nb
+#         dfmat_return$nb <- tempmat
+#         nb <- dfmat_return
+#       }
+#       if(is.list(nb$nb)){
+#         dflist_return <- nb
+#         dflist_return$nb <- tempnb2
+#         nb <- dflist_return
+#       }
+#     } else {
+#       if(is.list(nb)){
+#         nb <- tempnb2
+#       }
+#       if(is.matrix(nb)){
+#         tempmat <- spdep::nb2mat(tempnb2, style="B")
+#         nb <- tempmat
+#       }
+#     }
+#   }
+#
+#   return(nb)
+# }
 
-  # Check if nb is a valid neighbourhood list, matrix, or dataframe containing 'nb' column
+st_force_join_nb <- function(nb, x = NULL, y = NULL, xy_df = NULL) {
+
+  # Check if nb is valid
   if (!(is.data.frame(nb) || is.list(nb$nb) || is.matrix(nb$nb) || is.list(nb) || is.matrix(nb))) {
     stop("Error: The 'nb' argument must be a neighbours list, a neighbours matrix, or a dataframe containing a neighbours list or matrix named 'nb'")
   } else if (is.data.frame(nb) && !("nb" %in% colnames(nb))) {
     stop("Error: The dataframe must contain a column called 'nb'")
   }
 
-  # If xy_df is provided, process multiple x, y pairs from the dataframe
+  # Determine number of areas (length of neighbourhood list/matrix)
+  nb_length <- if (is.data.frame(nb)) {
+    if (is.list(nb$nb)) {
+      length(nb$nb)
+    } else if (is.matrix(nb$nb)) {
+      nrow(nb$nb)
+    } else {
+      stop("Error: Invalid neighbourhood structure in dataframe.")
+    }
+  } else if (is.list(nb)) {
+    length(nb)
+  } else if (is.matrix(nb)) {
+    nrow(nb)
+  } else {
+    stop("Error: Unrecognised neighbourhood format.")
+  }
+
+  # Helper to check whether a pair (x, y) is valid
+  check_pair_validity <- function(x, y) {
+    if (is.character(x) && is.character(y)) {
+      # When x and y are names, check against valid names
+      valid_names <- if (is.data.frame(nb)) {
+        if (is.list(nb$nb)) {
+          names(nb$nb)
+        } else if (is.matrix(nb$nb)) {
+          rownames(nb$nb)
+        } else {
+          stop("Error: Invalid neighbourhood structure in dataframe.")
+        }
+      } else if (is.list(nb)) {
+        names(nb)
+      } else if (is.matrix(nb)) {
+        rownames(nb)
+      } else {
+        stop("Error: Unrecognised neighbourhood format.")
+      }
+
+      if (!(x %in% valid_names)) {
+        stop(paste0("Error: x = '", x, "' is not found in the neighbourhood structure."))
+      }
+      if (!(y %in% valid_names)) {
+        stop(paste0("Error: y = '", y, "' is not found in the neighbourhood structure."))
+      }
+
+    } else if (is.numeric(x) && is.numeric(y)) {
+      # When x and y are numeric indices
+      if (x < 1 || x > nb_length || y < 1 || y > nb_length) {
+        stop(paste0("Error: x or y index is out of range. Valid indices are between 1 and ", nb_length, "."))
+      }
+    } else {
+      stop("Error: x and y must either both be numeric or both be character (names).")
+    }
+  }
+
+  # Process pairs from xy_df (if provided)
   if (!is.null(xy_df)) {
-    # Ensure that xy_df has x and y columns
     if (!all(c("x", "y") %in% colnames(xy_df))) {
-      stop("Error: The dataframe must contain columns 'x' and 'y'")
+      stop("Error: xy_df must contain columns 'x' and 'y'")
     }
 
-    # Loop over the rows of xy_df and perform the join for each pair
-    for (i in 1:nrow(xy_df)) {
-      x <- xy_df$x[i]
-      y <- xy_df$y[i]
-
-      # Process the current pair
-      nb <- process_pair(nb, x, y)
+    for (i in seq_len(nrow(xy_df))) {
+      check_pair_validity(xy_df$x[i], xy_df$y[i])
+      nb <- process_pair(nb, xy_df$x[i], xy_df$y[i])
     }
-
     return(nb)
   }
 
-  # If no xy_df, proceed with single x and y processing
+  # Process single x, y pair (if xy_df not provided)
   if (is.null(x) || is.null(y)) {
-    stop("Error: Either provide 'x' and 'y' or 'xy_df'.")
+    stop("Error: Either provide 'x' and 'y', or provide 'xy_df'.")
   }
 
-  # Process the single pair
+  check_pair_validity(x, y)
   nb <- process_pair(nb, x, y)
 
   return(nb)
@@ -60,52 +230,41 @@ st_force_join_nb <- function(nb, x = NULL, y = NULL, xy_df = NULL){
 # Helper function to process a single pair of x and y
 process_pair <- function(nb, x, y) {
 
-  # MAKE INTEGERS: xnum and ynum
-  if(is.numeric(x) & is.numeric(y)){
-    xnum <- as.integer(x)
-    ynum <- as.integer(y)
-  }else{
-    if(is.data.frame(nb)){
-      if(is.list(nb$nb)){
-        xnum <- which(names(nb$nb) == x) |> as.integer()
-        ynum <- which(names(nb$nb) == y) |> as.integer()
+  # Convert names to numeric indices if needed
+  if (is.character(x) && is.character(y)) {
+    if (is.data.frame(nb)) {
+      if (is.list(nb$nb)) {
+        xnum <- which(names(nb$nb) == x)
+        ynum <- which(names(nb$nb) == y)
+      } else if (is.matrix(nb$nb)) {
+        xnum <- which(rownames(nb$nb) == x)
+        ynum <- which(rownames(nb$nb) == y)
       }
-      if(is.matrix(nb$nb)){
-        xnum <- which(rownames(nb$nb) == x) |> as.integer()
-        ynum <- which(rownames(nb$nb) == y) |> as.integer()
-      }
-    } else {
-      if(is.list(nb)){
-        xnum <- which(names(nb) == x) |> as.integer()
-        ynum <- which(names(nb) == y) |> as.integer()
-      }
-      if(is.matrix(nb)){
-        xnum <- which(rownames(nb) == x) |> as.integer()
-        ynum <- which(rownames(nb) == y) |> as.integer()
-      }
-    }
-  }
-
-  # EXTRACT THE CONTIGUITY AS LIST FOR ALL FORMS: tempnb
-  if(is.data.frame(nb)){
-    tempnb <- nb$nb # list or matrix within dataframe
-    if(is.matrix(tempnb)){ # matrix within dataframe
-      tempnb <- spdep::mat2listw(tempnb, style="B")
-      tempnb <- tempnb[2]
-      tempnb <- tempnb$neighbours
+    } else if (is.list(nb)) {
+      xnum <- which(names(nb) == x)
+      ynum <- which(names(nb) == y)
+    } else if (is.matrix(nb)) {
+      xnum <- which(rownames(nb) == x)
+      ynum <- which(rownames(nb) == y)
     }
   } else {
-    if(is.matrix(nb)){
-      tempnb <- spdep::mat2listw(nb, style="B")
-      tempnb <- tempnb[2]
-      tempnb <- tempnb$neighbours
-    }
-    if(is.list(nb)){
-      tempnb <- nb
-    }
+    xnum <- as.integer(x)
+    ynum <- as.integer(y)
   }
 
-  # Check if x and y are already neighbours
+  # Extract contiguity list
+  if (is.data.frame(nb)) {
+    tempnb <- nb$nb
+    if (is.matrix(tempnb)) {
+      tempnb <- spdep::mat2listw(tempnb, style = "B")$neighbours
+    }
+  } else if (is.matrix(nb)) {
+    tempnb <- spdep::mat2listw(nb, style = "B")$neighbours
+  } else {
+    tempnb <- nb
+  }
+
+  # Check if they are already neighbours
   if (!(xnum %in% tempnb[[ynum]])) {
     tempnb2 <- tempnb
     tempnb2[[xnum]] <- sort(c(tempnb[[xnum]], ynum))
@@ -114,26 +273,16 @@ process_pair <- function(nb, x, y) {
     tempnb2[[ynum]] <- tempnb2[[ynum]][tempnb2[[ynum]] != 0]
     class(tempnb2) <- c("nb", "list")
 
-    if(is.data.frame(nb)){
-      if(is.matrix(nb$nb)){
-        tempmat <- spdep::nb2mat(tempnb2, style="B")
-        dfmat_return <- nb
-        dfmat_return$nb <- tempmat
-        nb <- dfmat_return
+    if (is.data.frame(nb)) {
+      if (is.matrix(nb$nb)) {
+        nb$nb <- spdep::nb2mat(tempnb2, style = "B")
+      } else {
+        nb$nb <- tempnb2
       }
-      if(is.list(nb$nb)){
-        dflist_return <- nb
-        dflist_return$nb <- tempnb2
-        nb <- dflist_return
-      }
+    } else if (is.matrix(nb)) {
+      nb <- spdep::nb2mat(tempnb2, style = "B")
     } else {
-      if(is.list(nb)){
-        nb <- tempnb2
-      }
-      if(is.matrix(nb)){
-        tempmat <- spdep::nb2mat(tempnb2, style="B")
-        nb <- tempmat
-      }
+      nb <- tempnb2
     }
   }
 

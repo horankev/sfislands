@@ -37,8 +37,7 @@ Imports:
     stringr,
     tidyr,
     broom.mixed,
-    lifecycle,
-    rlang
+    lifecycle
 Suggests:
     mgcv,
     testthat (>= 3.0.0)
