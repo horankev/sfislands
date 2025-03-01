@@ -90,7 +90,7 @@ st_quickmap_nb <- function(nbsf,
     centroids <- sf::st_centroid(nbsf)
     centroids$id <- nbsf$id
     plot <- plot + ggplot2::geom_sf_text(data = centroids,
-                                         ggplot2::aes(label = id),
+                                         ggplot2::aes(label = nbsf$id),
                                          size = numericsize, colour = numericcol, fontface = "bold")
   } else {
     plot <- plot + ggplot2::geom_sf(data = endpoints_coords, size = pointsize, colour = pointcol)
