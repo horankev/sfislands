@@ -29,7 +29,7 @@
 
     <a class="navbar-brand me-2" href="index.html">sfislands</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -111,8 +111,8 @@
 </h3>
 <table class="table">
 <colgroup>
-<col width="15%">
-<col width="84%">
+<col width="50%">
+<col width="50%">
 </colgroup>
 <thead><tr class="header">
 <th>function:</th>
@@ -132,12 +132,12 @@
 <td><em>Check assignment of island contiguities in a dataframe.</em></td>
 </tr>
 <tr class="even">
-<td><strong>st_manual_join_nb()</strong></td>
-<td><em>Make manual changes to any connections.</em></td>
+<td><strong>st_force_join_nb()</strong></td>
+<td><em>Enforce changes to any connections.</em></td>
 </tr>
 <tr class="odd">
-<td><strong>st_manual_cut_nb()</strong></td>
-<td><em>Make manual changes to any connections.</em></td>
+<td><strong>st_force_cut_nb()</strong></td>
+<td><em>Enforce changes to any connections.</em></td>
 </tr>
 </tbody>
 </table>
@@ -152,8 +152,8 @@
 </h3>
 <table class="table">
 <colgroup>
-<col width="30%">
-<col width="69%">
+<col width="50%">
+<col width="50%">
 </colgroup>
 <thead><tr class="header">
 <th>function:</th>
@@ -185,8 +185,9 @@
 <li><p>for <strong>islands</strong>, contiguities are assigned to the two nearest constituencies to each island. This number can be altered using the <code>link_islands_k</code> argument.</p></li>
 </ol>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">nbsf</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/st_bridges.html">st_bridges</a></span><span class="op">(</span>df <span class="op">=</span> <span class="va">uk_election</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">country</span> <span class="op">==</span> <span class="st">"Scotland"</span><span class="op">)</span>,</span>
-<span>                   geom_col_name <span class="op">=</span> <span class="st">"constituency_name"</span>,</span>
+<code class="sourceCode R"><span><span class="va">scotland_df</span> <span class="op">&lt;-</span> <span class="va">uk_election</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">country</span> <span class="op">==</span> <span class="st">"Scotland"</span><span class="op">)</span></span>
+<span><span class="va">nbsf</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/st_bridges.html">st_bridges</a></span><span class="op">(</span>df <span class="op">=</span> <span class="va">scotland_df</span>,</span>
+<span>                   row_identifier <span class="op">=</span> <span class="st">"constituency_name"</span>,</span>
 <span>                   link_islands_k <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 <p>This new dataframe has the following form (with a column named <code>nb</code> containing a neighbours list):</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
@@ -246,10 +247,10 @@
 <p>A researcher can now use domain knowledge or a particular hypothesis to edit these contiguities. For instance, we may not be happy with the connection between 47 (Na h-Eileanan An Iar) and 51 (Orkney and Shetland) and wish to remove it. We might instead feel that it is important for 47 and 5 to be considered neighbours. This can be easily achieved, as shown below, using the <code><a href="reference/st_manual_cut_nb.html">st_manual_cut_nb()</a></code> and <code><a href="reference/st_manual_join_nb.html">st_manual_join_nb()</a></code> functions. The spatial units whose relationships we wish to change can be referenced by name or by index number.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">nbsf</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/st_bridges.html">st_bridges</a></span><span class="op">(</span>df <span class="op">=</span> <span class="va">uk_election</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">country</span> <span class="op">==</span> <span class="st">"Scotland"</span><span class="op">)</span>,</span>
-<span>                   geom_col_name <span class="op">=</span> <span class="st">"constituency_name"</span>,</span>
+<span>                   row_identifier <span class="op">=</span> <span class="st">"constituency_name"</span>,</span>
 <span>                   link_islands_k <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="reference/st_manual_cut_nb.html">st_manual_cut_nb</a></span><span class="op">(</span><span class="st">"Na h-Eileanan An Iar"</span>, <span class="st">"Orkney and Shetland"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="reference/st_manual_join_nb.html">st_manual_join_nb</a></span><span class="op">(</span><span class="fl">47</span>, <span class="fl">5</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="reference/st_force_cut_nb.html">st_force_cut_nb</a></span><span class="op">(</span><span class="st">"Na h-Eileanan An Iar"</span>, <span class="st">"Orkney and Shetland"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="reference/st_force_join_nb.html">st_force_join_nb</a></span><span class="op">(</span><span class="fl">47</span>, <span class="fl">5</span><span class="op">)</span></span></code></pre></div>
 <p>The results of these changes as visualised in map form are shown below:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">ggarrange</span><span class="op">(</span></span>

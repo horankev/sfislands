@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">sfislands</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -44,11 +44,13 @@
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">st_bridges</span><span class="op">(</span></span>
 <span>  <span class="va">df</span>,</span>
-<span>  <span class="va">geom_col_name</span>,</span>
+<span>  <span class="va">row_identifier</span>,</span>
 <span>  remove_islands <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  link_islands_k <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  nb_structure <span class="op">=</span> <span class="st">"list"</span>,</span>
-<span>  add_to_dataframe <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  add_to_dataframe <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  threshold <span class="op">=</span> <span class="fl">1.001</span>,</span>
+<span>  geom_col_name <span class="op">=</span> <span class="fu">lifecycle</span><span class="fu">::</span><span class="fu"><a href="https://lifecycle.r-lib.org/reference/deprecated.html" class="external-link">deprecated</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -60,7 +62,7 @@
 <dd><p>an `sf` or `sfc` object.</p></dd>
 
 
-<dt id="arg-geom-col-name">geom_col_name<a class="anchor" aria-label="anchor" href="#arg-geom-col-name"></a></dt>
+<dt id="arg-row-identifier">row_identifier<a class="anchor" aria-label="anchor" href="#arg-row-identifier"></a></dt>
 <dd><p>name of a column from `df` containing names (or unique identifiers) for each row.</p></dd>
 
 
@@ -78,6 +80,14 @@
 
 <dt id="arg-add-to-dataframe">add_to_dataframe<a class="anchor" aria-label="anchor" href="#arg-add-to-dataframe"></a></dt>
 <dd><p>default `TRUE`. Whether or not to augment existing df with contiguity output as `"nb"` column. `FALSE` returns only the contiguity structure.</p></dd>
+
+
+<dt id="arg-threshold">threshold<a class="anchor" aria-label="anchor" href="#arg-threshold"></a></dt>
+<dd><p>default 1.001. factor by which to change the size of buffer automatically generated around islands to account for imprecisions which may arise from sf::st_buffer() functionality. This can be increased if connections to islands are not occurring as expected.</p></dd>
+
+
+<dt id="arg-geom-col-name">geom_col_name<a class="anchor" aria-label="anchor" href="#arg-geom-col-name"></a></dt>
+<dd><p>name of a column from `df` containing names (or unique identifiers) for each row. This argument is now deprecated and the new "row_identifier" argument replaces it with the same functionality.</p></dd>
 
 </dl></div>
     <div class="section level2">

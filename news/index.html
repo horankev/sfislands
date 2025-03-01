@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">sfislands</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,11 +36,35 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="1.0.0" id="sfislands-100">sfislands 1.0.0<a class="anchor" aria-label="anchor" href="#sfislands-100"></a></h2><p class="text-muted">CRAN release: 2024-03-21</p>
+<h2 class="pkg-version" data-toc-text="1.1.0" id="sfislands-110">sfislands 1.1.0<a class="anchor" aria-label="anchor" href="#sfislands-110"></a></h2>
+<div class="section level3">
+<h3 id="new-features-1-1-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-1-1-0"></a></h3>
+<ul><li>
+<p>The functions <code>st_manual_cut_nb</code> and <code>st_manual_join_nb</code> have been <strong>deprecated</strong> and replaced by the more intuitively named <code>st_force_cut_nb</code> and <code>st_force_join_nb</code>.</p>
+<ul><li>The new <code><a href="../reference/st_force_cut_nb.html">st_force_cut_nb()</a></code> and <code><a href="../reference/st_force_join_nb.html">st_force_join_nb()</a></code> functions work similarly to their predecessors, but now include a new argument <code>xy_df</code>. This allows multiple cuts or joins to be applied in a <strong>single function call</strong>, improving both performance and usability.</li>
+<li>The <code>xy_df</code> argument should be a data frame containing two columns, <code>x</code> and <code>y</code>, representing pairs of units to be cut or joined.</li>
+</ul></li>
+<li>
+<p>In <code><a href="../reference/st_bridges.html">st_bridges()</a></code>, the argument <code>geom_col_name</code> has been <strong>deprecated</strong> in favour of the clearer <code>row_identifier</code>.</p>
+<ul><li>This is purely a naming change — the functionality remains the same.</li>
+</ul></li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-1-1-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-1-0"></a></h3>
+<ul><li>Several spurious warnings and messages that appeared in version 1.0 have been resolved.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="other-improvements-1-1-0">Other Improvements<a class="anchor" aria-label="anchor" href="#other-improvements-1-1-0"></a></h3>
+<ul><li>Error messages have been reviewed and improved for better clarity and consistency.</li>
+</ul></div>
 </div>
     <div class="section level2">
+<h2 class="pkg-version" data-toc-text="1.0.0" id="sfislands-100">sfislands 1.0.0<a class="anchor" aria-label="anchor" href="#sfislands-100"></a></h2><p class="text-muted">CRAN release: 2024-03-21</p>
+<ul><li>Initial CRAN release.</li>
+</ul></div>
+    <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.1.0" id="sfislands-010">sfislands 0.1.0<a class="anchor" aria-label="anchor" href="#sfislands-010"></a></h2>
-<ul><li>Initial CRAN submission.</li>
+<ul><li>Initial development release.</li>
 </ul></div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
