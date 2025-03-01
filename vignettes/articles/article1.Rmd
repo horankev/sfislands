@@ -94,8 +94,8 @@ The following is a framework within which the `sfislands` functions could be use
 | **st_bridges()**        | *Create a neighbours list, matrix, or `sf` dataframe containing a neighbours list or matrix as column "nb", while accounting for islands.* |
 | **st_quickmap_nb()**    | *Check contiguities visually on map.*                                                                                                      |
 | **st_check_islands()**  | *Check assignment of island contiguities in a dataframe.*                                                                                  |
-| **st_manual_join_nb()** | *Make manual changes to any connections.*                                                                                                  |
-| **st_manual_cut_nb()**  | *Make manual changes to any connections.*                                                                                                  |
+| **st_force_join_nb()** | *Enforce changes to any connections.*                                                                                                  |
+| **st_force_cut_nb()**  | *Enforce changes to any connections.*                                                                                                  |
 
 ### Step 2: Create model
 
