@@ -1,9 +1,8 @@
 pandoc: 3.1.11
 pkgdown: 2.1.1
 pkgdown_sha: ~
-articles:
-  articles/article1: article1.html
-last_built: 2025-03-01T20:54Z
+articles: {}
+last_built: 2025-03-02T15:30Z
 urls:
   reference: https://horankev.github.io/sfislands/reference
   article: https://horankev.github.io/sfislands/articles
