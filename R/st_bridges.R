@@ -23,28 +23,26 @@ st_bridges <- function(df,
                        threshold = 1.001,
                        geom_col_name = lifecycle::deprecated())
 {
-
   if (lifecycle::is_present(geom_col_name)) {
     lifecycle::deprecate_warn("1.1.0", "st_bridges(geom_col_name)", "st_bridges(row_identifier)")
     row_identifier <- geom_col_name
   }
 
+  # Get the geometry column name
+  geom_col <- attr(df, "sf_column")
+
   if (length(unique(df |> dplyr::pull({{ row_identifier }}))) != nrow(df)) {
     stop("Duplicate row identifiers present", call. = FALSE)
   }
-
   if (remove_islands == TRUE){
     # unconnected units
     cont <-  df |>
       sf::st_intersects()
     still_unconnected <- lengths(cont)
     unconnected <- which(still_unconnected == 1)
-
     df <- df[-unconnected,]
     link_islands_k = 0
-
   }
-
   if (link_islands_k > 0)
   {
     # unconnected units
@@ -59,7 +57,8 @@ st_bridges <- function(df,
     )
     for (i in 1:length(unconnected))
     {
-      distances <- sf::st_distance(df$geometry[unconnected[i]], sf::st_geometry(df$geometry)) |>
+      # Fix: use sf::st_geometry() instead of df$geometry
+      distances <- sf::st_distance(sf::st_geometry(df)[unconnected[i]], sf::st_geometry(df)) |>
         as.numeric() |> sort()
       distdf[i,2] <- distances[link_islands_k+1] * threshold
       distdf[i,1] <- unconnected[i]
@@ -69,7 +68,6 @@ st_bridges <- function(df,
     {
       bufs[distdf[i,1]] <- distdf[i,2]
     }
-
     cont <- df |>
       sf::st_buffer(dist=bufs) |>
       sf::st_intersects() |>
@@ -83,22 +81,17 @@ st_bridges <- function(df,
     #   purrr::imap(~setdiff(.x, .y))  # Remove self-neighbor (if any)
 
     names(cont) <- df |> dplyr::pull({{ row_identifier }})
-
     class(cont) <- c("nb","list")
   }
-
   # otherwise, just return unaltered contiguity structure
   if(link_islands_k <= 0)
   {
     cont <- df |>
       sf::st_intersects() |>
       purrr::imap(~setdiff(.x,.y))
-
     names(cont) <- df |> dplyr::pull({{ row_identifier }})
-
     class(cont) <- c("nb","list")
   }
-
   if(add_to_dataframe == FALSE){
     if(nb_structure == "list"){
       return(cont)
@@ -109,13 +102,13 @@ st_bridges <- function(df,
       return(cont2)
     }
   }
-
   if(add_to_dataframe == TRUE){
     if(nb_structure == "list"){
       tempdf <- df |>
         dplyr::mutate(nb = cont)
       tempdf[[row_identifier]] <- factor(tempdf[[row_identifier]])
-      cols_to_reposition <- c("nb","geometry")
+      # Fix: use actual geometry column name instead of hardcoded "geometry"
+      cols_to_reposition <- c("nb", geom_col)
       tempdf <- tempdf |>
         dplyr::select(dplyr::everything(),dplyr::all_of(cols_to_reposition))
       return(tempdf)
@@ -126,7 +119,8 @@ st_bridges <- function(df,
       tempdf <- df |>
         dplyr::mutate(nb = cont2)
       tempdf[[row_identifier]] <- factor(tempdf[[row_identifier]])
-      cols_to_reposition <- c("nb","geometry")
+      # Fix: use actual geometry column name instead of hardcoded "geometry"
+      cols_to_reposition <- c("nb", geom_col)
       tempdf <- tempdf |>
         dplyr::select(dplyr::everything(),dplyr::all_of(cols_to_reposition))
       return(tempdf)

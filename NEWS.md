@@ -1,3 +1,8 @@
+# sfislands 1.1.2.9000 (development version)
+
+* Fixed bug in `st_bridges()` where function failed when geometry column wasn't named 'geometry'
+* Function now works with any geometry column name using `sf::st_geometry()`
+
 # sfislands 1.1.2
 
 # sfislands 1.1.1
